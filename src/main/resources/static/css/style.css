@@ -1,0 +1,45 @@
+/*--taupe-gray: #92828dff;
+--white: #ffffffff;
+--blue-sapphire: #175676ff;
+--maximum-blue: #4ba3c3ff;
+--celadon: #afd5aaff;*/
+
+body {
+  padding-top: 56px;
+  font-family: "Oswald", sans-serif;
+}
+
+.my-navbar {
+  background-color: #175676ff;
+  letter-spacing: 0.25rem;
+}
+
+.home {
+  font-weight: bolder;
+}
+
+h1 {
+  color: black;
+  letter-spacing: 0.25rem;
+  word-spacing: 1rem;
+  text-transform: uppercase;
+  background-color: #4ba3c3ff;
+  margin-top: 0px;
+}
+
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.my-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #175676ff;
+  color: #fff;
+  text-align: center;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+}
