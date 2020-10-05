@@ -70,6 +70,24 @@ h1 {
   margin-top: 20px;
 }
 
+input {
+  border: 2px solid #175676ff;
+  border-radius: 10px;
+}
+
 #about-me-p {
   text-indent: 2.5rem;
+}
+
+.parent {
+  display: grid;
+  place-items: center;
+  text-align: left;
+}
+
+textarea {
+  width: 80%;
+  resize: none;
+  border: 2px solid #175676ff;
+  border-radius: 10px;
 }
