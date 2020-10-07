@@ -96,3 +96,12 @@ textarea {
   margin: auto;
   width: 60%;
 }
+
+.div-distancer {
+  margin-bottom: 10px;
+}
+
+.sign-in-button {
+  background-color: #175676ff;
+  color: #fff;
+}
