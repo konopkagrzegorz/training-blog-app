@@ -1,61 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/src/main/resources/static/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark my-navbar fixed-top">
-        <a class="navbar-brand home" href="#">IN LOVE WITH STRENGTH
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Categories
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Articles</a>
-                <a class="dropdown-item" href="#">Fundamentals</a>
-                <a class="dropdown-item" href="#">Plan generator</a>
-              </div>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Sign in</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button><br>
-          </form>
-        </div>
-      </nav>
-      <div class="ontainer-fluid px-0 no-padding">
-        <div class="row">
-            <div class="col-sm-12">
-                <img src="/src/main/resources/images/banner.jpg"  class="img-fluid no-padding width:100%" alt="banner">
-            </div>
-        </div>
-    </div>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
     <form action="" class="form-signin">
       <div class="container">
         <h1 class="h3 mb-3 text-center">Please sign in</h1>
@@ -72,14 +23,7 @@
         <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Sign in</button>
     </div>
     </form>
-      <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 my-footer no-padding">
-                    <p>Copyright &copy; 2020 by Grzegorz Konopka</p>
-                </div>
-            </div>
-        </div>
+    <footer th:replace="layout :: footer-fragment">
     </footer>
 </body>
 </html>

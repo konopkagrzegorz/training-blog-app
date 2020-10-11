@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <div th:replace="site-head">
-    </div>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: meta-head">
   </head>
   <body>
-  <nav>
-    <div th:replace="fragments.html :: site-navbar">
-
-    </div>
+  <nav th:replace="layout :: site-navbar">
   </nav>
+  <div th:replace="layout :: banner-fragment">
+
+  </div>
     <div class="container my-container">
       <div class="row">
         <div class="col-md-8">
@@ -98,10 +95,7 @@
         </div>
       </div>
     </div>
-    <footer>
-      <div   th:replace="fragments.html :: footer-fragment">
-
-      </div>
+    <footer th:replace="layout :: footer-fragment">
     </footer>
   </body>
 </html>
