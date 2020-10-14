@@ -1,4 +1,68 @@
 package com.training.trainingblogapp.services;
 
-public class UserService {
+import com.training.trainingblogapp.domain.model.Role;
+import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+public class UserService implements UserDetailsService {
+
+    private UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public User save(User user) {
+        User temp = new User();
+        temp.setUsername(user.getUsername());
+        temp.setPassword(passwordEncoder.encode(user.getPassword()));
+        temp.setRole(new Role("ROLE_USER"));
+        return userRepository.save(temp);
+    }
+
+    public void delete() {
+
+    }
+
+        @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User temp = findByUsername(username);
+
+        if (temp == null) {
+            throw new UsernameNotFoundException("Invalid username and/or password");
+        }
+
+        Collection collection = new HashSet();
+        collection.add(temp.getRole());
+
+        return new org.springframework.security.core.userdetails.User(temp.getUsername(),
+                temp.getPassword(), mapRolesToAuthorities(collection));
+    }
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+
+        return roles.stream()
+                .map(roleTemp -> new SimpleGrantedAuthority(roleTemp.getName()))
+                .collect(Collectors.toList());
+
+    }
 }

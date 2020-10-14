@@ -1,9 +1,16 @@
 package com.training.trainingblogapp.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -18,4 +25,15 @@ public class Role {
             cascade = CascadeType.ALL)
     private List<User> users;
 
+    public Role(String role_user) {
+        this.name = role_user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

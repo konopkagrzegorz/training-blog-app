@@ -1,4 +1,14 @@
 package com.training.trainingblogapp.repositories;
 
-public interface UserRepository {
+import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
+import com.training.trainingblogapp.domain.model.User;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository extends CrudRepository<User, Long> {
+
+    User findByUsername(String username);
+    void deleteByUsername(String username);
+    User findByEmail(String email);
+    User save(User User);
+
 }
