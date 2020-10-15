@@ -100,3 +100,8 @@ textarea {
   background-color: #175676ff;
   color: #fff;
 }
+
+.listed-error {
+  margin-top: 5px;
+  color: red;
+}

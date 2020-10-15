@@ -23,8 +23,4 @@ public class IndexController {
         return "about";
     }
 
-    @GetMapping({"contact","contact.html"})
-    public String showContactPage() {
-        return "contact";
-    }
 }

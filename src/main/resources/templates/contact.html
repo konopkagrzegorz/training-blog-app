@@ -10,31 +10,63 @@
     <div class="container my-container">
         <div class="row">
             <div class="col-sm-12">
-                <form action="post">
+                <form th:object="${messageDTO}" th:action="@{/contact/add-new}" method="post">
                     <div class="row parent">
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger col-sm-12 parent" style="margin-top: 20px; width: 80%">
+                            <p>Please Correct Errors Below</p>
+                        </div>
                         <div class="col-sm-12 parent" style="margin-top: 20px;">
                             <label for="name-and-surname">Name and Surname</label>
                         </div>
                         <div class="col-sm-12 parent">
-                            <input class="form-control text-start center-block" type="text" id="name-and-surname" style="width:80%" placeholder="Your name...">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input th:field="*{name}" class="form-control text-start center-block" type="text" id="name-and-surname" name="name" style="width:80%" placeholder="Your name...">
+                            <div class="col-sm-12 pull-left" style="width: 80%">
+                                <div th:if="${#fields.hasErrors('name')}">
+                                    <ul>
+                                        <li class="listed-error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-12 parent">
                             <label for="subject">Subject</label>
                         </div>
                         <div class="col-sm-12 parent">
-                            <input class="form-control text-start center-block" type="text" id="subject" style="width:80%" placeholder="Subject...">
+                            <input th:field="*{subject}" class="form-control text-start center-block" type="text" id="subject" name="subject" style="width:80%" placeholder="Subject...">
+                        </div>
+                        <div class="col-sm-12 pull-left" style="width: 80%">
+                            <div th:if="${#fields.hasErrors('subject')}">
+                                <ul>
+                                    <li class="listed-error" th:each="err : ${#fields.errors('subject')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-sm-12 parent">
                             <label for="email">Contact email</label>
                         </div>
                         <div class="col-sm-12 parent">
-                            <input class="form-control text-start center-block" type="text" id="email" style="width:80%" placeholder="Your email...">
+                            <input th:field="*{contactEmail}" class="form-control text-start center-block" type="text" id="email"  name="contactEmail" style="width:80%" placeholder="Your email...">
+                        </div>
+                        <div class="col-sm-12 pull-left" style="width: 80%">
+                            <div th:if="${#fields.hasErrors('contactEmail')}">
+                                <ul>
+                                    <li class="listed-error" th:each="err : ${#fields.errors('contactEmail')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-sm-12 parent">
                             <label for="message">Message</label>
                         </div>
                         <div class="col-sm-12 parent">
-                            <textarea class="form-control text-start center-block" type="textarea" id="message" style="width: 80%" rows="8" placeholder="Your message.."></textarea>
+                            <textarea th:field="*{text}" class="form-control text-start center-block" type="textarea" id="message" name="text" style="width: 80%" rows="8" placeholder="Your message.."></textarea>
+                        </div>
+                        <div class="col-sm-12 pull-left" style="width: 80%">
+                            <div th:if="${#fields.hasErrors('text')}">
+                                <ul>
+                                    <li class="listed-error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-sm-12 parent" style="margin-top: 10px;">
                           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>

@@ -9,7 +9,7 @@
 </nav>
 <div th:replace="layout :: banner-fragment">
 </div>
-    <form th:action="@{/login}" action="post"  role="form" class="form-signin">
+    <form th:action="@{/login}" method="post" class="form-signin">
       <div class="container">
         <h1 class="h3 mb-3 text-center">Please sign in</h1>
           <div class="row">
@@ -19,7 +19,7 @@
                   Invalid username or password.
               </div>
           </div>
-          <div th:if="${param.logout}" class="alert alert-danger">
+          <div th:if="${param.logout}" class="alert alert-success">
               <div>
                   You have been logged out.
               </div>
@@ -28,12 +28,12 @@
       </div>
         <div class="row">
           <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-            <input class="form-control text-start" type="text" id="username" placeholder="Enter username...">
+            <input class="form-control text-start" type="text" name="username" placeholder="Enter username...">
         </div>
         </div>
         <div class="row">
           <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-            <input class="form-control text-start" type="password" id="password" placeholder="Enter password...">
+            <input class="form-control text-start" type="password" name="password" placeholder="Enter password...">
           </div>
         </div>
         <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container"

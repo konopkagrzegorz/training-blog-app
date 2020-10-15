@@ -11,7 +11,6 @@ VALUES ('mkomenda','Martyna','Komenda','$2y$12$YRNUnzw/yNuPaBYXP9m6VO48SuukLRkgo
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
 VALUES ('rkonopka','Ryszard','Konopka','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','ryszardk@gmail.com','3');
 
-
 -- CREATE TABLE `users`
 -- (`id` INT(20) NOT NULL,
 -- `username` VARCHAR(64) NOT NULL,
