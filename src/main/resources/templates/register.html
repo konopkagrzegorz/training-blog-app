@@ -7,42 +7,100 @@
 </nav>
 <div th:replace="layout :: banner-fragment">
 </div>
-    <form action="" class="form-signin">
+    <form th:object="${userRegistrationDto}" th:action="@{/register}" method="post" class="form-signin">
         <div class="container">
-          <h1 class="h3 mb-3 text-center">Please sign up</h1>
-          <div class="row">
-            <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-              <input class="form-control text-start" type="text" id="username" placeholder="Enter username...">
-          </div>
-          </div>
-          <div class="row">
-            <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-              <input class="form-control text-start" type="text" id="firstName" placeholder="Enter first name...">
-          </div>
-          </div>
-          <div class="row">
-            <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-              <input class="form-control text-start" type="text" id="lastName" placeholder="Enter last name...">
-          </div>
-          </div>
-          <div class="row">
-            <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-              <input class="form-control text-start" type="password" id="password" placeholder="Enter password...">
+            <h1 class="h3 mb-3 text-center">Please sign up</h1>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <p>Please Correct Errors Below</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-              <input class="form-control text-start" type="password" id="confirmPassword" placeholder="Confirm password...">
+                <div class="row">
+                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                      <input th:field="*{username}" class="form-control text-start" type="text" id="username" name="username" placeholder="Enter username...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('username')}" class="pull-left">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                      <input th:field="*{firstName}" class="form-control text-start" type="text" id="firstName" name="firstName" placeholder="Enter first name...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('firstName')}">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{lastName}" class="form-control text-start" type="text" id="lastName" name="lastName" placeholder="Enter last name...">
+                    <div class="pull-left">
+                      <div th:if="${#fields.hasErrors('lastName')}">
+                        <ul>
+                          <li class="listed-error" th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-              <input type="checkbox" value="terms"> I agree with <a href="#" target="_blank">terms </a> of use
+                <div class="row">
+                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                      <input th:field="*{email}" class="form-control text-start" type="text" id="email" name="email" placeholder="Enter email address...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('email')}">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                        <input th:field="*{password}" class="form-control text-start" type="password" id="password" name="password" placeholder="Enter password...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('password')}">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{confirmPassword}" class="form-control text-start" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password...">
+                </div>
             </div>
-          </div>
-          <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Sign in</button>
-      </div>
-      </form>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{terms}" type="checkbox" value="terms" name="terms"> I agree with <a th:href="@{/terms}" href="#" target="_blank">terms </a> of use
+                <div class="pull-left">
+                      <div th:if="${#fields.hasErrors('terms')}">
+                        <ul>
+                          <li class="listed-error" th:each="err : ${#fields.errors('terms')}" th:text="${err}"></li>
+                        </ul>
+                      </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Sign in</button>
+                </div>
+            </div>
+        </div>
+        </form>
         <footer th:replace="layout :: footer-fragment">
       </footer>
 </body>

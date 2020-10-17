@@ -1,5 +1,6 @@
 package com.training.trainingblogapp.services;
 
+import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.repositories.UserRepository;
@@ -18,11 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
 
+    private MappingService mappingService;
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(MappingService mappingService, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.mappingService = mappingService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -31,11 +34,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public User save(User user) {
-        User temp = new User();
-        temp.setUsername(user.getUsername());
-        temp.setPassword(passwordEncoder.encode(user.getPassword()));
-        temp.setRole(new Role("ROLE_USER"));
+    public User save(UserRegistrationDTO userRegistrationDTO) {
+        User temp = mappingService.userRegistrationDtoToUser(userRegistrationDTO);
+        temp.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         return userRepository.save(temp);
     }
 

@@ -9,6 +9,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
     void deleteByUsername(String username);
     User findByEmail(String email);
-    User save(User User);
+    User save(UserRegistrationDTO user);
 
 }

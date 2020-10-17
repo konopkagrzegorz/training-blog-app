@@ -101,6 +101,10 @@ textarea {
   color: #fff;
 }
 
+p {
+  text-align: justify;
+}
+
 .listed-error {
   margin-top: 5px;
   color: red;

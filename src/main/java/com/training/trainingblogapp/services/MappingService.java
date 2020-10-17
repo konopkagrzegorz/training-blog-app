@@ -1,7 +1,10 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.MessageDTO;
+import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.Message;
+import com.training.trainingblogapp.domain.model.Role;
+import com.training.trainingblogapp.domain.model.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +30,16 @@ public class MappingService {
         messageDTO.setText(message.getText());
 
         return messageDTO;
+    }
+
+    public User userRegistrationDtoToUser(UserRegistrationDTO userRegistrationDTO) {
+        User user = new User();
+        user.setUsername(userRegistrationDTO.getUsername());
+        user.setPassword(userRegistrationDTO.getPassword());
+        user.setEmail(userRegistrationDTO.getEmail());
+        user.setFirstName(userRegistrationDTO.getFirstName());
+        user.setLastName(userRegistrationDTO.getLastName());
+
+        return user;
     }
 }

@@ -13,11 +13,6 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping({"register", "register.html"})
-    public String showRegisterPage() {
-        return "register";
-    }
-
     @GetMapping({"about", "about.html"})
     public String showAboutPage() {
         return "about";
