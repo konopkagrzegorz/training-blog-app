@@ -1,14 +1,20 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.UserDTO;
+import com.training.trainingblogapp.domain.model.PasswordGenerator;
+import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.MailService;
 import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
@@ -16,23 +22,49 @@ public class MailController {
 
     private MailService mailService;
     private UserService userService;
+//    private PasswordGenerator passwordGenerator;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @ModelAttribute ("userDTO")
-    UserDTO userDTO() {
+    public UserDTO userDTO() {
         return new UserDTO();
     }
 
+//    @Bean
+//    public PasswordGenerator passwordGenerator(PasswordGenerator.PasswordGeneratorBuilder builder) {
+//        PasswordGenerator passwordGenerator = builder.build();
+//        return passwordGenerator;
+//    }
+
     @Autowired
-    public MailController(MailService mailService, UserService userService) {
+    public MailController(MailService mailService, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.mailService = mailService;
         this.userService = userService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping("/reset-password")
-    public String resetPassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult result) {
+    public String showResetPassword() {
+        return "reset";
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult result) throws MessagingException {
         if (result.hasErrors()) {
             return "reset";
         }
-        if (userService.loadUserByUsername(userDTO))
+        User user = userService.findByUsername(userDTO.getUsername());
+         if (user == null) {
+             throw new RuntimeException("Username does not exist");
+         }
+
+         if (user.getFirstName().equals(userDTO.getFirstName()) && user.getLastName().equals(userDTO.getLastName())
+                    && user.getEmail().equals(userDTO.getEmail())) {
+             String password = "asdef";
+             mailService.sendMail(user.getEmail(), "Password Reset", "Your new password: " + password, false);
+             user.setPassword(bCryptPasswordEncoder.encode(password));
+             userService.update(user);
+         }
+         return "reset";
     }
 }

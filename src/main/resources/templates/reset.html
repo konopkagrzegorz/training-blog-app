@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
+    <form th:object="${userDTO}" th:action="@{/reset-password}" method="post" class="form-signin">
+      <div class="container">
+        <h1 class="h3 mb-3 text-center">Please sign in</h1>
+          <div class="row">
+              <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+              <div th:if="${param.error}" class="alert alert-danger">
+                  <div>
+                      Please Correct Errors Below
+                  </div>
+              </div>
+              <div th:if="${param.success}" class="alert alert-success">
+                  <div>
+                      Sucessfully reseted password
+                  </div>
+              </div>
+             </div>
+          </div>
+        <div class="row">
+            <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                <input th:field="*{username}" class="form-control text-start" type="text" name="username" placeholder="Enter username...">
+            </div>
+        </div>
+          <div class="row">
+              <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{firstName}" class="form-control text-start" type="text" name="firstName" placeholder="Enter First Name...">
+              </div>
+          </div>
+          <div class="row">
+              <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{lastName}" class="form-control text-start" type="text" name="lastName" placeholder="Enter Last Name...">
+              </div>
+          </div>
+          <div class="row">
+              <div class=" col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{email}" class="form-control text-start" type="text" name="email" placeholder="Enter Email Address...">
+              </div>
+          </div>
+        <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container"
+                type="submit">Reset Password</button>
+    </div>
+    </form>
+    <footer th:replace="layout :: footer-fragment">
+    </footer>
+</body>
+</html>

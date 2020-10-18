@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
-    User findByUsername(String username) {
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -43,6 +43,10 @@ public class UserService implements UserDetailsService {
         temp.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         temp.setRole(roleRepository.findByName("ROLE_USER"));
         return userRepository.save(temp);
+    }
+
+    public void update(User user) {
+      userRepository.save(user);
     }
 
     public void delete() {
