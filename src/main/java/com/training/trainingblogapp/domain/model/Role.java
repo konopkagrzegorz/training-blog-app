@@ -21,7 +21,7 @@ public class Role {
 
     private String name;
 
-    @OneToMany(mappedBy="role", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy="role", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     private List<User> users;
 
@@ -35,5 +35,12 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addUser(User user) {
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        this.users.add(user);
     }
 }

@@ -2,6 +2,7 @@ package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.services.RoleService;
 import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,7 @@ public class UserController {
         if (result.hasErrors()) {
             return "register";
         }
-        userService.save(userRegistrationDTO);
+        User user = userService.save(userRegistrationDTO);
         return "index";
     }
 }
