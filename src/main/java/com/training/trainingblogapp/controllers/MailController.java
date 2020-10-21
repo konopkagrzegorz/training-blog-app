@@ -13,16 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+
 
 @Controller
 public class MailController {
 
     private MailService mailService;
     private UserService userService;
-//    private PasswordGenerator passwordGenerator;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @ModelAttribute ("userDTO")
@@ -30,17 +29,13 @@ public class MailController {
         return new UserDTO();
     }
 
-//    @Bean
-//    public PasswordGenerator passwordGenerator(PasswordGenerator.PasswordGeneratorBuilder builder) {
-//        PasswordGenerator passwordGenerator = builder.build();
-//        return passwordGenerator;
-//    }
 
     @Autowired
     public MailController(MailService mailService, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.mailService = mailService;
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
     }
 
     @GetMapping("/reset-password")
@@ -60,8 +55,15 @@ public class MailController {
 
          if (user.getFirstName().equals(userDTO.getFirstName()) && user.getLastName().equals(userDTO.getLastName())
                     && user.getEmail().equals(userDTO.getEmail())) {
-             String password = "asdef";
-             mailService.sendMail(user.getEmail(), "Password Reset", "Your new password: " + password, false);
+
+             PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
+                     .useDigits(true)
+                     .useLower(true)
+                     .useUpper(true)
+                     .build();
+             String password = passwordGenerator.generate(8);
+             mailService.sendMail(user.getEmail(), "Password Reset",
+                     "<h3>Message from Training Blog</h3><br>Your new password: " + "<strong>" + password + "</strong>", true);
              user.setPassword(bCryptPasswordEncoder.encode(password));
              userService.update(user);
          }

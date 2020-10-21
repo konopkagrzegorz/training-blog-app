@@ -6,7 +6,7 @@ INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`,
 VALUES ('gkonopka','Grzegorz','Konopka','$2y$12$mWI3bRSpWyds3GkkTITmFuLCI7Eyiov7GON/9NTFkJxqQX4lWQgra','konopkagrzeg@gmail.com','1');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
-VALUES ('mkomenda','Martyna','Komenda','$2y$12$YRNUnzw/yNuPaBYXP9m6VO48SuukLRkgobaHXL4j23Ey4/Xi9tv0W','martynakomenda@gmail.com','2');
+VALUES ('mkomenda','Martyna','Komenda','$2y$12$YRNUnzw/yNuPaBYXP9m6VO48SuukLRkgobaHXL4j23Ey4/Xi9tv0W','martyna.komenda7@gmail.com','2');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
 VALUES ('rkonopka','Ryszard','Konopka','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','ryszardk@gmail.com','3');
