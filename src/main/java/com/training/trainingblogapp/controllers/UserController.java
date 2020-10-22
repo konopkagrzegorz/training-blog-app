@@ -6,6 +6,7 @@ import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,7 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/profile/edit")
-    public String showEditProfile() {
+    public String showEditProfile(Model model, Principal principal) {
+        model.addAttribute("userDTO", userService.findByUsername(principal.getName()));
         return "profile";
     }
 
