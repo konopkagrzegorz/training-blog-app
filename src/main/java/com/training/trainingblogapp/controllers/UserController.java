@@ -1,5 +1,6 @@
 package com.training.trainingblogapp.controllers;
 
+import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -22,6 +24,11 @@ public class UserController {
         return new UserRegistrationDTO();
     }
 
+    @ModelAttribute("userDTO")
+    public UserDTO userDTO() {
+        return new UserDTO();
+    }
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -30,6 +37,17 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/profile/edit")
+    public String showEditProfile() {
+        return "profile";
+    }
+
+    @PostMapping("/profile/edit")
+    public String editProfile(@ModelAttribute ("userDTO") UserDTO userDTO, Principal principal) {
+        userService.update(userDTO,principal);
+        return "index";
     }
 
     @GetMapping("/terms")

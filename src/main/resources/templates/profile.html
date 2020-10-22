@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
+    <form th:object="${userDTO}" th:action="@{/profile/edit}" method="post" class="form-signin">
+        <div class="container">
+            <h1 class="h3 mb-3 text-center">Change data</h1>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <p>Please Correct Errors Below</p>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" th:field="*{id}">
+                <div class="row">
+                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                      <input th:field="*{firstName}" th:text="${userDTO.getFirstName()}" class="form-control text-start" type="text" id="firstName" name="firstName" placeholder="Enter first name...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('firstName')}">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <p th:text="${userDTO.getLastName()}"></p>
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{lastName}" th:text="${userDTO.getLastName()}" class="form-control text-start" type="text" id="lastName" name="lastName" placeholder="Enter last name...">
+                    <div class="pull-left">
+                      <div th:if="${#fields.hasErrors('lastName')}">
+                        <ul>
+                          <li class="listed-error" th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                      <input th:field="*{email}" th:text="${userDTO.getEmail()}" class="form-control text-start" type="text" id="email" name="email" placeholder="Enter email address...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('email')}">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                        <input th:field="*{password}" class="form-control text-start" type="password" id="password" name="password" placeholder="Enter password...">
+                        <div class="pull-left">
+                          <div th:if="${#fields.hasErrors('password')}">
+                            <ul>
+                              <li class="listed-error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                  <input th:field="*{confirmPassword}" class="form-control text-start" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+        </form>
+        <footer th:replace="layout :: footer-fragment">
+      </footer>
+</body>
+</html>

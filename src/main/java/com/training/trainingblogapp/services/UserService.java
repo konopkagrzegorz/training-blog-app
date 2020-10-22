@@ -1,5 +1,6 @@
 package com.training.trainingblogapp.services;
 
+import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.User;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,8 +47,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(temp);
     }
 
-    public void update(User user) {
-      userRepository.save(user);
+    public void update(UserDTO userDTO, Principal principal) {
+        User user = userRepository.findByUsername(principal.getName());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userRepository.save(user);
     }
 
     public void delete() {
