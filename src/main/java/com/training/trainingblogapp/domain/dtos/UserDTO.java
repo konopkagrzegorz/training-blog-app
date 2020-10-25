@@ -28,12 +28,4 @@ public class UserDTO {
 
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Must be a valid email")
     private String email;
-
-//    @NotBlank(message = "Space is not allowed")
-//    @Size(min = 3,max = 20,message = "Password must be between {min} - {max} characters")
-//    private String password;
-//
-//    @NotBlank(message = "Space is not allowed")
-//    @Size(min = 3,max = 20,message = "Password must be between {min} - {max} characters")
-//    private String confirmPassword;
 }

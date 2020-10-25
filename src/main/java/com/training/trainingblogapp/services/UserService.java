@@ -1,6 +1,7 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.UserDTO;
+import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.User;
@@ -55,13 +56,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void changePassword(UserDTO userDTO, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-
-//        if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-//            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-//            userRepository.save(user);
-//        }
+    public void changePassword(UserPasswordDTO userPasswordDTO, Principal principal) {
+        User temp = userRepository.findByUsername(principal.getName());
+        temp.setPassword(passwordEncoder.encode(userPasswordDTO.getPassword()));
     }
 
     public void delete() {

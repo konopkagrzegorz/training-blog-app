@@ -15,11 +15,12 @@
                     <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                         <p>Please Correct Errors Below</p>
                     </div>
-<!--                    <div th:if="${success}" th:text="${success}" class="alert alert-success">-->
-<!--                    </div>-->
+                    <div th:if="${success}" th:text="${success}" class="alert alert-success">
+                    </div>
                 </div>
             </div>
             <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{username}">
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
                       <input th:field="*{firstName}" class="form-control text-start" type="text" id="firstName" name="firstName" placeholder="Enter first name...">
@@ -61,23 +62,6 @@
                         <p><a th:href="@{/profile/edit/change-password}">Change password</a></p>
                     </div>
                 </div>
-<!--                <div class="row">-->
-<!--                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">-->
-<!--                        <input th:field="*{password}" class="form-control text-start" type="password" id="password" name="password" placeholder="Enter password...">-->
-<!--                        <div class="pull-left">-->
-<!--                          <div th:if="${#fields.hasErrors('password')}">-->
-<!--                            <ul>-->
-<!--                              <li class="listed-error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>-->
-<!--                            </ul>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            <div class="row">-->
-<!--                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">-->
-<!--                  <input th:field="*{confirmPassword}" class="form-control text-start" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password...">-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="row">
                 <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
                     <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Save</button>

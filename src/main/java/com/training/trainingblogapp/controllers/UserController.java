@@ -1,6 +1,7 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.UserDTO;
+import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.UserService;
@@ -31,6 +32,11 @@ public class UserController {
         return new UserDTO();
     }
 
+    @ModelAttribute("userPasswordDTO")
+    public UserPasswordDTO userPasswordDTO() {
+        return new UserPasswordDTO();
+    }
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -55,23 +61,22 @@ public class UserController {
         }
         userService.update(userDTO,principal);
         attributes.addFlashAttribute("success", "Successfully updated you profile");
-        return "index";
+        return "redirect:/profile/edit?succsess";
     }
 
     @GetMapping("profile/edit/change-password")
     public String showChangePassword(Model model, Principal principal) {
-        model.addAttribute("userDTO", userService.findByUsername(principal.getName()));
+        model.addAttribute("userPasswordDTO", userService.findByUsername(principal.getName()));
         return "change-password";
     }
 
     @PostMapping("profile/edit/change-password")
-    public String changePassword(@Valid @ModelAttribute ("userDTO") UserDTO userDTO, BindingResult result, Principal principal,
-                                 RedirectAttributes attributes) {
-
+    public String changePassword(@Valid @ModelAttribute ("userPasswordDTO") UserPasswordDTO userPasswordDTO,
+                                 BindingResult result, Principal principal, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return "change-password";
         }
-        //userService.changePassword(userDTO,principal);
+        userService.changePassword(userPasswordDTO,principal);
         attributes.addFlashAttribute("success", "Successfully changed your password");
         return "redirect:/profile/edit/change-password";
     }

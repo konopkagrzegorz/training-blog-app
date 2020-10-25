@@ -44,6 +44,14 @@ public class MappingService {
         return user;
     }
 
+    public UserDTO userToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        return userDTO;
+    }
+
     public User userDtoToUser(UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
