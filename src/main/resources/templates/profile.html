@@ -15,9 +15,8 @@
                     <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                         <p>Please Correct Errors Below</p>
                     </div>
-                    <div th:if="${success}" class="alert alert-success">
-                        <p th:text="${success}"></p>
-                    </div>
+<!--                    <div th:if="${success}" th:text="${success}" class="alert alert-success">-->
+<!--                    </div>-->
                 </div>
             </div>
             <input type="hidden" th:field="*{id}">

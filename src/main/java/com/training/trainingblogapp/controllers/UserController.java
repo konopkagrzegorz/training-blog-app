@@ -71,7 +71,7 @@ public class UserController {
         if (result.hasErrors()) {
             return "change-password";
         }
-        userService.changePassword(userDTO,principal);
+        //userService.changePassword(userDTO,principal);
         attributes.addFlashAttribute("success", "Successfully changed your password");
         return "redirect:/profile/edit/change-password";
     }
