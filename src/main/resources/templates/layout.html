@@ -79,7 +79,7 @@
                 </li>
                 <li class="nav-item active">
                     <div sec:authorize="${isAuthenticated()}">
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Edit Profile</a>
+                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true" th:href="@{/profile/edit}">Edit Profile</a>
                     </div>
                 </li>
             </ul>

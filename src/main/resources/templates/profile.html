@@ -15,12 +15,15 @@
                     <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                         <p>Please Correct Errors Below</p>
                     </div>
+                    <div th:if="${success}" class="alert alert-success">
+                        <p th:text="${success}"></p>
+                    </div>
                 </div>
             </div>
             <input type="hidden" th:field="*{id}">
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-                      <input th:field="*{firstName}" th:text="${userDTO.getFirstName()}" class="form-control text-start" type="text" id="firstName" name="firstName" placeholder="Enter first name...">
+                      <input th:field="*{firstName}" class="form-control text-start" type="text" id="firstName" name="firstName" placeholder="Enter first name...">
                         <div class="pull-left">
                           <div th:if="${#fields.hasErrors('firstName')}">
                             <ul>
@@ -31,9 +34,8 @@
                     </div>
                 </div>
             <div class="row">
-                <p th:text="${userDTO.getLastName()}"></p>
                 <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-                  <input th:field="*{lastName}" th:text="${userDTO.getLastName()}" class="form-control text-start" type="text" id="lastName" name="lastName" placeholder="Enter last name...">
+                  <input th:field="*{lastName}" class="form-control text-start" type="text" id="lastName" name="lastName" placeholder="Enter last name...">
                     <div class="pull-left">
                       <div th:if="${#fields.hasErrors('lastName')}">
                         <ul>
@@ -45,7 +47,7 @@
             </div>
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-                      <input th:field="*{email}" th:text="${userDTO.getEmail()}" class="form-control text-start" type="text" id="email" name="email" placeholder="Enter email address...">
+                      <input th:field="*{email}" class="form-control text-start" type="text" id="email" name="email" placeholder="Enter email address...">
                         <div class="pull-left">
                           <div th:if="${#fields.hasErrors('email')}">
                             <ul>
@@ -56,17 +58,22 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-                        <input th:field="*{password}" class="form-control text-start" type="password" id="password" name="password" placeholder="Enter password...">
-                        <div class="pull-left">
-                          <div th:if="${#fields.hasErrors('password')}">
-                            <ul>
-                              <li class="listed-error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
-                            </ul>
-                          </div>
-                        </div>
+                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                        <p><a th:href="@{/profile/edit/change-password}">Change password</a></p>
                     </div>
                 </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">-->
+<!--                        <input th:field="*{password}" class="form-control text-start" type="password" id="password" name="password" placeholder="Enter password...">-->
+<!--                        <div class="pull-left">-->
+<!--                          <div th:if="${#fields.hasErrors('password')}">-->
+<!--                            <ul>-->
+<!--                              <li class="listed-error" th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>-->
+<!--                            </ul>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 <!--            <div class="row">-->
 <!--                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">-->
 <!--                  <input th:field="*{confirmPassword}" class="form-control text-start" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password...">-->

@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -47,9 +48,32 @@ public class UserController {
     }
 
     @PostMapping("/profile/edit")
-    public String editProfile(@ModelAttribute ("userDTO") UserDTO userDTO, Principal principal) {
+    public String editProfile(@Valid @ModelAttribute ("userDTO") UserDTO userDTO, BindingResult result,
+                              Principal principal, RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            return "profile";
+        }
         userService.update(userDTO,principal);
+        attributes.addFlashAttribute("success", "Successfully updated you profile");
         return "index";
+    }
+
+    @GetMapping("profile/edit/change-password")
+    public String showChangePassword(Model model, Principal principal) {
+        model.addAttribute("userDTO", userService.findByUsername(principal.getName()));
+        return "change-password";
+    }
+
+    @PostMapping("profile/edit/change-password")
+    public String changePassword(@Valid @ModelAttribute ("userDTO") UserDTO userDTO, BindingResult result, Principal principal,
+                                 RedirectAttributes attributes) {
+
+        if (result.hasErrors()) {
+            return "change-password";
+        }
+        userService.changePassword(userDTO,principal);
+        attributes.addFlashAttribute("success", "Successfully changed your password");
+        return "redirect:/profile/edit/change-password";
     }
 
     @GetMapping("/terms")
