@@ -57,8 +57,9 @@ public class UserService implements UserDetailsService {
     }
 
     public void changePassword(UserPasswordDTO userPasswordDTO, Principal principal) {
-        User temp = userRepository.findByUsername(principal.getName());
-        temp.setPassword(passwordEncoder.encode(userPasswordDTO.getPassword()));
+        User user = userRepository.findByUsername(principal.getName());
+        user.setPassword(passwordEncoder.encode(userPasswordDTO.getPassword()));
+        userRepository.save(user);
     }
 
     public void delete() {

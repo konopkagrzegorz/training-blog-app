@@ -61,7 +61,7 @@ public class UserController {
         }
         userService.update(userDTO,principal);
         attributes.addFlashAttribute("success", "Successfully updated you profile");
-        return "redirect:/profile/edit?succsess";
+        return "redirect:/profile/edit";
     }
 
     @GetMapping("profile/edit/change-password")
