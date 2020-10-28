@@ -48,6 +48,12 @@ public class UserService implements UserDetailsService {
         return userRepository.save(temp);
     }
 
+    public void resetPassword(UserDTO userDTO,String password) {
+        User user = userRepository.findByUsername(userDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
     public void update(UserDTO userDTO, Principal principal) {
         User user = userRepository.findByUsername(principal.getName());
         user.setFirstName(userDTO.getFirstName());

@@ -45,7 +45,7 @@ public class MailController {
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult result, Principal principal) throws MessagingException {
+    public String resetPassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult result) throws MessagingException {
         if (result.hasErrors()) {
             return "reset";
         }
@@ -65,8 +65,7 @@ public class MailController {
              String password = passwordGenerator.generate(8);
              mailService.sendMail(user.getEmail(), "Password Reset",
                      "<h3>Message from Training Blog</h3><br>Your new password: " + "<strong>" + password + "</strong>", true);
-             user.setPassword(bCryptPasswordEncoder.encode(password));
-             userService.update(userDTO,principal);
+             userService.resetPassword(userDTO,password);
          }
          return "reset";
     }

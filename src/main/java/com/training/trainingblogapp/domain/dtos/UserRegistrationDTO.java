@@ -1,5 +1,6 @@
 package com.training.trainingblogapp.domain.dtos;
 
+import com.training.trainingblogapp.validation.FieldsValueMatch;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,8 @@ import javax.validation.constraints.Size;
 
 @Data
 @EqualsAndHashCode
+@FieldsValueMatch(field = "password", fieldMatch = "confirmPassword")
+
 public class UserRegistrationDTO {
 
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Special characters are not allowed")
@@ -33,8 +36,7 @@ public class UserRegistrationDTO {
     @Size(min = 3,max = 20,message = "Password must be between {min} - {max} characters")
     private String password;
 
-    @NotBlank(message = "Space is not allowed")
-    @Size(min = 3,max = 20,message = "Password must be between {min} - {max} characters")
+
     private String confirmPassword;
 
     @AssertTrue(message = "Please accept terms of use")
