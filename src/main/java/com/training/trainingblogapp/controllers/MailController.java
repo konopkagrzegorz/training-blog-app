@@ -6,7 +6,6 @@ import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.MailService;
 import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.security.Principal;
 
 
 @Controller
@@ -23,7 +21,6 @@ public class MailController {
 
     private MailService mailService;
     private UserService userService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @ModelAttribute ("userDTO")
     public UserDTO userDTO() {
@@ -32,10 +29,9 @@ public class MailController {
 
 
     @Autowired
-    public MailController(MailService mailService, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public MailController(MailService mailService, UserService userService) {
         this.mailService = mailService;
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
     }
 

@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 @FieldsValueMatch(field = "password", fieldMatch = "confirmPassword")
 public class UserPasswordDTO {
 
+    private long id;
+
     @NotBlank(message = "Space is not allowed")
     @Size(min = 3,max = 20,message = "Password must be between {min} - {max} characters")
     private String password;

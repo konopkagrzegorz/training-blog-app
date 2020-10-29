@@ -2,6 +2,7 @@ package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.MessageDTO;
 import com.training.trainingblogapp.domain.dtos.UserDTO;
+import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.Message;
 import com.training.trainingblogapp.domain.model.Role;
@@ -42,6 +43,13 @@ public class MappingService {
         user.setLastName(userRegistrationDTO.getLastName());
 
         return user;
+    }
+
+    public UserPasswordDTO userToUserPasswordDto(User user) {
+        UserPasswordDTO userPasswordDTO = new UserPasswordDTO();
+        userPasswordDTO.setId(user.getId());
+
+        return userPasswordDTO;
     }
 
     public UserDTO userToUserDTO(User user) {

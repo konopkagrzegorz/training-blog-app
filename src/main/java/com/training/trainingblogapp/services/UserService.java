@@ -41,6 +41,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public UserPasswordDTO findUserPasswordDTOByUsername(String username) {
+        UserPasswordDTO userPasswordDTO = mappingService.userToUserPasswordDto(userRepository.findByUsername(username));
+        return userPasswordDTO;
+    }
+
     public User save(UserRegistrationDTO userRegistrationDTO) {
         User temp = mappingService.userRegistrationDtoToUser(userRegistrationDTO);
         temp.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));

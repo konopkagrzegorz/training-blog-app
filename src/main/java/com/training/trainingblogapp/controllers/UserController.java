@@ -66,7 +66,7 @@ public class UserController {
 
     @GetMapping("profile/edit/change-password")
     public String showChangePassword(Model model, Principal principal) {
-        model.addAttribute("userPasswordDTO", userService.findByUsername(principal.getName()));
+        model.addAttribute("userPasswordDTO", userService.findUserPasswordDTOByUsername(principal.getName()));
         return "change-password";
     }
 
