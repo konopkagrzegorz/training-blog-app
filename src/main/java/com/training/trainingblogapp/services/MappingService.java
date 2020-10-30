@@ -5,7 +5,6 @@ import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.Message;
-import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.User;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +18,19 @@ public class MappingService {
         message.setSubject(messageDTO.getSubject());
         message.setContactEmail(messageDTO.getContactEmail());
         message.setText(messageDTO.getText());
+        message.setStatus(messageDTO.getStatus());
 
         return message;
     }
 
-    public MessageDTO messageDtoToMessage(Message message) {
+    public MessageDTO messageToDtoMessage(Message message) {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setId(message.getId());
         messageDTO.setName(message.getName());
         messageDTO.setSubject(message.getSubject());
         messageDTO.setContactEmail(message.getContactEmail());
         messageDTO.setText(message.getText());
+        messageDTO.setStatus(message.getStatus());
 
         return messageDTO;
     }

@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends CrudRepository<Message, Long> {
 
-//    List<Message> findByContactEmail();
-//    List<Message> findBySubject();
+        List<Message> findAll();
 
 }

@@ -23,6 +23,12 @@ public class ContactController {
         this.contactService = contactService;
     }
 
+    @GetMapping("/messages/list")
+    public String viewMessagesList(Model model) {
+        model.addAttribute("messages", contactService.findAll());
+        return "messages-list";
+    }
+
     @GetMapping("/contact")
     public String contact(Model model) {
         MessageDTO messageDTO = new MessageDTO();

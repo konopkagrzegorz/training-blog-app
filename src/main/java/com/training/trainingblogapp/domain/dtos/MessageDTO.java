@@ -25,4 +25,10 @@ public class MessageDTO {
     @Size(min = 3,max = 300,message = "Message must be between {min} and {max} characters")
     private String text;
 
+    @NotNull
+    private boolean status;
+
+    public boolean getStatus() {
+        return status;
+    }
 }

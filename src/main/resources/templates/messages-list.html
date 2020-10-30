@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
+<div class="row">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>SUBJECT</th>
+            <th>EMAIL</th>
+            <th>STATUS</th>
+        </tr>
+        <tr th:each=" message : ${messages}">
+            <td th:text="${message.getId()}"></td>
+            <td th:text="${message.getName()}"></td>
+            <td th:text="${message.getSubject()}"></td>
+            <td th:text="${message.getContactEmail()}"></td>
+            <td th:text="${message.getStatus()}"></td>
+        </tr>
+    </table>
+</div>
+<footer th:replace="layout :: footer-fragment">
+</footer>
+</body>
+</html>
