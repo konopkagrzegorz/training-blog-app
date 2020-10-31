@@ -7,23 +7,31 @@
 </nav>
 <div th:replace="layout :: banner-fragment">
 </div>
-<div class="row">
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>SUBJECT</th>
-            <th>EMAIL</th>
-            <th>STATUS</th>
-        </tr>
-        <tr th:each=" message : ${messages}">
-            <td th:text="${message.getId()}"></td>
-            <td th:text="${message.getName()}"></td>
-            <td th:text="${message.getSubject()}"></td>
-            <td th:text="${message.getContactEmail()}"></td>
-            <td th:text="${message.getStatus()}"></td>
-        </tr>
-    </table>
+<div class="container mb-20">
+    <div class="table-responsive">
+        <h1 class="h3 mb-3 text-center">MESSAGES</h1>
+        <table class="table table-hover table-sm">
+            <tr class="table-messages">
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">SUBJECT</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">ACTION</th>
+            </tr>
+            <tr th:each=" message : ${messages}">
+                <td class="text-center" th:text="${message.getId()}"></td>
+                <td class="text-center" th:text="${message.getName()}"></td>
+                <td class="text-center" th:text="${message.getSubject()}"></td>
+                <td class="text-center" th:text="${message.getContactEmail()}"></td>
+                <td class="text-center" th:text="${message.getStatus()}"></td>
+                <td class="text-center" style="white-space:nowrap;">
+                <a href="#" class="btn btn-info">Details</a>
+                <a th:href="@{/messages/delete/{id} (id=${message.getId()})}" class="btn btn-info">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <footer th:replace="layout :: footer-fragment">
 </footer>
