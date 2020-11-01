@@ -27,16 +27,6 @@ public class UserController {
         return new UserRegistrationDTO();
     }
 
-    @ModelAttribute("userDTO")
-    public UserDTO userDTO() {
-        return new UserDTO();
-    }
-
-    @ModelAttribute("userPasswordDTO")
-    public UserPasswordDTO userPasswordDTO() {
-        return new UserPasswordDTO();
-    }
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;

@@ -38,6 +38,18 @@ public class ContactService {
         }).collect(Collectors.toList());
     }
 
+    public MessageDTO findById(Long id) {
+        Message message = contactRepository.findById(id).get();
+        MessageDTO messageDTO = mappingService.messageToDtoMessage(message);
+
+        return messageDTO;
+    }
+
+    public void update(MessageDTO messageDTO) {
+        Message message = mappingService.messageDtoToMessage(messageDTO);
+        contactRepository.save(message);
+    }
+
     public void delete(Long id) {
         contactRepository.deleteById(id);
     }

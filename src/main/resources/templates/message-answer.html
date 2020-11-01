@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
+<form th:object="${answerDTO}" th:action="@{/messages/answer/{id} (id=${messageDTO.getId()})}" method="post">
+    <div class="container">
+        <div class="col-sm-12 parent">
+            <textarea th:field="*{text}" class="form-control text-start center-block" type="textarea" id="message" name="text" style="width: 80%" rows="8" placeholder="Your message.."></textarea>
+        </div>
+        <div class="col-sm-12 pull-left" style="width: 80%">
+            <div th:if="${#fields.hasErrors('text')}">
+                <ul>
+                    <li class="listed-error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+            <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Send Message</button>
+        </div>
+    </div>
+</form>
+<footer th:replace="layout :: footer-fragment">
+</footer>
+</body>
+</html>
