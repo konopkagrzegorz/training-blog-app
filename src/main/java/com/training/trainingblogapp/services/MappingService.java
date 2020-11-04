@@ -18,7 +18,7 @@ public class MappingService {
         message.setSubject(messageDTO.getSubject());
         message.setContactEmail(messageDTO.getContactEmail());
         message.setText(messageDTO.getText());
-        message.setStatus(messageDTO.getStatus());
+        message.setStatus(messageDTO.isStatus());
 
         return message;
     }

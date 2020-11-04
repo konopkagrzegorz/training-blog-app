@@ -22,10 +22,7 @@ public class MailController {
     private MailService mailService;
     private UserService userService;
 
-    @ModelAttribute ("userDTO")
-    public UserDTO userDTO() {
-        return new UserDTO();
-    }
+
 
 
     @Autowired
@@ -33,36 +30,5 @@ public class MailController {
         this.mailService = mailService;
         this.userService = userService;
 
-    }
-
-    @GetMapping("/reset-password")
-    public String showResetPassword() {
-        return "reset";
-    }
-
-    @PostMapping("/reset-password")
-    public String resetPassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult result) throws MessagingException {
-        if (result.hasErrors()) {
-            return "reset";
-        }
-        User user = userService.findByUsername(userDTO.getUsername());
-         if (user == null) {
-             throw new RuntimeException("Username does not exist");
-         }
-
-         if (user.getFirstName().equals(userDTO.getFirstName()) && user.getLastName().equals(userDTO.getLastName())
-                    && user.getEmail().equals(userDTO.getEmail())) {
-
-             PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
-                     .useDigits(true)
-                     .useLower(true)
-                     .useUpper(true)
-                     .build();
-             String password = passwordGenerator.generate(8);
-             mailService.sendMail(user.getEmail(), "Password Reset",
-                     "<h3>Message from Training Blog</h3><br>Your new password: " + "<strong>" + password + "</strong>", true);
-             userService.resetPassword(userDTO,password);
-         }
-         return "reset";
     }
 }

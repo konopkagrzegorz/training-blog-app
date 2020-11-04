@@ -27,8 +27,4 @@ public class MessageDTO {
 
     @NotNull
     private boolean status;
-
-    public boolean getStatus() {
-        return status;
-    }
 }
