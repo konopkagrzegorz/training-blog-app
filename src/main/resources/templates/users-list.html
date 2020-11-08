@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
+<div class="container mb-5">
+    <div class="table-responsive">
+        <h1 class="h3 mb-3 text-center">USERS</h1>
+        <table class="table table-sm">
+            <tr class="table-messages">
+                <th scope="col">ID</th>
+                <th scope="col">USERNAME</th>
+                <th scope="col">NAME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">ROLE</th>
+                <th scope="col">ACTION</th>
+            </tr>
+            <tr th:each=" user : ${users}">
+                <td class="text-center" th:text="${user.getId()}"></td>
+                <td class="text-center" th:text="${user.getUsername()}"></td>
+                <td class="text-center" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></td>
+                <td class="text-center" th:text="${user.getEmail()}"></td>
+                <td class="text-center" th:text="${user.getRole().getName()}"></td>
+                <td class="text-center" style="white-space:nowrap;">
+                <a href="#" class="btn btn-info">Change role</a>
+                <a th:href="@{/admin/users/{id}/delete (id=${user.getId()})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<footer th:replace="layout :: footer-fragment">
+</footer>
+</body>
+</html>

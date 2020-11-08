@@ -1,6 +1,7 @@
 package com.training.trainingblogapp.domain.dtos;
 
 
+import com.training.trainingblogapp.domain.model.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,4 +29,6 @@ public class UserDTO {
 
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Must be a valid email")
     private String email;
+
+    private Role role;
 }

@@ -55,9 +55,12 @@ public class MappingService {
 
     public UserDTO userToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setRole(user.getRole());
         return userDTO;
     }
 
@@ -67,7 +70,7 @@ public class MappingService {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
-//        user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
 
         return user;
     }

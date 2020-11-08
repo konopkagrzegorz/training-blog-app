@@ -37,6 +37,13 @@ public class UserService implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
+    public List<UserDTO> findAll() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> {UserDTO userDTO = mappingService.userToUserDTO(user);
+        return userDTO;
+        }).collect(Collectors.toList());
+    }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -73,8 +80,8 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void delete() {
-
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
         @Override

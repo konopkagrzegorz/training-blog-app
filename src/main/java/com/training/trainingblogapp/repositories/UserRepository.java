@@ -5,6 +5,8 @@ import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByUsername(String username);
@@ -12,5 +14,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByEmail(String email);
     User save(UserRegistrationDTO user);
     User save(User user);
+    List<User> findAll();
 
 }
