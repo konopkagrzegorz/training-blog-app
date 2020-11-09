@@ -7,6 +7,8 @@ import com.training.trainingblogapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -26,5 +28,9 @@ public class RoleService {
         Role role = roleRepository.findByName(user.getRole().toString());
         role.getUsers().add(user);
         return role;
+    }
+
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 }

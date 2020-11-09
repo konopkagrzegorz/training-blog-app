@@ -26,7 +26,7 @@
                 <td class="text-center" th:text="${user.getEmail()}"></td>
                 <td class="text-center" th:text="${user.getRole().getName()}"></td>
                 <td class="text-center" style="white-space:nowrap;">
-                <a href="#" class="btn btn-info">Change role</a>
+                <a th:href="@{/admin/users/{id}/edit-role (id=${user.getId()})}" class="btn btn-info">Change role</a>
                 <a th:href="@{/admin/users/{id}/delete (id=${user.getId()})}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>

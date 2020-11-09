@@ -4,17 +4,17 @@ import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.PasswordGenerator;
+import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.MailService;
+import com.training.trainingblogapp.services.MappingService;
+import com.training.trainingblogapp.services.RoleService;
 import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -26,6 +26,8 @@ public class UserController {
 
     private UserService userService;
     private MailService mailService;
+    private RoleService roleService;
+    private MappingService mappingService;
 
     @ModelAttribute("userRegistrationDto")
     public UserRegistrationDTO userRegistrationDto() {
@@ -38,9 +40,11 @@ public class UserController {
     }
 
     @Autowired
-    public UserController(UserService userService, MailService mailService) {
+    public UserController(UserService userService, MailService mailService, RoleService roleService, MappingService mappingService) {
         this.userService = userService;
         this.mailService = mailService;
+        this.roleService = roleService;
+        this.mappingService = mappingService;
     }
 
     @GetMapping("/login")
@@ -134,6 +138,22 @@ public class UserController {
     @GetMapping("/admin/users/{id}/delete")
     public String deleteUser(@PathVariable ("id") Long id) {
         userService.deleteById(id);
+        return "redirect:/admin/users/list";
+    }
+
+    @GetMapping("/admin/users/{id}/edit-role")
+    public String showEditRole(@PathVariable ("id") Long id, Model model) {
+        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("userDTO", userService.findById(id));
+        return "user-role";
+    }
+
+    @PutMapping("/admin/users/{id}/update")
+    public String editRole(@ModelAttribute ("userDTO") UserDTO userDTO, Model model) {
+        model.addAttribute("roles", roleService.findAll());
+        User user = userService.findByUsername(userDTO.getUsername());
+        roleService.save(user);
+        userService.update(userDTO);
         return "redirect:/admin/users/list";
     }
 }

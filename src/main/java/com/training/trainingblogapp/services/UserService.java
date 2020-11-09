@@ -44,6 +44,12 @@ public class UserService implements UserDetailsService {
         }).collect(Collectors.toList());
     }
 
+    public UserDTO findById(Long id) {
+        User user = userRepository.findById(id).get();
+        UserDTO userDTO = mappingService.userToUserDTO(user);
+        return userDTO;
+    }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -63,6 +69,12 @@ public class UserService implements UserDetailsService {
     public void resetPassword(UserDTO userDTO,String password) {
         User user = userRepository.findByUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
+    public void update(UserDTO userDTO) {
+        User user = userRepository.findByUsername(userDTO.getUsername());
+        user.setRole(userDTO.getRole());
         userRepository.save(user);
     }
 

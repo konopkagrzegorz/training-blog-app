@@ -21,8 +21,7 @@ public class Role {
 
     private String name;
 
-    @OneToMany(mappedBy="role", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="role", fetch = FetchType.EAGER)
     private List<User> users;
 
     public Role(String role_user) {
