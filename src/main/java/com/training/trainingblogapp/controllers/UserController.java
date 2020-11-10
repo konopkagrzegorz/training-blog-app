@@ -34,10 +34,10 @@ public class UserController {
         return new UserRegistrationDTO();
     }
 
-    @ModelAttribute ("userDTO")
-    public UserDTO userDTO() {
-        return new UserDTO();
-    }
+//    @ModelAttribute ("userDTO")
+//    public UserDTO userDTO() {
+//        return new UserDTO();
+//    }
 
     @Autowired
     public UserController(UserService userService, MailService mailService, RoleService roleService, MappingService mappingService) {
@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @GetMapping("/reset-password")
-    public String showResetPassword() {
+    public String showResetPassword(@ModelAttribute UserDTO userDTO) {
         return "reset";
     }
 
@@ -148,11 +148,8 @@ public class UserController {
         return "user-role";
     }
 
-    @PutMapping("/admin/users/{id}/update")
-    public String editRole(@ModelAttribute ("userDTO") UserDTO userDTO, Model model) {
-        model.addAttribute("roles", roleService.findAll());
-        User user = userService.findByUsername(userDTO.getUsername());
-        roleService.save(user);
+    @PostMapping("/admin/users/{id}/edit-role")
+    public String editRole(@ModelAttribute ("userDTO") UserDTO userDTO, BindingResult result) {
         userService.update(userDTO);
         return "redirect:/admin/users/list";
     }

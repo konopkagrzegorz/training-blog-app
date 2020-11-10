@@ -8,13 +8,13 @@
 <div th:replace="layout :: banner-fragment">
 </div>
 <div class="container my-container">
-    <form th:object="${userDTO}" th:action="@{/admin/users/{id}/update (id=${userDTO.getId()})}" method="post">
+    <form th:object="${userDTO}" th:action="@{/admin/users/{id}/edit-role (id=${userDTO.getId()})}" method="post">
     <div class="row">
         <div class="col-10 col-sm-8 col-xl-6 mx-auto div-distancer">
             <div class="checkbox">
                 <ul>
                     <li th:each="role : ${roles}">
-                        <input type="checkbox" name="categories" th:value="${role.getId()}"/>
+                        <input type="radio" name="role" th:value="${role.getId()}"/>
                         <label th:text="${role.getName()}"></label>
                     </li>
                 </ul>
@@ -23,8 +23,7 @@
     </div>
     <div class="row">
         <div class="col-10 col-sm-8 col-xl-6 mx-auto div-distancer">
-            <button type="submit" class="btn btn-success pull-left">Submit</button>
-<!--            <a th:href="@{/admin/users/{id}/update (id=${userDTO.getId()})}" class="btn btn-info">Update</a>-->
+            <button type="submit" class="btn btn-info">Submit</button>
         </div>
     </div>
     </form>

@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void update(UserDTO userDTO) {
-        User user = userRepository.findByUsername(userDTO.getUsername());
+        User user = userRepository.findById(userDTO.getId()).get();
         user.setRole(userDTO.getRole());
         userRepository.save(user);
     }
