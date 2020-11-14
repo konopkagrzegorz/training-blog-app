@@ -9,6 +9,9 @@
 <div th:replace="layout :: banner-fragment">
 </div>
 <form th:object="${answerDTO}" th:action="@{/messages/answer/{id} (id=${messageDTO.getId()})}" method="post">
+    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger col-sm-12 parent" style="margin-top: 20px; width: 80%">
+        <p>Please Correct Errors Below</p>
+    </div>
     <div class="container">
         <div class="col-sm-12 parent">
             <textarea th:field="*{text}" class="form-control text-start center-block" type="textarea" id="message" name="text" style="width: 80%" rows="8" placeholder="Your message.."></textarea>

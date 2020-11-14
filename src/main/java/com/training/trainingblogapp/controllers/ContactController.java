@@ -78,19 +78,19 @@ public class ContactController {
     }
 
     @PostMapping("/messages/answer/{id}")
-    public String answerMessage(@Valid @PathVariable ("id") Long id,
-                                @ModelAttribute("answerDTO") AnswerDTO answerDTO, BindingResult result) {
+    public String answerMessage(@PathVariable ("id") Long id,@Valid @ModelAttribute("answerDTO") AnswerDTO answerDTO, BindingResult result) {
+        MessageDTO messageDTO = contactService.findById(id);
         if (result.hasErrors()) {
             return "message-answer";
-        }
-        MessageDTO messageDTO = contactService.findById(id);
-        try {
-            mailService.sendMail(messageDTO.getContactEmail(), messageDTO.getSubject(),
-                    answerDTO.getText(), false);
-            messageDTO.setStatus(true);
-            contactService.update(messageDTO);
-        } catch (MessagingException exception) {
-            exception.printStackTrace();
+        } else {
+            try {
+                mailService.sendMail(messageDTO.getContactEmail(), messageDTO.getSubject(),
+                        answerDTO.getText(), false);
+                messageDTO.setStatus(true);
+                contactService.update(messageDTO);
+            } catch (MessagingException exception) {
+                //exception.printStackTrace();
+            }
         }
         return "message-answer";
     }
