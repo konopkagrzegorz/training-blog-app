@@ -92,6 +92,6 @@ public class ContactController {
                 //exception.printStackTrace();
             }
         }
-        return "message-answer";
+        return "redirect:/messages/answer/{id}";
     }
 }
