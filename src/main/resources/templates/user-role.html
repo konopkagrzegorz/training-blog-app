@@ -7,17 +7,18 @@
 </nav>
 <div th:replace="layout :: banner-fragment">
 </div>
-<div class="container my-container">
+<div class="container my-container" style="margin-top: 20px; width: 80%">
     <form th:object="${userDTO}" th:action="@{/admin/users/{id}/edit-role (id=${userDTO.getId()})}" method="post">
     <div class="row">
         <div class="col-10 col-sm-8 col-xl-6 mx-auto div-distancer">
+            <h3 class="text-center">SET ROLE:</h3>
             <div class="checkbox">
-                <ul>
-                    <li th:each="role : ${roles}">
+                <tr>
+                    <td th:each="role : ${roles}">
                         <input type="radio" name="role" th:value="${role.getId()}"/>
-                        <label th:text="${role.getName()}"></label>
-                    </li>
-                </ul>
+                        <label th:text="${role.getName()}"></label><br>
+                    </td>
+                </tr>
             </div>
         </div>
     </div>

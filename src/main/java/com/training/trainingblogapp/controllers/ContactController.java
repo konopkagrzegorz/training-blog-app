@@ -35,7 +35,7 @@ public class ContactController {
         return new MessageDTO();
     }
 
-    @GetMapping("/messages/list")
+    @GetMapping("/admin/messages/list")
     public String viewMessagesList(Model model) {
         model.addAttribute("messages", contactService.findAll());
         return "messages-list";
@@ -57,27 +57,27 @@ public class ContactController {
         return "redirect:/";
     }
 
-    @GetMapping("/messages/delete/{id}")
+    @GetMapping("/admin/messages/delete/{id}")
     public String deleteMessage(@PathVariable("id") Long id) {
         contactService.delete(id);
-        return "redirect:/messages/list";
+        return "redirect:/admin/messages/list";
     }
 
-    @GetMapping("/messages/show/{id}")
+    @GetMapping("admin//messages/show/{id}")
     public String showMessageDetails (@PathVariable ("id") Long id, Model model) {
         MessageDTO messageDTO = contactService.findById(id);
         model.addAttribute("messageDTO", messageDTO);
         return "message-details";
     }
 
-    @GetMapping("/messages/answer/{id}")
+    @GetMapping("/admin/messages/answer/{id}")
     public String showAnswerMessage(@PathVariable ("id") Long id, Model model) {
         MessageDTO messageDTO = contactService.findById(id);
         model.addAttribute("messageDTO", messageDTO);
         return "message-answer";
     }
 
-    @PostMapping("/messages/answer/{id}")
+    @PostMapping("/admin/messages/answer/{id}")
     public String answerMessage(@PathVariable ("id") Long id,@Valid @ModelAttribute("answerDTO") AnswerDTO answerDTO, BindingResult result) {
         MessageDTO messageDTO = contactService.findById(id);
         if (result.hasErrors()) {
@@ -92,6 +92,6 @@ public class ContactController {
                 //exception.printStackTrace();
             }
         }
-        return "redirect:/messages/answer/{id}";
+        return "redirect:/admin/messages/answer/{id}";
     }
 }

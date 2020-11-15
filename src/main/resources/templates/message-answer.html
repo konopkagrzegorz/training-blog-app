@@ -8,21 +8,23 @@
 </nav>
 <div th:replace="layout :: banner-fragment">
 </div>
-<form th:object="${answerDTO}" th:action="@{/messages/answer/{id} (id=${messageDTO.getId()})}" method="post">
-    <div class="col-sm-12 parent">
-        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger col-sm-12 parent" style="margin-top: 20px; width: 80%">
-            <p>Please Correct Errors Below</p>
-        </div>
-    </div>
+<form th:object="${answerDTO}" th:action="@{/admin/messages/answer/{id} (id=${messageDTO.getId()})}" method="post">
     <div class="container" style="margin-top: 20px; width: 80%">
-        <h1 class="h3 mb-3 text-center">MESSAGE</h1>
-        <div class="col-sm-12 parent">
-            <textarea th:field="*{text}" class="form-control text-start center-block" type="textarea" id="message" name="text" style="width: 80%" rows="8" placeholder="Your message.."></textarea>
+        <div class="row">
+            <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please Correct Errors Below</p>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-12 pull-left" style="width: 80%">
+        <h1 class="h3 mb-3 text-center">MESSAGE</h1>
+        <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+            <textarea th:field="*{text}" class="form-control text-start center-block" type="textarea" id="message" name="text" rows="8" placeholder="Your message.."></textarea>
+        </div>
+        <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
             <div th:if="${#fields.hasErrors('text')}">
                 <ul>
-                    <li class="listed-error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+                    <li class="listed-error pull-left" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
                 </ul>
             </div>
         </div>

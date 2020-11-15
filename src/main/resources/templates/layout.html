@@ -82,7 +82,26 @@
                         <a class="nav-link" href="#" tabindex="-1" aria-disabled="true" th:href="@{/profile/edit}">Edit Profile</a>
                     </div>
                 </li>
-            </ul>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item dropdown">
+                            <a
+                                    class="nav-link dropdown-toggle active"
+                                    href="#"
+                                    id="navbarDropdown2"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                            >
+                                Admin Panel
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{/admin/messages/list}">View Messages</a>
+                                <a class="dropdown-item" th:href="@{/admin/users/list}">User's privileges</a>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input
                         class="form-control mr-sm-2"
