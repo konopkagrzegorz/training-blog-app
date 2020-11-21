@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role {

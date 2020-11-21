@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -23,6 +21,7 @@ public class Post {
 
     private String heading;
 
+    @Lob
     private String text;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -34,7 +33,4 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-
-
 }

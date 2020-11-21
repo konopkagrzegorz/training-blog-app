@@ -9,8 +9,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "comments")
 public class Comment {
@@ -19,6 +17,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Lob
     private String text;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-@EqualsAndHashCode
 @FieldsValueMatch(field = "password", fieldMatch = "confirmPassword")
 public class UserPasswordDTO {
 

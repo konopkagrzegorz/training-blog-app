@@ -10,7 +10,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-@EqualsAndHashCode
 public class UserDTO {
 
     private long id;

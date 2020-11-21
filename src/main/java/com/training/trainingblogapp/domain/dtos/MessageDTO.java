@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class MessageDTO {
 
     private long id;
