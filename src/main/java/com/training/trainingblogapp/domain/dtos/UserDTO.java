@@ -2,6 +2,7 @@ package com.training.trainingblogapp.domain.dtos;
 
 
 import com.training.trainingblogapp.domain.model.Role;
+import com.training.trainingblogapp.domain.model.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

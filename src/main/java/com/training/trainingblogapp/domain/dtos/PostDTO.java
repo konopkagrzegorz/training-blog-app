@@ -11,5 +11,5 @@ public class PostDTO {
     private String heading;
     private String text;
     private LocalDateTime date;
-    private User userDTO;
+    private UserDTO userDTO;
 }

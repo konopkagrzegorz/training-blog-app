@@ -10,5 +10,4 @@ import java.util.List;
 public interface ContactRepository extends CrudRepository<Message, Long> {
 
         List<Message> findAll();
-
 }

@@ -1,10 +1,8 @@
 package com.training.trainingblogapp.services;
 
-import com.training.trainingblogapp.domain.dtos.MessageDTO;
-import com.training.trainingblogapp.domain.dtos.UserDTO;
-import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
-import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
+import com.training.trainingblogapp.domain.dtos.*;
 import com.training.trainingblogapp.domain.model.Message;
+import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
 import org.springframework.stereotype.Service;
 
@@ -73,5 +71,16 @@ public class MappingService {
         user.setRole(userDTO.getRole());
 
         return user;
+    }
+
+    public PostDTO postToPostDto(Post post) {
+        PostDTO postDTO = new PostDTO();
+        postDTO.setId(post.getId());
+        postDTO.setDate(post.getDate());
+        postDTO.setHeading(post.getHeading());
+        postDTO.setText(post.getText());
+        postDTO.setUserDTO(userToUserDTO(post.getUser()));
+
+        return postDTO;
     }
 }

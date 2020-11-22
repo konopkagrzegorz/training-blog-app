@@ -13,8 +13,9 @@
         <div class="col-md-8">
           <div class="row">
             <div class="col-sm-12">
-              <h1>First paragraph</h1>
-              <p class="text-justify">
+              <div class="row" th:each="post : ${posts}">
+              <h1 th:text="${post.getHeading()}">First paragraph</h1>
+              <p class="text-justify" th:text="${post.getText()}">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Consequatur fugit maxime dignissimos. Asperiores repellat
                 maiores officia laboriosam amet dolorem delectus repellendus
@@ -42,37 +43,6 @@
                 consequatur molestias quaerat, similique corporis blanditiis.
               </p>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <h1>Second paragraph</h1>
-              <p class="text-justify">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consequatur fugit maxime dignissimos. Asperiores repellat
-                maiores officia laboriosam amet dolorem delectus repellendus
-                commodi explicabo accusamus magnam quibusdam, impedit temporibus
-                quam nihil ducimus maxime. Autem libero quis est voluptate alias
-                error, ea sapiente, temporibus laborum numquam deleniti
-                repellendus eum consequatur? Doloribus iure nostrum esse
-                repellat, voluptate est nobis ipsa sint! Quibusdam omnis
-                expedita cum atque sunt inventore laborum quos suscipit, velit
-                placeat deleniti aspernatur tempore sint dolor unde dicta ab?
-                Provident enim rem cumque neque ut velit nisi vitae sed sunt,
-                aspernatur animi et dolorem eligendi explicabo perspiciatis
-                aperiam corporis inventore assumenda veritatis quidem eveniet
-                illo itaque. Atque beatae facere perferendis alias nulla placeat
-                nobis deserunt perspiciatis repellendus ratione expedita ut
-                excepturi adipisci, quasi, amet at reprehenderit id nostrum
-                commodi in fugiat porro fugit? Perferendis dolorum deserunt aut
-                eius fuga nulla! Ipsa vel dolor doloremque similique. Quod
-                fugiat exercitationem doloribus corporis quae quidem rem.
-                Corrupti reprehenderit, amet voluptatem ex ut quas quisquam
-                porro aperiam illum. Numquam voluptas laboriosam excepturi.
-                Ullam fuga odit distinctio alias qui at eos quaerat repellat,
-                aperiam quod quae recusandae, corrupti veniam. Minima labore
-                rerum vitae cum ratione, quos explicabo ea quis nostrum
-                consequatur molestias quaerat, similique corporis blanditiis.
-              </p>
             </div>
           </div>
         </div>
@@ -95,6 +65,28 @@
         </div>
       </div>
     </div>
+  <div th:if = "${totalPages > 1}">
+    <div class = "row col-sm-10">
+      <div class = "col-sm-2">
+        Total Rows: [[${totalItems}]]
+      </div>
+      <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+      </div>
+      <div class = "col-sm-1">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+        <span th:unless="${currentPage < totalPages}">Next</span>
+      </div>
+
+      <div class="col-sm-1">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+        <span th:unless="${currentPage < totalPages}">Last</span>
+      </div>
+    </div>
+  </div>
     <footer th:replace="layout :: footer-fragment">
     </footer>
   </body>
