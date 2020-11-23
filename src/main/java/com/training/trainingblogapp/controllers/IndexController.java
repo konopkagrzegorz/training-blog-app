@@ -40,6 +40,7 @@ public class IndexController {
         Page<PostDTO> page = postService.listAllByPage(pageNo, pageSize);
         List<PostDTO> postsDTO = page.getContent();
 
+        model.addAttribute("firstPage", 1);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
