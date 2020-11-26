@@ -49,4 +49,12 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/post/{id}")
+    public String showPost(@PathVariable ("id") long postId, Model model) {
+        PostDTO postDTO = postService.findPostById(postId);
+        model.addAttribute("postDTO", postDTO);
+
+        return "showPost";
+    }
+
 }

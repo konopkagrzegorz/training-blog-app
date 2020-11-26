@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: meta-head">
+  </head>
+  <body>
+  <nav th:replace="layout :: site-navbar">
+  </nav>
+  <div th:replace="layout :: banner-fragment">
+
+  </div>
+    <div class="container my-container">
+      <div class="row">
+            <div class="col-sm-10">
+              <h1 th:text="${postDTO.getHeading()}">First paragraph</h1>
+              <h5 th:text="'Author: ' + ${postDTO.getUserDTO().getUsername()}"></h5>
+              <h6 th:text="'Date: ' + ${#temporals.format(postDTO.getDate(),'dd-MM-yyyy')}"></h6>
+              <p class="text-justify" th:text="${postDTO.getText()}">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Consequatur fugit maxime dignissimos. Asperiores repellat
+                maiores officia laboriosam amet dolorem delectus repellendus
+                commodi explicabo accusamus magnam quibusdam, impedit temporibus
+                quam nihil ducimus maxime. Autem libero quis est voluptate alias
+                error, ea sapiente, temporibus laborum numquam deleniti
+                repellendus eum consequatur? Doloribus iure nostrum esse
+                repellat, voluptate est nobis ipsa sint! Quibusdam omnis
+                expedita cum atque sunt inventore laborum quos suscipit, velit
+                placeat deleniti aspernatur tempore sint dolor unde dicta ab?
+                Provident enim rem cumque neque ut velit nisi vitae sed sunt,
+                aspernatur animi et dolorem eligendi explicabo perspiciatis
+                aperiam corporis inventore assumenda veritatis quidem eveniet
+                illo itaque. Atque beatae facere perferendis alias nulla placeat
+                nobis deserunt perspiciatis repellendus ratione expedita ut
+                excepturi adipisci, quasi, amet at reprehenderit id nostrum
+                commodi in fugiat porro fugit? Perferendis dolorum deserunt aut
+                eius fuga nulla! Ipsa vel dolor doloremque similique. Quod
+                fugiat exercitationem doloribus corporis quae quidem rem.
+                Corrupti reprehenderit, amet voluptatem ex ut quas quisquam
+                porro aperiam illum. Numquam voluptas laboriosam excepturi.
+                Ullam fuga odit distinctio alias qui at eos quaerat repellat,
+                aperiam quod quae recusandae, corrupti veniam. Minima labore
+                rerum vitae cum ratione, quos explicabo ea quis nostrum
+                consequatur molestias quaerat, similique corporis blanditiis.
+              </p>
+            </div>
+      </div>
+    </div>
+    <footer th:replace="layout :: footer-fragment">
+    </footer>
+  </body>
+</html>

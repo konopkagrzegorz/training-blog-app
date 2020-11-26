@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -46,5 +47,10 @@ public class PostService {
             }
         });
         return dtoPage;
+    }
+
+    public PostDTO findPostById(long id) {
+        PostDTO postDTO = mappingService.postToPostDto(postRepository.findById(id).get());
+        return postDTO;
     }
 }
