@@ -1,9 +1,9 @@
 package com.training.trainingblogapp.domain.dtos;
 
-import com.training.trainingblogapp.domain.model.User;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
-import java.util.Base64;
 
 @Data
 public class PostDTO {
@@ -12,6 +12,8 @@ public class PostDTO {
     private String heading;
     private String text;
     private LocalDateTime date;
+    private MultipartFile image;
     private String imageEncoded;
     private UserDTO userDTO;
+
 }

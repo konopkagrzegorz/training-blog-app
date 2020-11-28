@@ -96,11 +96,31 @@
                                 Admin Panel
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href=#>Add Post</a>
                                 <a class="dropdown-item" th:href="@{/admin/messages/list}">View Messages</a>
                                 <a class="dropdown-item" th:href="@{/admin/users/list}">User's privileges</a>
                             </div>
                         </li>
                     </div>
+                <div sec:authorize="hasRole('ROLE_MODERATOR')">
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle active"
+                                href="#"
+                                id="navbarDropdown2"
+                                role="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            Moderator Panel
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href=#>Add Post</a>
+                            <a class="dropdown-item" th:href="@{/admin/messages/list}">View Messages</a>
+                        </div>
+                    </li>
+                </div>
                 </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input

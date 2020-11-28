@@ -7,6 +7,7 @@ import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Base64;
 
 @Service
@@ -88,6 +89,21 @@ public class MappingService {
         postDTO.setUserDTO(userToUserDTO(post.getUser()));
 
         return postDTO;
+    }
+
+    public Post postDtoToPost(PostDTO postDTO) throws IOException{
+        Post post = new Post();
+        post.setId(postDTO.getId());
+        //post.setDate(postDTO.getDate());
+        post.setHeading(postDTO.getHeading());
+        post.setText(postDTO.getText());
+        //post.setUser(userDtoToUser(postDTO.getUserDTO()));
+
+        if(postDTO.getImage() != null) {
+            post.setImage(postDTO.getImage().getBytes());
+        }
+
+        return post;
     }
 
     public CommentDTO commentToCommentDto(Comment comment) {
