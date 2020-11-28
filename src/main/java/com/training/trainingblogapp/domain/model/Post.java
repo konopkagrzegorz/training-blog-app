@@ -30,6 +30,10 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private Set<Comment> comments = new HashSet<>();
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] image;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

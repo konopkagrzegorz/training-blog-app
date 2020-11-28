@@ -10,9 +10,9 @@
   </div>
     <div class="container my-container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 mx-auto div-distancer">
           <div class="row">
-            <div class="col-sm-10">
+            <div class="col-10 mx-auto div-distancer">
               <div th:each="post : ${posts}">
               <h1 th:text="${post.getHeading()}">First paragraph</h1>
               <p class="text-justify" th:text="${#strings.abbreviate(post.getText(),400)}">
@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mx-auto div-distancer">
           <h1>Categories</h1>
           <p class="text-justify">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium

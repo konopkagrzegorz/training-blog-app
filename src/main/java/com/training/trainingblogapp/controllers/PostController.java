@@ -1,7 +1,9 @@
 package com.training.trainingblogapp.controllers;
 
+import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.model.Post;
+import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,13 +17,15 @@ import java.util.List;
 
 @Controller
 @RequestMapping({"","/"})
-public class IndexController {
+public class PostController {
 
     private PostService postService;
+    private CommentService commentService;
 
     @Autowired
-    public IndexController(PostService postService) {
+    public PostController(PostService postService, CommentService commentService) {
         this.postService = postService;
+        this.commentService = commentService;
     }
 
     @GetMapping({"about", "about.html"})
@@ -52,7 +56,9 @@ public class IndexController {
     @GetMapping("/post/{id}")
     public String showPost(@PathVariable ("id") long postId, Model model) {
         PostDTO postDTO = postService.findPostById(postId);
+        List<CommentDTO> commentsDTO = commentService.findAll();
         model.addAttribute("postDTO", postDTO);
+        model.addAttribute("commentsDTO", commentsDTO);
 
         return "showPost";
     }

@@ -1,10 +1,13 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.*;
+import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Message;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
 import org.springframework.stereotype.Service;
+
+import java.util.Base64;
 
 @Service
 public class MappingService {
@@ -79,8 +82,22 @@ public class MappingService {
         postDTO.setDate(post.getDate());
         postDTO.setHeading(post.getHeading());
         postDTO.setText(post.getText());
+        if (post.getImage() != null) {
+            postDTO.setImageEncoded(Base64.getEncoder().encodeToString(post.getImage()));
+        }
         postDTO.setUserDTO(userToUserDTO(post.getUser()));
 
         return postDTO;
+    }
+
+    public CommentDTO commentToCommentDto(Comment comment) {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setId(comment.getId());
+        commentDTO.setDate(comment.getDate());
+        commentDTO.setPostDTO(postToPostDto(comment.getPost()));
+        commentDTO.setText(comment.getText());
+        commentDTO.setUserDTO(userToUserDTO(comment.getUser()));
+
+        return commentDTO;
     }
 }
