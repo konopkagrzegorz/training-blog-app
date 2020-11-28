@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Long> {
     List<Comment> findAllByOrderByDateDesc();
+    List<Comment> findCommentByPost_IdOrderByDateDesc(Long id);
 }

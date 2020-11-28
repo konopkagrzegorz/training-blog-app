@@ -23,10 +23,19 @@ public class CommentService {
 
     public List<CommentDTO> findAll() {
         List<Comment> comments = commentRepository.findAllByOrderByDateDesc();
-        List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
+        List<CommentDTO> commentsDTO = comments.stream().map(comment -> {
             CommentDTO commentDTO = mappingService.commentToCommentDto(comment);
             return commentDTO;
         }).collect(Collectors.toList());
-        return commentDTOS;
+        return commentsDTO;
+    }
+
+    public List<CommentDTO> findAllByPostId(Long id) {
+        List<Comment> comments = commentRepository.findCommentByPost_IdOrderByDateDesc(id);
+        List<CommentDTO> commentsDTO = comments.stream().map(comment -> {
+            CommentDTO commentDTO = mappingService.commentToCommentDto(comment);
+            return commentDTO;
+        }).collect(Collectors.toList());
+        return commentsDTO;
     }
 }
