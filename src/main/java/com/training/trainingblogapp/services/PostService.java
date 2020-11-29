@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class PostService {
     }
 
     public Page<PostDTO> listAllByPage(int pageNo, int pageSize) {
-        Pageable pageable= PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable= PageRequest.of(pageNo - 1, pageSize, Sort.by("date").descending());
         Page<Post> entities = postRepository.findAll(pageable);
         Page<PostDTO> dtoPage = entities.map(new Function<Post, PostDTO>() {
             @Override

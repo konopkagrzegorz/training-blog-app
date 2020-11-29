@@ -47,10 +47,12 @@
                 rerum vitae cum ratione, quos explicabo ea quis nostrum
                 consequatur molestias quaerat, similique corporis blanditiis.
               </p>
+              <hr>
             </div>
       </div>
       <div class="row">
         <div class="col-10 mx-auto div-distancer">
+          <h4>COMMENT SECTION</h4>
           <div th:each="commentDTO : ${commentsDTO}">
             <h5 th:text="${commentDTO.getUserDTO().getUsername()}"></h5>
             <h6 th:text="${#temporals.format(commentDTO.getDate(),'dd-MM-yyyy')}"></h6>
