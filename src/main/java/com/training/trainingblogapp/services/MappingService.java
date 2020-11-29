@@ -116,4 +116,12 @@ public class MappingService {
 
         return commentDTO;
     }
+
+    public Comment commentDtoToComment(CommentDTO commentDTO) {
+        Comment comment = new Comment();
+        comment.setId(commentDTO.getId());
+        comment.setText(commentDTO.getText());
+
+        return comment;
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
   <head th:replace="layout :: meta-head">
   </head>
   <body>
@@ -53,6 +53,12 @@
       <div class="row">
         <div class="col-10 mx-auto div-distancer">
           <h4>COMMENT SECTION</h4>
+          <div sec:authorize="${isAuthenticated()}">
+            <form th:action="@{/post/{id}/add-comment (id=${postDTO.getId()})}" th:object=${commentDTO} method="post">
+                <input th:field="*{text}" name="comment" id="comment" placeholder="Type your comment">
+                <button class="col-10 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Submit</button>
+            </form>
+          </div>
           <div th:each="commentDTO : ${commentsDTO}">
             <h5 th:text="${commentDTO.getUserDTO().getUsername()}"></h5>
             <h6 th:text="${#temporals.format(commentDTO.getDate(),'dd-MM-yyyy')}"></h6>

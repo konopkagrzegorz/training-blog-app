@@ -53,7 +53,7 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public String showPost(@PathVariable ("id") long postId, Model model) {
+    public String showPost(@PathVariable ("id") long postId,@ModelAttribute ("commentDTO") CommentDTO commentDTO, Model model) {
         PostDTO postDTO = postService.findPostById(postId);
         List<CommentDTO> commentsDTO = commentService.findAllByPostId(postId);
         model.addAttribute("postDTO", postDTO);
