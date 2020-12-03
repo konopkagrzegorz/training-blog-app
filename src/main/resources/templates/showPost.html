@@ -50,10 +50,12 @@
               <hr>
             </div>
       </div>
+      <form th:action="@{/post/{id}/add-comment (id=${postDTO.getId()})}" th:object=${commentDTO} method="post">
       <div class="row">
         <div class="col-10 mx-auto div-distancer">
           <h4>COMMENT SECTION</h4>
-          <form th:action="@{/post/{id}/add-comment (id=${postDTO.getId()})}" th:object=${commentDTO} method="post">
+        </div>
+      </div>
           <div class="row">
             <div class="col-10 mx-auto div-distancer">
               <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -61,9 +63,10 @@
               </div>
             </div>
           </div>
-            <div sec:authorize="${isAuthenticated()}">
+        <div class="row">
+            <div sec:authorize="${isAuthenticated()}" class="col-10 mx-auto div-distancer my-container">
+                  <input th:field="*{text}" class="form-control" name="comment" id="comment" placeholder="Type your comment">
                 <div class="row">
-                  <input th:field="*{text}" name="comment" id="comment" placeholder="Type your comment">
                   <div class="pull-left">
                     <div th:if="${#fields.hasErrors('text')}" class="pull-left">
                       <ul>
@@ -72,16 +75,19 @@
                     </div>
                   </div>
                 </div>
-                  <button class="col-10 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Submit</button>
+                  <button class="btn btn-lg sign-in-button btn-block my-container mt-3" type="submit">Submit</button>
             </div>
+        </div>
+        <div class="row">
+          <div class="col-10 mx-auto div-distancer">
           <div th:each="commentDTO : ${commentsDTO}">
             <h5 th:text="${commentDTO.getUserDTO().getUsername()}"></h5>
             <h6 th:text="${#temporals.format(commentDTO.getDate(),'dd-MM-yyyy')}"></h6>
             <p th:text="${commentDTO.getText()}"></p>
           </div>
-          </form>
+          </div>
       </div>
-      </div>
+      </form>
     </div>
     <footer th:replace="layout :: footer-fragment">
     </footer>
