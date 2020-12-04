@@ -96,7 +96,7 @@
                                 Admin Panel
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href=#>Add Post</a>
+                                <a class="dropdown-item" th:href=@{/post/add-new}>Add Post</a>
                                 <a class="dropdown-item" th:href="@{/admin/messages/list}">View Messages</a>
                                 <a class="dropdown-item" th:href="@{/admin/users/list}">User's privileges</a>
                             </div>
@@ -137,7 +137,7 @@
     </nav>
     <div th:fragment="banner-fragment" class="container-fluid px-0 no-padding">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mx-auto">
                 <img
                         th:src="@{/images/banner.jpg}"
                         src="resources/static/images/banner.jpg"
@@ -151,7 +151,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 my-footer no-padding">
-                    <p>Copyright &copy; 2020 by Grzegorz Konopka</p>
+                    <p class="text-center">Copyright &copy; 2020 by Grzegorz Konopka</p>
                 </div>
             </div>
         </div>

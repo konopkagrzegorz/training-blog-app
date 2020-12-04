@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -68,7 +70,10 @@ public class PostController {
     }
 
     @PostMapping("/post/add-new")
-    public String addPost(@ModelAttribute ("postDTO") PostDTO postDTO, Principal principal) {
+    public String addPost(@Valid @ModelAttribute ("postDTO") PostDTO postDTO, BindingResult result, Principal principal) {
+        if (result.hasErrors()) {
+            return "add-post";
+        }
         postService.addPost(postDTO,principal);
         return "redirect:/";
     }
