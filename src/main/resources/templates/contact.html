@@ -68,9 +68,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <input type=“checkbox” checked=“true” style="display:none;" th:field="*{status}">
+                        <div class="col-sm-12 parent">
+                            <input type=“checkbox” checked=“true” style="display:none;" th:field="*{status}">
+                        </div>
                         <div class="col-sm-12 parent" style="margin-top: 10px;">
-                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+                          <button class="btn btn-lg sign-in-button btn-block" type="submit" style="width: 80%">Submit</button>
                         </div>
                     </div>
                 </form>
