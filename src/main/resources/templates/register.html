@@ -17,6 +17,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <div th:if="${userFound != null}" class="alert alert-danger">
+                        <p th:text="${'User: ' + userFound + ' already exists in portal!'}"></p>
+                    </div>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
                       <input th:field="*{username}" class="form-control text-start" type="text" id="username" name="username" placeholder="Enter username...">
@@ -108,7 +115,7 @@
             </div>
             <div class="row">
                 <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
-                    <button class="col-10 col-sm-8 col-md-6 mx-auto btn btn-lg sign-in-button btn-block my-container" type="submit">Sign in</button>
+                    <button class="btn btn-lg sign-in-button btn-block my-container" type="submit">Sign in</button>
                 </div>
             </div>
         </div>

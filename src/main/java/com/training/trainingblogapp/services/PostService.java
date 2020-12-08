@@ -60,7 +60,7 @@ public class PostService {
 
     public void addPost(PostDTO postDTO, Principal principal) {
 
-        User user = userRepository.findByUsername(principal.getName());
+        User user = userRepository.findByUsername(principal.getName()).get();
         Post post = null;
         try {
             post = mappingService.postDtoToPost(postDTO);

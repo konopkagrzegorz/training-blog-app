@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,12 +51,24 @@ public class UserService implements UserDetailsService {
         return userDTO;
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserDTO> findByUsername(String username) {
+        Optional<User> user = Optional.of(userRepository.findByUsername(username).orElse(new User()));
+        if (!user.isEmpty()) {
+            Optional<UserDTO> userDTO = Optional.ofNullable(mappingService.userToUserDTO(user.get()));
+            return userDTO;
+        }
+
+        Optional<UserDTO> userDTO = Optional.empty();
+        return userDTO;
+    }
+
+    public Optional<UserDTO> findByEmail(String email) {
+        Optional<UserDTO> userDTO = Optional.ofNullable(mappingService.userToUserDTO(userRepository.findByEmail(email)));
+        return userDTO;
     }
 
     public UserPasswordDTO findUserPasswordDTOByUsername(String username) {
-        UserPasswordDTO userPasswordDTO = mappingService.userToUserPasswordDto(userRepository.findByUsername(username));
+        UserPasswordDTO userPasswordDTO = mappingService.userToUserPasswordDto(userRepository.findByUsername(username).get());
         return userPasswordDTO;
     }
 
@@ -67,7 +80,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void resetPassword(UserDTO userDTO,String password) {
-        User user = userRepository.findByUsername(userDTO.getUsername());
+        User user = userRepository.findByUsername(userDTO.getUsername()).get();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
@@ -79,7 +92,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void update(UserDTO userDTO, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
+        User user = userRepository.findByUsername(principal.getName()).get();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
@@ -87,7 +100,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void changePassword(UserPasswordDTO userPasswordDTO, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
+        User user = userRepository.findByUsername(principal.getName()).get();
         user.setPassword(passwordEncoder.encode(userPasswordDTO.getPassword()));
         userRepository.save(user);
     }
@@ -98,7 +111,7 @@ public class UserService implements UserDetailsService {
 
         @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User temp = findByUsername(username);
+        User temp = userRepository.findByUsername(username).get();
 
         if (temp == null) {
             throw new UsernameNotFoundException("Invalid username and/or password");

@@ -57,7 +57,7 @@ public class CommentService {
     public void saveComment(CommentDTO commentDTO, Principal principal, Long id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Post post = postRepository.findById(id).get();
-        User user = userRepository.findByUsername(principal.getName());
+        User user = userRepository.findByUsername(principal.getName()).get();
         Comment comment = mappingService.commentDtoToComment(commentDTO);
 
         comment.setPost(post);

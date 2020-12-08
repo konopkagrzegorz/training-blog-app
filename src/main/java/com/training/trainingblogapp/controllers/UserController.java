@@ -4,7 +4,6 @@ import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.PasswordGenerator;
-import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.MailService;
 import com.training.trainingblogapp.services.MappingService;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -33,11 +33,6 @@ public class UserController {
     public UserRegistrationDTO userRegistrationDto() {
         return new UserRegistrationDTO();
     }
-
-//    @ModelAttribute ("userDTO")
-//    public UserDTO userDTO() {
-//        return new UserDTO();
-//    }
 
     @Autowired
     public UserController(UserService userService, MailService mailService, RoleService roleService, MappingService mappingService) {
@@ -96,11 +91,23 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute ("userRegistrationDto") UserRegistrationDTO userRegistrationDTO, BindingResult result) {
+    public String register(@Valid @ModelAttribute ("userRegistrationDto") UserRegistrationDTO userRegistrationDTO, BindingResult result, Model model) {
+
+        Optional<String> username = Optional.ofNullable(userService.findByUsername(userRegistrationDTO.getUsername()).get().getUsername());
+        //Optional<String> email = Optional.ofNullable(userService.findByEmail(userRegistrationDTO.getEmail()).get().getEmail());
+        model.addAttribute("userFound", userRegistrationDTO.getUsername());
+        if (!(username.isEmpty())) {
+            return "register";
+        }
+//        if (email != null) {
+//            model.addAttribute("emailFound", email);
+//            return "register";
+//        }
+
         if (result.hasErrors()) {
             return "register";
         }
-        User user = userService.save(userRegistrationDTO);
+        userService.save(userRegistrationDTO);
         return "index";
     }
 
@@ -112,7 +119,7 @@ public class UserController {
     @PostMapping("/reset-password")
     public String resetPassword(@Valid @ModelAttribute UserDTO userDTO) throws MessagingException {
 
-        User user = userService.findByUsername(userDTO.getUsername());
+        User user = mappingService.userDtoToUser(userService.findByUsername(userDTO.getUsername()).get());
         if (user != null && user.getFirstName().equals(userDTO.getFirstName()) && user.getLastName().equals(userDTO.getLastName())
                 && user.getEmail().equals(userDTO.getEmail())) {
             PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
