@@ -20,7 +20,14 @@
             <div class="row">
                 <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
                     <div th:if="${userFound != null}" class="alert alert-danger">
-                        <p th:text="${'User: ' + userFound + ' already exists in portal!'}"></p>
+                        <p th:text="${'User ' + userFound + ' already exists in portal!'}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <div th:if="${emailFound != null}" class="alert alert-danger">
+                        <p th:text="${'Email ' + emailFound + ' already exists in portal!'}"></p>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
     void deleteByUsername(String username);
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
     User save(UserRegistrationDTO user);
     User save(User user);
     List<User> findAll();

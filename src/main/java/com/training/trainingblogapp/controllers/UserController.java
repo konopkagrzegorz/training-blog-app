@@ -35,7 +35,8 @@ public class UserController {
     }
 
     @Autowired
-    public UserController(UserService userService, MailService mailService, RoleService roleService, MappingService mappingService) {
+    public UserController(UserService userService, MailService mailService, RoleService roleService,
+                          MappingService mappingService) {
         this.userService = userService;
         this.mailService = mailService;
         this.roleService = roleService;
@@ -91,18 +92,16 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute ("userRegistrationDto") UserRegistrationDTO userRegistrationDTO, BindingResult result, Model model) {
-
-        Optional<String> username = Optional.ofNullable(userService.findByUsername(userRegistrationDTO.getUsername()).get().getUsername());
-        //Optional<String> email = Optional.ofNullable(userService.findByEmail(userRegistrationDTO.getEmail()).get().getEmail());
-        model.addAttribute("userFound", userRegistrationDTO.getUsername());
-        if (!(username.isEmpty())) {
+    public String register(@Valid @ModelAttribute ("userRegistrationDto") UserRegistrationDTO userRegistrationDTO,
+                           BindingResult result, Model model) {
+        if (userService.findByUsername(userRegistrationDTO.getUsername()).isPresent()) {
+            model.addAttribute("userFound", userRegistrationDTO.getUsername());
             return "register";
         }
-//        if (email != null) {
-//            model.addAttribute("emailFound", email);
-//            return "register";
-//        }
+        if (userService.findByUsername(userRegistrationDTO.getEmail()).isPresent()) {
+            model.addAttribute("emailFound", userRegistrationDTO.getEmail());
+            return "register";
+        }
 
         if (result.hasErrors()) {
             return "register";
