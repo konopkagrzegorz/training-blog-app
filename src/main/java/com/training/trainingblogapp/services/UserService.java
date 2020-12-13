@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<UserDTO> findByEmail(String email) {
-        Optional<User> user = Optional.ofNullable(userRepository.findByUsername(email)).get();
+        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email)).get();
         if (user.isPresent()) {
             Optional<UserDTO> userDTO = Optional.ofNullable(mappingService.userToUserDTO(user.get()));
             return userDTO;

@@ -98,7 +98,7 @@ public class UserController {
             model.addAttribute("userFound", userRegistrationDTO.getUsername());
             return "register";
         }
-        if (userService.findByUsername(userRegistrationDTO.getEmail()).isPresent()) {
+        if (userService.findByEmail(userRegistrationDTO.getEmail()).isPresent()) {
             model.addAttribute("emailFound", userRegistrationDTO.getEmail());
             return "register";
         }
@@ -107,7 +107,7 @@ public class UserController {
             return "register";
         }
         userService.save(userRegistrationDTO);
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/reset-password")
