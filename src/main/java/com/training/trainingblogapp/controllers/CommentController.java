@@ -1,17 +1,12 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
-import com.training.trainingblogapp.domain.model.Comment;
-import com.training.trainingblogapp.repositories.CommentRepository;
-import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 

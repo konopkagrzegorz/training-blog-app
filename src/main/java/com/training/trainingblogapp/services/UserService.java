@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -79,7 +79,8 @@ public class UserService implements UserDetailsService {
     public User save(UserRegistrationDTO userRegistrationDTO) {
         User temp = mappingService.userRegistrationDtoToUser(userRegistrationDTO);
         temp.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        temp.setRole(roleRepository.findByName("ROLE_USER"));
+        Role role = roleRepository.findByName("ROLE_USER").get();
+        temp.setRole(role);
         return userRepository.save(temp);
     }
 

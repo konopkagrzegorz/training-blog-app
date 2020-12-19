@@ -1,6 +1,5 @@
 package com.training.trainingblogapp.repositories;
 
-import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.User;
 import org.springframework.data.repository.CrudRepository;
