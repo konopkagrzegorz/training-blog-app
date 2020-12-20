@@ -24,7 +24,8 @@ public class User {
     private String password;
     private String email;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @OneToMany(mappedBy = "user")

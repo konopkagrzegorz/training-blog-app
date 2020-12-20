@@ -21,9 +21,6 @@ public class Role {
 
     private String name;
 
-    @OneToMany(mappedBy="role", fetch = FetchType.EAGER)
-    private List<User> users;
-
     public Role(String role_user) {
         this.name = role_user;
     }
@@ -34,12 +31,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void addUser(User user) {
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
-        this.users.add(user);
     }
 }

@@ -22,13 +22,13 @@ public class RoleService {
         this.userRepository = userRepository;
     }
 
-    public void save(User user) {
-        Optional<Role> role = roleRepository.findByName(user.getRole().getName());
-        if (role.isEmpty()) {
-            throw new RuntimeException("User does not have any role!");
-        }
-        role.get().getUsers().add(user);
-    }
+//    public void save(User user) {
+//        Optional<Role> role = roleRepository.findByName(user.getRole().getName());
+//        if (role.isEmpty()) {
+//            throw new RuntimeException("User does not have any role!");
+//        }
+//        role.get().getUsers().add(user);
+//    }
 
     public List<Role> findAll() {
         return roleRepository.findAll();
