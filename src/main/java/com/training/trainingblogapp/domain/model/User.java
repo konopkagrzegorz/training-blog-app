@@ -1,6 +1,8 @@
 package com.training.trainingblogapp.domain.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +30,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Post> posts = new HashSet<>();
 
     @OneToMany(mappedBy = "user")

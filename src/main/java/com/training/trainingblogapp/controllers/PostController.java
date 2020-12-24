@@ -32,6 +32,7 @@ public class PostController {
         return "about";
     }
 
+
     @GetMapping({"/","index","index.html"})
     public String viewHome(Model model) {
         return showPage(1,model);
@@ -51,6 +52,46 @@ public class PostController {
 
         return "index";
     }
+
+//NOT WORKING - COMMENTED FOR BUG FIXING
+//    @GetMapping("/search/page/{pageNo}")
+//    public String showSearchPage(@PathVariable ("phase") String phase, @PathVariable ("pageNo") int pageNo, Model model) {
+//        int pageSize = 5;
+//        Page<PostDTO> page = postService.findAllPostContainsPhase(pageNo,pageSize,phase);
+//        List<PostDTO> postsDTO = page.getContent();
+//
+//        model.addAttribute("firstPage", 1);
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", page.getTotalPages());
+//        model.addAttribute("totalItems", page.getTotalElements());
+//        model.addAttribute("posts", postsDTO);
+//
+//        return "index";
+//    }
+
+//    @GetMapping("/search/posts")
+//    public String showFirstSearchPage(@PathVariable (value = "phase", required = false) String phase, Model model) {
+//        model.addAttribute("phase", phase);
+//        showSearchPage(1, model);
+//
+//        return "index";
+//
+//    }
+//
+//    @GetMapping("/search/page/{pageNo}")
+//    public String showSearchPage(@PathVariable ("pageNo") int pageNo, Model model) {
+//        int pageSize = 5;
+//        Page<PostDTO> page = postService.findAllPostContainsPhase(pageNo, pageSize, model.getAttribute("phase").toString());
+//        List<PostDTO> postsDTO = page.getContent();
+//
+//        model.addAttribute("firstPage", 1);
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", page.getTotalPages());
+//        model.addAttribute("totalItems", page.getTotalElements());
+//        model.addAttribute("posts", postsDTO);
+//
+//        return "index";
+//    }
 
     @GetMapping("/post/{id}")
     public String showPost(@PathVariable ("id") long postId,@ModelAttribute ("commentDTO") CommentDTO commentDTO, Model model) {

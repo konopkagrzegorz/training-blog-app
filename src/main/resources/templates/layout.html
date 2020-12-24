@@ -51,24 +51,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/contact}">Contact</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a
-                            class="nav-link dropdown-toggle active"
-                            href="#"
-                            id="navbarDropdown"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                    >
-                        Categories
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Articles</a>
-                        <a class="dropdown-item" href="#">Fundamentals</a>
-                        <a class="dropdown-item" href="#">Plan generator</a>
-                    </div>
-                </li>
                 <li class="nav-item active">
                     <div sec:authorize="${isAuthenticated()}">
                         <a class="nav-link" href="#" tabindex="-1" aria-disabled="true" th:href="@{/logout}">Sign out</a>
@@ -116,14 +98,15 @@
                             Moderator Panel
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href=#>Add Post</a>
+                            <a class="dropdown-item" th:href=@{/post/add-new}>Add Post</a>
                             <a class="dropdown-item" th:href="@{/admin/messages/list}">View Messages</a>
                         </div>
                     </li>
                 </div>
                 </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline my-2 my-lg-0" th:action="@{/search/posts}">
                 <input
+                        th:value="${phase}"
                         class="form-control mr-sm-2"
                         type="search"
                         placeholder="Search"

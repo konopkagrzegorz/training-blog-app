@@ -45,12 +45,19 @@ public class PostService {
     public Page<PostDTO> listAllByPage(int pageNo, int pageSize) {
         Pageable pageable= PageRequest.of(pageNo - 1, pageSize, Sort.by("date").descending());
         Page<Post> entities = postRepository.findAll(pageable);
-        Page<PostDTO> dtoPage = entities.map(new Function<Post, PostDTO>() {
-            @Override
-            public PostDTO apply(Post entity) {
-                return mappingService.postToPostDto(entity);
-            }
-        });
+        Page<PostDTO> dtoPage = entities.map(entity -> mappingService.postToPostDto(entity));
+        return dtoPage;
+    }
+
+//    public List<PostDTO> findDistinctByHeadingContaining(String phase) {
+//        return postRepository.findDistinctByHeadingContaining(phase).stream().map(post -> mappingService.postToPostDto(post))
+//                .collect(Collectors.toList());
+//    }
+
+    public Page<PostDTO> findAllPostContainsPhase(int pageNo, int pageSize, String phase) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize, Sort.by("date").descending());
+        Page<Post> entities = postRepository.findDistinctByHeadingContaining(phase,pageable);
+        Page<PostDTO> dtoPage = entities.map(entity -> mappingService.postToPostDto(entity));
         return dtoPage;
     }
 

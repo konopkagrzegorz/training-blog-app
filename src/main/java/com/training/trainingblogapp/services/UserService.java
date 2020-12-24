@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,7 +26,6 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
-
 
     @Autowired
     public UserService(MappingService mappingService, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, RoleRepository roleRepository) {
@@ -79,8 +76,7 @@ public class UserService implements UserDetailsService {
     public User save(UserRegistrationDTO userRegistrationDTO) {
         User temp = mappingService.userRegistrationDtoToUser(userRegistrationDTO);
         temp.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        Role role = roleRepository.findByName("ROLE_USER");
-        //Role role = roleRepository.findByName("ROLE_USER").get();
+        Role role = roleRepository.findByName("ROLE_USER").get();
         temp.setRole(role);
         return userRepository.save(temp);
     }

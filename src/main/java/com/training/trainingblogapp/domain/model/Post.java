@@ -27,7 +27,7 @@ public class Post {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime date;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
     @Lob

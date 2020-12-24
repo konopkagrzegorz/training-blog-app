@@ -88,7 +88,7 @@ public class ContactController {
                 messageDTO.setStatus(true);
                 contactService.update(messageDTO);
             } catch (MessagingException exception) {
-                //exception.printStackTrace();
+                exception.printStackTrace();
             }
         }
         return "redirect:/admin/messages/answer/{id}";
