@@ -2,6 +2,7 @@ package com.training.trainingblogapp.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "posts")
+@EqualsAndHashCode(exclude = {"comments", "user"})
 public class Post {
 
     @Id

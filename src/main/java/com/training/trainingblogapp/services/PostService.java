@@ -1,6 +1,7 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.PostDTO;
+import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.repositories.PostRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -59,6 +61,12 @@ public class PostService {
         Page<Post> entities = postRepository.findDistinctByHeadingContaining(phase,pageable);
         Page<PostDTO> dtoPage = entities.map(entity -> mappingService.postToPostDto(entity));
         return dtoPage;
+    }
+
+    @Transactional
+    public void deleteByUser(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        postRepository.deleteByUser(user.get());
     }
 
     public PostDTO findPostById(long id) {

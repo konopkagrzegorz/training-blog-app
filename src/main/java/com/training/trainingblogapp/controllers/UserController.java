@@ -24,6 +24,8 @@ public class UserController {
     private MailService mailService;
     private RoleService roleService;
     private MappingService mappingService;
+    private PostService postService;
+    private CommentService commentService;
 
     @ModelAttribute("userRegistrationDto")
     public UserRegistrationDTO userRegistrationDto() {
@@ -31,12 +33,13 @@ public class UserController {
     }
 
     @Autowired
-    public UserController(UserService userService, MailService mailService, RoleService roleService,
-                          MappingService mappingService) {
+    public UserController(UserService userService, MailService mailService, RoleService roleService, MappingService mappingService, PostService postService, CommentService commentService) {
         this.userService = userService;
         this.mailService = mailService;
         this.roleService = roleService;
         this.mappingService = mappingService;
+        this.postService = postService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/login")
@@ -139,6 +142,9 @@ public class UserController {
 
     @GetMapping("/admin/users/{id}/delete")
     public String deleteUser(@PathVariable ("id") Long id) {
+        String username  = userService.findById(id).getUsername();
+        postService.deleteByUser(username);
+        commentService.deleteByUser(username);
         userService.deleteById(id);
         return "redirect:/admin/users/list";
     }

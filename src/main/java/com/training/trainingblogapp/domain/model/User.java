@@ -1,6 +1,7 @@
 package com.training.trainingblogapp.domain.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(exclude = {"posts", "comments"})
 public class User {
 
     @Id

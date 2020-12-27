@@ -12,12 +12,14 @@ import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,5 +69,11 @@ public class CommentService {
 
         postRepository.save(post);
         commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void deleteByUser(String username) {
+        Optional<User> temp = userRepository.findByUsername(username);
+        commentRepository.deleteByUser(temp.get());
     }
 }
