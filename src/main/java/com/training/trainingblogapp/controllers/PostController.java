@@ -69,13 +69,13 @@ public class PostController {
 //        return "index";
 //    }
 
-    @GetMapping("/search")
-    public String showFirstSearchPage(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
-        model.addAttribute("phase", keyword);
-        model.addAttribute("posts", postService.findAllPostContainsPhase(keyword));
-
-        return "index";
-    }
+//    @GetMapping("/search")
+//    public String showFirstSearchPage(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
+//        model.addAttribute("phase", keyword);
+//        model.addAttribute("posts", postService.findAllPostContainsPhase(keyword));
+//
+//        return "index";
+//    }
 
 //    @GetMapping("/search/page/{pageNo}")
 //    public String showSearchPage(@PathVariable ("pageNo") int pageNo, Model model) {
