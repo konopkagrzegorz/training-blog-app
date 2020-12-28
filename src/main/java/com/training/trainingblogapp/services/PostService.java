@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -56,12 +57,21 @@ public class PostService {
 //                .collect(Collectors.toList());
 //    }
 
-    public Page<PostDTO> findAllPostContainsPhase(int pageNo, int pageSize, String phase) {
-        Pageable pageable = PageRequest.of(pageNo -1, pageSize, Sort.by("date").descending());
-        Page<Post> entities = postRepository.findDistinctByHeadingContaining(phase,pageable);
-        Page<PostDTO> dtoPage = entities.map(entity -> mappingService.postToPostDto(entity));
-        return dtoPage;
+    public List<PostDTO> findAllPostContainsPhase(String phase) {
+        List<Post> posts = postRepository.findAllPostContainsPhase(phase);
+        return posts.stream().map(post -> {
+            PostDTO postDTO = mappingService.postToPostDto(post);
+            return postDTO;
+        }).collect(Collectors.toList());
     }
+
+
+//    public Page<PostDTO> findAllPostContainsPhase(int pageNo, int pageSize, String phase) {
+//        Pageable pageable = PageRequest.of(pageNo -1, pageSize, Sort.by("date").descending());
+//        Page<Post> entities = postRepository.findDistinctByHeadingContaining(phase,pageable);
+//        Page<PostDTO> dtoPage = entities.map(entity -> mappingService.postToPostDto(entity));
+//        return dtoPage;
+//    }
 
     @Transactional
     public void deleteByUser(String username) {
