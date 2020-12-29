@@ -2,6 +2,7 @@ package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
+import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,21 @@ public class PostController {
         model.addAttribute("commentsDTO", commentsDTO);
 
         return "showPost";
+    }
+
+    @GetMapping("/post/edit/{id}")
+    public String editPost(@PathVariable("id") long postId, Model model) {
+        model.addAttribute("postDTO", postService.findPostById(postId));
+        return "editPost";
+    }
+
+    @PostMapping("/post/edit/update")
+    public String editPost(@Valid @ModelAttribute ("postDTO") PostDTO postDTO, BindingResult result, Principal principal) {
+        if (result.hasErrors()) {
+            return "editPost";
+        }
+        postService.update(postDTO,principal);
+        return "redirect:/";
     }
 
     @GetMapping("/post/add-new")

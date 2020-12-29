@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+
+</div>
+<form th:action="@{/post/edit/update}" enctype="multipart/form-data" th:object="${postDTO}" method="post">
+  <div class="container my-container">
+    <div class="row">
+      <div class="col-10 mx-auto div-distancer mt-3">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+          <p>Please Correct Errors Below</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10 mx-auto div-distancer">
+        <h3>Heading</h3>
+        <input th:field="*{id}" type="hidden">
+        <input th:field="*{heading}" class="form-control text-start" type="text" id="heading" name="heading" placeholder="Enter post heading...">
+        <div class="pull-left">
+          <div th:if="${#fields.hasErrors('heading')}" class="pull-left">
+            <ul>
+              <li class="listed-error" th:each="err : ${#fields.errors('heading')}" th:text="${err}"></li>
+            </ul>
+          </div>
+        </div>
+        <h3>Article Text</h3>
+        <textarea th:field="*{text}" class="form-control text-start" type="text" id="text" name="text" placeholder="Enter text..."></textarea>
+        <div class="pull-left">
+          <div th:if="${#fields.hasErrors('text')}" class="pull-left">
+            <ul>
+              <li class="listed-error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+            </ul>
+          </div>
+        </div>
+        <h3>Image</h3>
+        <input type="file" name="file"
+               th:field="*{image}" id="image">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10 mx-auto div-distancer">
+        <button class="btn btn-lg sign-in-button btn-block my-container mx-auto" type="submit">Update Post</button>
+      </div>
+    </div>
+  </div>
+</form>
+<footer th:replace="layout :: footer-fragment">
+</footer>
+</body>
+</html>

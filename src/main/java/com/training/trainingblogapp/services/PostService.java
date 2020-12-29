@@ -11,16 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,16 +81,30 @@ public class PostService {
         return postDTO;
     }
 
+    public void update(PostDTO postDTO, Principal principal) {
+        Post temp = postRepository.findById(postDTO.getId()).get();
+        User user = userRepository.findByUsername(temp.getUser().getUsername()).get();
+        Post post = null;
+        try {
+            post = mappingService.updatePostDtoToPost(postDTO);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        post.setDate(temp.getDate());
+        post.setUser(user);
+        postRepository.save(post);
+    }
+
     public void addPost(PostDTO postDTO, Principal principal) {
 
         User user = userRepository.findByUsername(principal.getName()).get();
+        postDTO.setDate(LocalDateTime.now());
         Post post = null;
         try {
-            post = mappingService.postDtoToPost(postDTO);
+            post = mappingService.newPostDtoToPost(postDTO);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        post.setDate(LocalDateTime.now());
         post.setUser(user);
         postRepository.save(post);
     }

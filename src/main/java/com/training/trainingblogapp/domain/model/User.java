@@ -32,9 +32,13 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Post> posts = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
+
+    public void addPost(Post post) {
+        posts.add(post);
+    }
 }
