@@ -2,6 +2,7 @@ package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
+import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
@@ -56,6 +57,15 @@ public class CommentService {
         return commentsDTO;
     }
 
+    public Optional<CommentDTO> findById(Long id) {
+        Optional<Comment> comment = Optional.ofNullable(commentRepository.findById(id)).get();
+        Optional<CommentDTO> commentDTO = Optional.empty();
+        if (comment.isPresent()) {
+            commentDTO = Optional.ofNullable(mappingService.commentToCommentDto(comment.get()));
+        }
+        return commentDTO;
+    }
+
     public void saveComment(CommentDTO commentDTO, Principal principal, Long id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Post post = postRepository.findById(id).get();
@@ -69,6 +79,10 @@ public class CommentService {
 
         postRepository.save(post);
         commentRepository.save(comment);
+    }
+
+    public void deleteById(long id) {
+        commentRepository.deleteById(id);
     }
 
     @Transactional

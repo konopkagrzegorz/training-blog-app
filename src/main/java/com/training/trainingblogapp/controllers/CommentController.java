@@ -1,12 +1,14 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
@@ -36,6 +38,16 @@ public class CommentController {
             model.addAttribute("commentDTO", commentDTO);
             commentService.saveComment(commentDTO,principal,id);
             return "redirect:/post/{id}";
+        }
+    }
+
+    @GetMapping("/post/{postId}/comment/delete/{id}")
+    public String deleteComment(@PathVariable("postId") long postId, @PathVariable("id") long id) {
+        if (commentService.findById(id).isPresent()) {
+            commentService.deleteById(id);
+            return "redirect:/post/{postId}";
+        } else {
+            throw new InvalidInputException("Comment with that id does not exist");
         }
     }
 }

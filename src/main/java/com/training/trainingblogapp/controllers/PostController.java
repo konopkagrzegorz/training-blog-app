@@ -131,6 +131,12 @@ public class PostController {
         return "redirect:/";
     }
 
+    @GetMapping("/admin/post/delete/{id}")
+    public String deletePost(@PathVariable ("id") long id) {
+        postService.delete(id);
+        return "redirect:/";
+    }
+
     @GetMapping("/post/add-new")
     public String addPost(@ModelAttribute ("postDTO") PostDTO postDTO) {
         return "add-post";

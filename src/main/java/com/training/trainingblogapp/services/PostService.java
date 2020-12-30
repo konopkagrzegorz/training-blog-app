@@ -71,6 +71,11 @@ public class PostService {
 //    }
 
     @Transactional
+    public void delete(long id) {
+        postRepository.deleteById(id);
+    }
+
+    @Transactional
     public void deleteByUser(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         postRepository.deleteByUser(user.get());
