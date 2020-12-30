@@ -65,7 +65,6 @@ public class PasswordGenerator {
             this.useUpper = useUpper;
             return this;
         }
-
         /**
          * Set true in case you would like to include digit characters (123..).
          * Default false.

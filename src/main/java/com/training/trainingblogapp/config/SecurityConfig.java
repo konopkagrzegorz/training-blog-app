@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/messages/**").hasAnyRole("ADMIN","MODERATOR")
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/post/add-new").hasAnyRole("ADMIN","MODERATOR")
+                .antMatchers("/post/edit/**").hasAnyRole("ADMIN", "MODERATOR")
                 .and()
                 .formLogin()
                 .permitAll()

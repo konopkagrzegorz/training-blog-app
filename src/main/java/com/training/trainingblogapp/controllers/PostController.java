@@ -2,9 +2,11 @@ package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
-import com.training.trainingblogapp.domain.model.Post;
+import com.training.trainingblogapp.domain.dtos.UserDTO;
+import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
+import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping({"","/"})
@@ -21,11 +24,13 @@ public class PostController {
 
     private PostService postService;
     private CommentService commentService;
+    private UserService userService;
 
     @Autowired
-    public PostController(PostService postService, CommentService commentService) {
+    public PostController(PostService postService, CommentService commentService, UserService userService) {
         this.postService = postService;
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping({"about", "about.html"})
@@ -104,8 +109,16 @@ public class PostController {
     }
 
     @GetMapping("/post/edit/{id}")
-    public String editPost(@PathVariable("id") long postId, Model model) {
-        model.addAttribute("postDTO", postService.findPostById(postId));
+    public String editPost(@PathVariable("id") long postId, Model model, Principal principal) {
+        PostDTO postDTO = postService.findPostById(postId);
+        Optional<UserDTO> user = userService.findByUsername(principal.getName());
+        boolean val = user.get().getUsername().equals(postDTO.getUserDTO().getUsername());
+        model.addAttribute("postDTO", postDTO);
+        if (!val) {
+            if (!user.get().getRole().getName().equals("ROLE_ADMIN")) {
+                return "401";
+            }
+        }
         return "editPost";
     }
 
