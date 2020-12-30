@@ -46,7 +46,8 @@ public class CommentController {
         if (commentService.findById(id).isPresent()) {
             commentService.deleteById(id);
             return "redirect:/post/{postId}";
-        } else {
+        }
+        else {
             throw new InvalidInputException("Comment with that id does not exist");
         }
     }

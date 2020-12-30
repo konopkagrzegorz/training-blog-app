@@ -1,7 +1,6 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.PostDTO;
-import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.repositories.PostRepository;
@@ -71,8 +70,17 @@ public class PostService {
 //    }
 
     @Transactional
-    public void delete(long id) {
+    public void deleteById(long id) {
         postRepository.deleteById(id);
+    }
+
+    public Optional<PostDTO> findById(Long id) {
+        Optional<Post> post = Optional.ofNullable(postRepository.findById(id)).get();
+        Optional<PostDTO> postDTO = Optional.empty();
+        if (post.isPresent()) {
+            postDTO = Optional.ofNullable(mappingService.postToPostDto(post.get()));
+        }
+        return postDTO;
     }
 
     @Transactional

@@ -1,0 +1,18 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+</div>
+    <div class="container">
+        <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+            <h3 class="text-center" th:text="${request}"></h3>
+            <p class="text-center" th:text="${exception}"></p>
+        </div>
+    </div>
+</body>
+<footer th:replace="layout :: footer-fragment">
+</footer>
+</html>

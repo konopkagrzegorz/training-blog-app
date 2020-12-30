@@ -4,6 +4,7 @@ import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import com.training.trainingblogapp.services.UserService;
@@ -133,8 +134,13 @@ public class PostController {
 
     @GetMapping("/admin/post/delete/{id}")
     public String deletePost(@PathVariable ("id") long id) {
-        postService.delete(id);
-        return "redirect:/";
+        if (postService.findById(id).isPresent()) {
+            postService.deleteById(id);
+            return "redirect:/";
+        }
+        else {
+            throw new InvalidInputException("Post with that id does not exist");
+        }
     }
 
     @GetMapping("/post/add-new")
