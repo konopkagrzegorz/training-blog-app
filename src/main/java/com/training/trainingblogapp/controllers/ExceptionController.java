@@ -1,6 +1,7 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.exceptions.InvalidInputException;
+import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -28,6 +29,15 @@ public class ExceptionController {
         String exceptionMessage = exception.getMessage();
         model.addAttribute("exception", exceptionMessage);
         model.addAttribute("request", "404 Page Not Found");
+        return "error";
+    }
+
+    @ExceptionHandler(UserNotAuthorizedException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleUserNotAuthorizedException(Exception exception, Model model) {
+        String exceptionMessage = exception.getMessage();
+        model.addAttribute("exception", exceptionMessage);
+        model.addAttribute("request", "401 Not Authorized");
         return "error";
     }
 

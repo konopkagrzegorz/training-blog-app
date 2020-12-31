@@ -5,6 +5,7 @@ import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.exceptions.InvalidInputException;
+import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import com.training.trainingblogapp.services.UserService;
@@ -76,8 +77,8 @@ public class PostController {
 //        return "index";
 //    }
 
-//    @GetMapping("/search")
-//    public String showFirstSearchPage(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
+//    @GetMapping("/post/search")
+//    public String showPostsByKeyword(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
 //        model.addAttribute("phase", keyword);
 //        model.addAttribute("posts", postService.findAllPostContainsPhase(keyword));
 //
@@ -117,7 +118,7 @@ public class PostController {
         model.addAttribute("postDTO", postDTO);
         if (!val) {
             if (!user.get().getRole().getName().equals("ROLE_ADMIN")) {
-                return "401";
+                throw new UserNotAuthorizedException("Oops... You are not admin or owner of this post - deleting aborted.");
             }
         }
         return "editPost";
