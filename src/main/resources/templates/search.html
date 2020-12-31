@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: meta-head">
+  </head>
+  <body>
+  <nav th:replace="layout :: site-navbar">
+  </nav>
+  <div th:replace="layout :: banner-fragment">
+
+  </div>
+    <div class="container my-container">
+      <div class="row" style="margin-top:25px">
+        <div class="col-10 mx-auto div-distancer">
+          <div class="row list-group">
+              <div th:each="post : ${posts}">
+                <div class="list-group-item">
+              <h1 th:text="${post.getHeading()}">First paragraph</h1>
+              <p class="text-justify" th:text="${#strings.abbreviate(post.getText(),400)}">
+              </p>
+                <a th:href="@{/post/{id} (id=${post.getId()})}">Read more</a>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4 mx-auto div-distancer">
+          <div class="row">
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer th:replace="layout :: footer-fragment">
+    </footer>
+  </body>
+</html>

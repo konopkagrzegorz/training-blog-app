@@ -104,19 +104,19 @@
                     </li>
                 </div>
                 </ul>
-<!--            <form class="form-inline my-2 my-lg-0" th:action="@{/search/posts}">-->
-<!--                <input-->
-<!--                        id="txtSearch"-->
-<!--                        class="form-control mr-sm-2"-->
-<!--                        type="search"-->
-<!--                        name="keyword"-->
-<!--                        placeholder="Search"-->
-<!--                        aria-label="Search"-->
-<!--                />-->
-<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">-->
-<!--                    Search</button-->
-<!--                ><br />-->
-<!--            </form>-->
+            <form class="form-inline my-2 my-lg-0" th:action="@{/posts/search}">
+                <input
+                        id="txtSearch"
+                        class="form-control mr-sm-2"
+                        type="search"
+                        name="keyword"
+                        placeholder="Search"
+                        aria-label="Search"
+                />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    Search</button
+                ><br />
+            </form>
         </div>
     </nav>
     <div th:fragment="banner-fragment" class="container-fluid px-0 no-padding">
