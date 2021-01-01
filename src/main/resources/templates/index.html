@@ -11,36 +11,11 @@
     <div class="container my-container">
       <div class="row">
         <div class="col-md-8 mx-auto div-distancer">
-          <div class="row">
+          <div class="row list-group">
             <div class="col-10 mx-auto div-distancer">
-              <div th:each="post : ${posts}">
+              <div th:each="post : ${posts}" class="list-group-item" style="margin-top:25px">
               <h1 th:text="${post.getHeading()}">First paragraph</h1>
               <p class="text-justify" th:text="${#strings.abbreviate(post.getText(),400)}">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consequatur fugit maxime dignissimos. Asperiores repellat
-                maiores officia laboriosam amet dolorem delectus repellendus
-                commodi explicabo accusamus magnam quibusdam, impedit temporibus
-                quam nihil ducimus maxime. Autem libero quis est voluptate alias
-                error, ea sapiente, temporibus laborum numquam deleniti
-                repellendus eum consequatur? Doloribus iure nostrum esse
-                repellat, voluptate est nobis ipsa sint! Quibusdam omnis
-                expedita cum atque sunt inventore laborum quos suscipit, velit
-                placeat deleniti aspernatur tempore sint dolor unde dicta ab?
-                Provident enim rem cumque neque ut velit nisi vitae sed sunt,
-                aspernatur animi et dolorem eligendi explicabo perspiciatis
-                aperiam corporis inventore assumenda veritatis quidem eveniet
-                illo itaque. Atque beatae facere perferendis alias nulla placeat
-                nobis deserunt perspiciatis repellendus ratione expedita ut
-                excepturi adipisci, quasi, amet at reprehenderit id nostrum
-                commodi in fugiat porro fugit? Perferendis dolorum deserunt aut
-                eius fuga nulla! Ipsa vel dolor doloremque similique. Quod
-                fugiat exercitationem doloribus corporis quae quidem rem.
-                Corrupti reprehenderit, amet voluptatem ex ut quas quisquam
-                porro aperiam illum. Numquam voluptas laboriosam excepturi.
-                Ullam fuga odit distinctio alias qui at eos quaerat repellat,
-                aperiam quod quae recusandae, corrupti veniam. Minima labore
-                rerum vitae cum ratione, quos explicabo ea quis nostrum
-                consequatur molestias quaerat, similique corporis blanditiis.
               </p>
                 <a th:href="@{/post/{id} (id=${post.getId()})}">Read more</a>
             </div>
