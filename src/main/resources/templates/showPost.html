@@ -67,7 +67,7 @@
             <h5 th:text="${commentDTO.getUserDTO().getUsername()}"></h5>
             <h6 th:text="${#temporals.format(commentDTO.getDate(),'dd-MM-yyyy')}"></h6>
             <p th:text="${commentDTO.getText()}"></p>
-            <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/post/delete/{id} (id=${postDTO.getId()})}" class="btn btn-danger">Delete</a></div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/post/{postId}/comment/delete/{id} (postId=${postDTO.getId()}, id=${commentDTO.getId()})}" class="btn btn-danger">Delete</a></div>
           </div>
           </div>
       </div>

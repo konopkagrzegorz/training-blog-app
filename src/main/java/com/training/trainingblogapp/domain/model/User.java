@@ -2,6 +2,8 @@ package com.training.trainingblogapp.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

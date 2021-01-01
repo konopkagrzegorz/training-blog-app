@@ -41,7 +41,7 @@ public class CommentController {
         }
     }
 
-    @GetMapping("/post/{postId}/comment/delete/{id}")
+    @GetMapping("/admin/post/{postId}/comment/delete/{id}")
     public String deleteComment(@PathVariable("postId") long postId, @PathVariable("id") long id) {
         if (commentService.findById(id).isPresent()) {
             commentService.deleteById(id);
