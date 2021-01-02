@@ -1,6 +1,8 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.TagDTO;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
+import com.training.trainingblogapp.exceptions.NotUniqueException;
 import com.training.trainingblogapp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,8 @@ public class TagController {
     public String addTag(@Valid @ModelAttribute("tagDTO") TagDTO tagDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "showTags";
+        } else if (tagService.findByName(tagDTO.getName()).isPresent()) {
+            throw new NotUniqueException("Tag with that name already exists");
         }
         tagService.add(tagDTO);
         return "redirect:/tags/showAll";
