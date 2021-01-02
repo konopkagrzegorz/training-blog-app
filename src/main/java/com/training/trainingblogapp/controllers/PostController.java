@@ -4,7 +4,6 @@ import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.domain.dtos.UserDTO;
-import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.services.CommentService;

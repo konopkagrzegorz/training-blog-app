@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <head th:replace="layout :: meta-head">
+  </head>
+  <body>
+  <nav th:replace="layout :: site-navbar">
+  </nav>
+  <div th:replace="layout :: banner-fragment">
+
+  </div>
+    <div class="container my-container">
+      <form th:action="@{/tags/add-new}" th:object=${tagDTO} method="post">
+      <div class="row">
+        <div class="col-10 mx-auto div-distancer text-center" style="margin-top:25px">
+          <h3 sec:a>ADD TAG SECTION</h3>
+        </div>
+      </div>
+          <div class="row">
+            <div class="col-10 mx-auto div-distancer">
+              <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <p>Please Correct Errors Below</p>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+            <div sec:authorize="${hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')}" class="col-10 mx-auto div-distancer my-container">
+                  <input th:field="*{name}" class="form-control" name="tag" id="tag" placeholder="Type tag name">
+                <div class="row">
+                  <div class="pull-left">
+                    <div th:if="${#fields.hasErrors('name')}" class="pull-left">
+                      <ul>
+                        <li class="listed-error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                  <button class="btn btn-lg sign-in-button btn-block my-container mt-3" type="submit">Submit</button>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-10 mx-auto div-distancer text-center table-responsive">
+            <h1 class="h3 mb-3 text-center">TAGS LIST</h1>
+            <table class="table table-sm">
+              <tr th:each="tagDTO : ${tagsDTO}" class="text-center">
+                <td class="text-center" th:text="${tagDTO.getId()}"></td>
+                <td class="text-center" th:text="${tagDTO.getName()}"></td>
+                <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/tag/delete/{id} (id=${tagDTO.getId()})}" class="btn btn-danger text-center">Delete</a></td>
+              </tr>
+            </table>
+          </div>
+      </div>
+      </form>
+    </div>
+    <footer th:replace="layout :: footer-fragment">
+    </footer>
+  </body>
+</html>
