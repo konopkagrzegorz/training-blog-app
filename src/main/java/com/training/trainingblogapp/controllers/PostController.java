@@ -2,12 +2,14 @@ package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
+import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
+import com.training.trainingblogapp.services.TagService;
 import com.training.trainingblogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,12 +29,14 @@ public class PostController {
     private PostService postService;
     private CommentService commentService;
     private UserService userService;
+    private TagService tagService;
 
     @Autowired
-    public PostController(PostService postService, CommentService commentService, UserService userService) {
+    public PostController(PostService postService, CommentService commentService, UserService userService, TagService tagService) {
         this.postService = postService;
         this.commentService = commentService;
         this.userService = userService;
+        this.tagService = tagService;
     }
 
     @GetMapping({"about", "about.html"})
@@ -51,31 +55,17 @@ public class PostController {
         int pageSize = 5;
         Page<PostDTO> page = postService.listAllByPage(pageNo, pageSize);
         List<PostDTO> postsDTO = page.getContent();
+        List<TagDTO> tagsDTO = tagService.findAll();
 
         model.addAttribute("firstPage", 1);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("posts", postsDTO);
+        model.addAttribute("tags", tagsDTO);
 
         return "index";
     }
-
-//NOT WORKING - COMMENTED FOR BUG FIXING
-//    @GetMapping("/search/page/{pageNo}")
-//    public String showSearchPage(@PathVariable ("phase") String phase, @PathVariable ("pageNo") int pageNo, Model model) {
-//        int pageSize = 5;
-//        Page<PostDTO> page = postService.findAllPostContainsPhase(pageNo,pageSize,phase);
-//        List<PostDTO> postsDTO = page.getContent();
-//
-//        model.addAttribute("firstPage", 1);
-//        model.addAttribute("currentPage", pageNo);
-//        model.addAttribute("totalPages", page.getTotalPages());
-//        model.addAttribute("totalItems", page.getTotalElements());
-//        model.addAttribute("posts", postsDTO);
-//
-//        return "index";
-//    }
 
     @GetMapping("/posts/search")
     public String showPostsByKeyword(@RequestParam (value = "keyword", required = false) String keyword, Model model) {
@@ -84,21 +74,6 @@ public class PostController {
 
         return "search";
     }
-
-//    @GetMapping("/search/page/{pageNo}")
-//    public String showSearchPage(@PathVariable ("pageNo") int pageNo, Model model) {
-//        int pageSize = 5;
-//        Page<PostDTO> page = postService.findAllPostContainsPhase(pageNo, pageSize, model.getAttribute("phase").toString());
-//        List<PostDTO> postsDTO = page.getContent();
-//
-//        model.addAttribute("firstPage", 1);
-//        model.addAttribute("currentPage", pageNo);
-//        model.addAttribute("totalPages", page.getTotalPages());
-//        model.addAttribute("totalItems", page.getTotalElements());
-//        model.addAttribute("posts", postsDTO);
-//
-//        return "index";
-//    }
 
     @GetMapping("/post/{id}")
     public String showPost(@PathVariable ("id") long postId,@ModelAttribute ("commentDTO") CommentDTO commentDTO, Model model) {

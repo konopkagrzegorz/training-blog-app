@@ -1,10 +1,7 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.*;
-import com.training.trainingblogapp.domain.model.Comment;
-import com.training.trainingblogapp.domain.model.Message;
-import com.training.trainingblogapp.domain.model.Post;
-import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.domain.model.*;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Base64;
@@ -147,5 +144,21 @@ public class MappingService {
         comment.setText(commentDTO.getText());
 
         return comment;
+    }
+
+    public Tag tagToTagDto(TagDTO tagDTO) {
+        Tag tag = new Tag();
+        tag.setId(tagDTO.getId());
+        tag.setName(tagDTO.getName());
+
+        return tag;
+    }
+
+    public TagDTO tagDtoToTag(Tag tag) {
+        TagDTO tagDTO = new TagDTO();
+        tagDTO.setId(tag.getId());
+        tagDTO.setName(tag.getName());
+
+        return tagDTO;
     }
 }

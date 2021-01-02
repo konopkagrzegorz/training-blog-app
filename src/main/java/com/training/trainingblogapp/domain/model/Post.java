@@ -29,6 +29,14 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(
+            name = "posts_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
+
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] image;
