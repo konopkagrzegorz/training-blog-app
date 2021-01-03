@@ -119,7 +119,8 @@ public class PostController {
     }
 
     @GetMapping("/post/add-new")
-    public String addPost(@ModelAttribute ("postDTO") PostDTO postDTO) {
+    public String addPost(@ModelAttribute ("postDTO") PostDTO postDTO, Model model) {
+        model.addAttribute("tagsDTO", tagService.findAll());
         return "add-post";
     }
 
