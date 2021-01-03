@@ -3,10 +3,7 @@ package com.training.trainingblogapp.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

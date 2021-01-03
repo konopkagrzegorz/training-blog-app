@@ -108,9 +108,9 @@ public class PostController {
     }
 
     @GetMapping("/admin/post/delete/{id}")
-    public String deletePost(@PathVariable ("id") long id) {
+    public String deletePost(@PathVariable ("id") long id, Principal principal) {
         if (postService.findById(id).isPresent()) {
-            postService.deleteById(id);
+            postService.deleteById(id,principal);
             return "redirect:/";
         }
         else {

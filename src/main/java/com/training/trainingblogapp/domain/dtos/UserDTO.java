@@ -1,6 +1,5 @@
 package com.training.trainingblogapp.domain.dtos;
 
-
 import com.training.trainingblogapp.domain.model.Role;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;

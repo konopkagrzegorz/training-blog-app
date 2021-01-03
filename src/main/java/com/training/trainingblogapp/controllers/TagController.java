@@ -10,9 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -41,5 +40,16 @@ public class TagController {
         }
         tagService.add(tagDTO);
         return "redirect:/tags/showAll";
+    }
+
+    @GetMapping("/tags/delete/{id}")
+    public String deleteTag(@PathVariable("id") long id, Principal principal) {
+        if (tagService.findById(id).isPresent()) {
+            tagService.deleteById(id,principal);
+            return "redirect:/";
+        }
+        else {
+            throw new InvalidInputException("Tag with that id does not exist");
+        }
     }
 }

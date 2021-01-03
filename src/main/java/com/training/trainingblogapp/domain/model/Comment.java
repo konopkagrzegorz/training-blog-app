@@ -2,7 +2,6 @@ package com.training.trainingblogapp.domain.model;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 

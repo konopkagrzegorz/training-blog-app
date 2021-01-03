@@ -2,7 +2,6 @@ package com.training.trainingblogapp.domain.dtos;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 

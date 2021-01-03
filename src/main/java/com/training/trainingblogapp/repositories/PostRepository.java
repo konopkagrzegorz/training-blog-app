@@ -5,7 +5,6 @@ import com.training.trainingblogapp.domain.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 
 public interface PostRepository extends PagingAndSortingRepository<Post,Long> {

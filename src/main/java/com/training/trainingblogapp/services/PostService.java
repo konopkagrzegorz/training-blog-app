@@ -3,6 +3,7 @@ package com.training.trainingblogapp.services;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,13 @@ public class PostService {
     }
 
     @Transactional
-    public void deleteById(long id) {
-        postRepository.deleteById(id);
+    public void deleteById(long id, Principal principal) {
+        Optional<User> user = userRepository.findByUsername(principal.getName());
+        if (user.isPresent() && user.get().getRole().getName().equals("ROLE_ADMIN")) {
+            postRepository.deleteById(id);
+        } else {
+            throw new UserNotAuthorizedException("You are not logged in or You are not an admin!");
+        }
     }
 
     public Optional<PostDTO> findById(Long id) {

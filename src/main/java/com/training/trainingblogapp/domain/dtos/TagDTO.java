@@ -1,7 +1,6 @@
 package com.training.trainingblogapp.domain.dtos;
 
 import lombok.Data;
-
 import javax.validation.constraints.Size;
 
 @Data

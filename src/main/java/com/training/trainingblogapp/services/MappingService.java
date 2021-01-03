@@ -146,7 +146,7 @@ public class MappingService {
         return comment;
     }
 
-    public Tag tagToTagDto(TagDTO tagDTO) {
+    public Tag tagDtoToTag(TagDTO tagDTO) {
         Tag tag = new Tag();
         tag.setId(tagDTO.getId());
         tag.setName(tagDTO.getName());
@@ -154,7 +154,7 @@ public class MappingService {
         return tag;
     }
 
-    public TagDTO tagDtoToTag(Tag tag) {
+    public TagDTO tagToTagDto(Tag tag) {
         TagDTO tagDTO = new TagDTO();
         tagDTO.setId(tag.getId());
         tagDTO.setName(tag.getName());
