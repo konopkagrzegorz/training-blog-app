@@ -6,7 +6,6 @@
   <nav th:replace="layout :: site-navbar">
   </nav>
   <div th:replace="layout :: banner-fragment">
-
   </div>
     <div class="container my-container">
       <div class="row">
@@ -24,6 +23,13 @@
               </p>
               <hr>
             </div>
+      </div>
+      <div class="row">
+        <div class="col-10 mx-auto div-distancer">
+        <div th:each="tagDTO : ${tagsDTO}">
+          <button th:text="${tagDTO.getName()}"class="btn btn-info disabled" style="cursor:default;">Something</button>
+        </div>
+        </div>
       </div>
       <div sec:authorize="${isAuthenticated()}" class="col-10 mx-auto div-distancer my-container">
       <div class="row">

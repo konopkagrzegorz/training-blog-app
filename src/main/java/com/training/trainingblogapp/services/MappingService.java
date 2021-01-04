@@ -4,7 +4,7 @@ import com.training.trainingblogapp.domain.dtos.*;
 import com.training.trainingblogapp.domain.model.*;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
-import java.util.Base64;
+import java.util.*;
 
 @Service
 public class MappingService {
@@ -90,6 +90,13 @@ public class MappingService {
         postDTO.setDate(post.getDate());
         postDTO.setHeading(post.getHeading());
         postDTO.setText(post.getText());
+        Set<TagDTO> tagsDTO = new HashSet<>();
+        for (Tag tag : post.getTags()) {
+            TagDTO tagDTO;
+            tagDTO = tagToTagDto(tag);
+            tagsDTO.add(tagDTO);
+        }
+        postDTO.setTags(tagsDTO);
         if (post.getImage() != null) {
             postDTO.setImageEncoded(Base64.getEncoder().encodeToString(post.getImage()));
         }
@@ -104,6 +111,9 @@ public class MappingService {
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
         post.setDate(postDTO.getDate());
+        for (TagDTO tagDTO : postDTO.getTags()) {
+            post.getTags().add(tagDtoToTag(tagDTO));
+        }
         if(postDTO.getImage().getSize() > 0) {
             post.setImage(postDTO.getImage().getBytes());
         }

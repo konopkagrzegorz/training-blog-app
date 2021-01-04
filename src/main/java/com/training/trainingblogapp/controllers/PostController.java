@@ -78,8 +78,10 @@ public class PostController {
     public String showPost(@PathVariable ("id") long postId,@ModelAttribute ("commentDTO") CommentDTO commentDTO, Model model) {
         PostDTO postDTO = postService.findPostById(postId);
         List<CommentDTO> commentsDTO = commentService.findAllByPostId(postId);
+        List<TagDTO> tagsDTO = tagService.findAllByPostId(postId);
         model.addAttribute("postDTO", postDTO);
         model.addAttribute("commentsDTO", commentsDTO);
+        model.addAttribute("tagsDTO", tagsDTO);
 
         return "showPost";
     }

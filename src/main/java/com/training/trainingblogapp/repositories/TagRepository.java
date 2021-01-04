@@ -9,5 +9,6 @@ public interface TagRepository extends CrudRepository<Tag, Long> {
 
     List<Tag> findAll();
     Optional<Tag> findByNameIgnoreCase(String name);
+    List<Tag> findByPosts_Id(Long id);
 
 }

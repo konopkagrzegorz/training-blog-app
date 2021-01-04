@@ -1,6 +1,8 @@
 package com.training.trainingblogapp.services;
 
+import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
+import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
@@ -57,6 +59,15 @@ public class TagService {
         }
         return tagDTO;
     }
+    public List<TagDTO> findAllByPostId(Long id) {
+        List<Tag> tags = tagRepository.findByPosts_Id(id);
+        List<TagDTO> tagsDTO = tags.stream().map(tag -> {
+            TagDTO tagDTO = mappingService.tagToTagDto(tag);
+            return tagDTO;
+        }).collect(Collectors.toList());
+        return tagsDTO;
+    }
+
 
     public void deleteById(long id, Principal principal) {
         Optional<User> user = userRepository.findByUsername(principal.getName());
