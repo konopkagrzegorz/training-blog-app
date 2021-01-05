@@ -92,6 +92,7 @@ public class PostController {
         Optional<UserDTO> user = userService.findByUsername(principal.getName());
         boolean val = user.get().getUsername().equals(postDTO.getUserDTO().getUsername());
         model.addAttribute("postDTO", postDTO);
+        model.addAttribute("tagsDTO", tagService.findAll());
         if (!val) {
             if (!user.get().getRole().getName().equals("ROLE_ADMIN")) {
                 throw new UserNotAuthorizedException("Oops... You are not admin or owner of this post - deleting aborted.");

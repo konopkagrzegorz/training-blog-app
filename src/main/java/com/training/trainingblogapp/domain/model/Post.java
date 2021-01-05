@@ -29,7 +29,7 @@ public class Post {
     @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE)
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE},fetch = FetchType.EAGER)
     @JoinTable(
             name = "posts_tags",
             joinColumns = @JoinColumn(name = "post_id"),

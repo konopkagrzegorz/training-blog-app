@@ -2,6 +2,7 @@ package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.*;
 import com.training.trainingblogapp.domain.model.*;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
@@ -111,9 +112,14 @@ public class MappingService {
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
         post.setDate(postDTO.getDate());
+        Set<Tag> tags = new HashSet<>();
         for (TagDTO tagDTO : postDTO.getTags()) {
-            post.getTags().add(tagDtoToTag(tagDTO));
+            Tag tag;
+            tag = tagDtoToTag(tagDTO);
+            tags.add(tag);
         }
+        post.setTags(tags);
+
         if(postDTO.getImage().getSize() > 0) {
             post.setImage(postDTO.getImage().getBytes());
         }
@@ -128,6 +134,13 @@ public class MappingService {
         post.setId(postDTO.getId());
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
+        Set<Tag> tags = new HashSet<>();
+        for (TagDTO tagDTO : postDTO.getTags()) {
+            Tag tag;
+            tag = tagDtoToTag(tagDTO);
+            tags.add(tag);
+        }
+        post.setTags(tags);
         if(postDTO.getImage().getSize() > 0) {
             post.setImage(postDTO.getImage().getBytes());
         }
@@ -156,11 +169,18 @@ public class MappingService {
         return comment;
     }
 
+    @SneakyThrows
     public Tag tagDtoToTag(TagDTO tagDTO) {
         Tag tag = new Tag();
         tag.setId(tagDTO.getId());
         tag.setName(tagDTO.getName());
-
+//        Set<Post> posts = new HashSet<>();
+//        for (PostDTO postDTO : tagDTO.getPostsDTO()) {
+//            Post post;
+//            post = newPostDtoToPost(postDTO);
+//            posts.add(post);
+//        }
+//        tag.setPosts(posts);
         return tag;
     }
 
@@ -168,7 +188,13 @@ public class MappingService {
         TagDTO tagDTO = new TagDTO();
         tagDTO.setId(tag.getId());
         tagDTO.setName(tag.getName());
-
+//        Set<PostDTO> postsDTO = new HashSet<>();
+//        for (Post post : tag.getPosts()) {
+//            PostDTO postDTO;
+//            postDTO = postToPostDto(post);
+//            postsDTO.add(postDTO);
+//        }
+//        tagDTO.setPostsDTO(postsDTO);
         return tagDTO;
     }
 }
