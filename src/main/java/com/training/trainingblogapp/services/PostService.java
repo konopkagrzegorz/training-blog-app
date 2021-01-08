@@ -57,6 +57,14 @@ public class PostService {
         }).collect(Collectors.toList());
     }
 
+    public List<PostDTO> findByTags_Id(Long id) {
+        List<Post> posts = postRepository.findByTags_Id(id);
+        return posts.stream().map(post -> {
+            PostDTO postDTO = mappingService.postToPostDto(post);
+            return postDTO;
+        }).collect(Collectors.toList());
+    }
+
     @Transactional
     public void deleteById(long id, Principal principal) {
         Optional<User> user = userRepository.findByUsername(principal.getName());

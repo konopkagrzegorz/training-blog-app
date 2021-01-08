@@ -4,6 +4,7 @@ import com.training.trainingblogapp.domain.dtos.*;
 import com.training.trainingblogapp.domain.model.*;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import java.io.IOException;
 import java.util.*;
 
@@ -119,12 +120,14 @@ public class MappingService {
             tags.add(tag);
         }
         post.setTags(tags);
-
-        if(postDTO.getImage().getSize() > 0) {
-            post.setImage(postDTO.getImage().getBytes());
-        }
-        else {
-            post.setImage(null);
+        if (postDTO.getImage().getSize() >= 1048576) {
+            throw new MaxUploadSizeExceededException(1048576);
+        } else {
+            if(postDTO.getImage().getSize() > 0) {
+                post.setImage(postDTO.getImage().getBytes());
+            } else {
+                post.setImage(null);
+            }
         }
         return post;
     }
@@ -141,11 +144,14 @@ public class MappingService {
             tags.add(tag);
         }
         post.setTags(tags);
-        if(postDTO.getImage().getSize() > 0) {
-            post.setImage(postDTO.getImage().getBytes());
-        }
-        else {
-            post.setImage(null);
+        if (postDTO.getImage().getSize() >= 1048576) {
+            throw new MaxUploadSizeExceededException(1048576);
+        } else {
+            if(postDTO.getImage().getSize() > 0) {
+                post.setImage(postDTO.getImage().getBytes());
+            } else {
+                post.setImage(null);
+            }
         }
         return post;
     }

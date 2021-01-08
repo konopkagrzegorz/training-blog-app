@@ -13,5 +13,6 @@ public interface PostRepository extends PagingAndSortingRepository<Post,Long> {
     @Query(value = "SELECT DISTINCT * FROM posts p WHERE p.heading LIKE %:keyword% OR p.text LIKE %:keyword%",
             nativeQuery = true)
     List<Post> findAllPostContainsPhase(@Param("keyword") String keyword);
+    List<Post> findByTags_Id(Long id);
     void deleteByUser(User user);
 }

@@ -1,8 +1,10 @@
 package com.training.trainingblogapp.controllers;
 
+import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.NotUniqueException;
+import com.training.trainingblogapp.services.PostService;
 import com.training.trainingblogapp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,15 +16,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class TagController {
 
     private TagService tagService;
+    private PostService postService;
 
     @Autowired
-    public TagController(TagService tagService) {
+    public TagController(TagService tagService, PostService postService) {
         this.tagService = tagService;
+        this.postService = postService;
     }
 
     @GetMapping("/tags/showAll")
@@ -42,9 +47,16 @@ public class TagController {
         return "redirect:/tags/showAll";
     }
 
-    @GetMapping("/tags/delete/{id}")
+    @GetMapping("/admin/tag/delete/{id}")
     public String deleteTag(@PathVariable("id") long id, Principal principal) {
         if (tagService.findById(id).isPresent()) {
+            TagDTO tagDTO = tagService.findById(id).get();
+            List<PostDTO> posts = postService.findByTags_Id(id);
+
+            for (PostDTO postDTO : posts) {
+                postDTO.getTags().remove(tagDTO);
+                postService.update(postDTO,principal);
+            }
             tagService.deleteById(id,principal);
             return "redirect:/";
         }

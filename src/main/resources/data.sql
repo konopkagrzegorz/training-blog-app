@@ -6,10 +6,10 @@ INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`,
 VALUES ('gkonopka','Grzegorz','Konopka','$2y$12$mWI3bRSpWyds3GkkTITmFuLCI7Eyiov7GON/9NTFkJxqQX4lWQgra','konopkagrzeg@gmail.com','1');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
-VALUES ('mkomenda','Martyna','Komenda','$2y$12$YRNUnzw/yNuPaBYXP9m6VO48SuukLRkgobaHXL4j23Ey4/Xi9tv0W','martyna.komenda7@gmail.com','2');
+VALUES ('moderator','Bill','Gates','$2y$12$YRNUnzw/yNuPaBYXP9m6VO48SuukLRkgobaHXL4j23Ey4/Xi9tv0W','billgates@hotmail.com','2');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
-VALUES ('rkonopka','Ryszard','Konopka','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','ryszardk@gmail.com','3');
+VALUES ('pstajniak','Piotr','Stajniak','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','pstajniak@outlook.com','3');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
 VALUES ('czak','Cezary','Żak','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','cezaryzak@gmail.com','3');
@@ -27,7 +27,7 @@ INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`,
 VALUES ('pkowal','Paulina','Kowal','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','pkowal@gmail.com','3');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
-VALUES ('rkonopka','Ryszard','Konopka','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','ryszardk@gmail.com','3');
+VALUES ('rkoni','Ryszard','Koni','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','konironi@gmail.com','3');
 
 INSERT INTO `users` (`username`, `first_name`, `last_name`, `password`, `email`, `role_id`)
 VALUES ('mczaplicki','Mariusz','Czaplicki','$2y$12$pgO84pmff4nn0pRtw52sx.zei0UviGruBYJZ21Qq6JBogt83sZocK','czapla@gmail.com','3');

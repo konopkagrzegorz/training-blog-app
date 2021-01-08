@@ -3,6 +3,7 @@ package com.training.trainingblogapp.controllers;
 import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.NotUniqueException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import java.io.IOException;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -55,6 +59,15 @@ public class ExceptionController {
     public String handleWrongInputException(Model model) {
         model.addAttribute("exception", "Oops...wrong input");
         model.addAttribute("request", "404 Page Not Found");
+        return "error";
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public String handleMaxUploadSizeExeededException(Exception exception, Model model) {
+        String exceptionMessage = exception.getMessage();
+        model.addAttribute("exception", exceptionMessage);
+        model.addAttribute("request", "413 Payload Too Large");
         return "error";
     }
 
