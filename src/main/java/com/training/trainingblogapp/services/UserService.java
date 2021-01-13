@@ -97,7 +97,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(principal.getName()).get();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
+        user.setEmail(userDTO.getEmail().toLowerCase());
         userRepository.save(user);
     }
 

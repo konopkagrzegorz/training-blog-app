@@ -5,6 +5,7 @@ import com.training.trainingblogapp.domain.dtos.UserPasswordDTO;
 import com.training.trainingblogapp.domain.dtos.UserRegistrationDTO;
 import com.training.trainingblogapp.domain.model.PasswordGenerator;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -54,13 +57,26 @@ public class UserController {
     }
 
     @PostMapping("/profile/edit")
-    public String editProfile(@Valid @ModelAttribute ("userDTO") UserDTO userDTO, BindingResult result,
-                              Principal principal, RedirectAttributes attributes) {
+    public String editProfile(@Valid @ModelAttribute ("userDTO") UserDTO userDTO, BindingResult result, Model model,
+                              Principal principal) {
+        int counter = 0;
+        for (UserDTO userDTOtemp : userService.findAll()) {
+            if (userDTOtemp.getEmail().equals(userDTO.getEmail())) {
+                counter++;
+            }
+        }
+        Optional<UserDTO>  userDTOtemp = userService.findByUsername(principal.getName());
+        if (userDTOtemp.isPresent()) {
+            if (!userDTO.getEmail().toLowerCase().equals(userDTOtemp.get().getEmail()) && counter >= 1) {
+                model.addAttribute("emailFound", userDTO.getEmail());
+                return "profile";
+            }
+        }
         if (result.hasErrors()) {
             return "profile";
         }
         userService.update(userDTO,principal);
-        attributes.addFlashAttribute("success", "Successfully updated you profile");
+        model.addAttribute("success", "Successfully updated you profile");
         return "redirect:/profile/edit";
     }
 

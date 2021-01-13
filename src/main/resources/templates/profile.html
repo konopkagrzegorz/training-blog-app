@@ -19,6 +19,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-10 col-sm-8 col-md-6 mx-auto div-distancer">
+                    <div th:if="${emailFound != null}" class="alert alert-danger">
+                        <p th:text="${'Email ' + emailFound + ' already exists in portal!'}"></p>
+                    </div>
+                </div>
+            </div>
             <input type="hidden" th:field="*{id}">
             <input type="hidden" th:field="*{username}">
                 <div class="row">
