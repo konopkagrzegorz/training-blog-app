@@ -38,12 +38,6 @@
             </ul>
           </div>
         </div>
-        <h3>TAGS LIST</h3>
-        <th:block th:each="tagDTO : ${tagsDTO}">
-          <input type="checkbox" name="tags" th:value="${tagDTO.getId()}"/>
-          <label th:text="${tagDTO.getName()}"></label>
-          <br>
-        </th:block>
         <h3>Image</h3>
         <input type="file" name="file"
                th:field="*{image}" id="image">

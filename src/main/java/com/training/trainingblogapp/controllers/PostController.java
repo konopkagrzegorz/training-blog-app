@@ -74,6 +74,12 @@ public class PostController {
         return "search";
     }
 
+    @GetMapping("/posts/search-by-tag/{id}")
+    public String showPostsByTagKeyword(@PathVariable ("id") long id, Model model) {
+        model.addAttribute("posts", postService.findByTags_Id(id));
+        return "search";
+    }
+
     @GetMapping("/post/{id}")
     public String showPost(@PathVariable ("id") long postId,@ModelAttribute ("commentDTO") CommentDTO commentDTO, Model model) {
         PostDTO postDTO = postService.findPostById(postId);

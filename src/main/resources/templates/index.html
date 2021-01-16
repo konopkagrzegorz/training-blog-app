@@ -27,7 +27,7 @@
             <div class="col-10 mx-auto div-distancer">
           <h1>Categories</h1>
               <span th:each="tag : ${tags}">
-                <a class="btn btn-outline-info" style="margin-bottom:10px" th:text="${tag.getName()}">
+                <a th:href="@{/posts/search-by-tag/{id} (id=${tag.getId()})}" class="btn btn-outline-info" style="margin-bottom:10px" th:text="${tag.getName()}">
                 </a>
               </span>
           </div>
