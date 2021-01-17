@@ -59,7 +59,7 @@ public class UserController {
                               Principal principal) {
         int counter = 0;
         for (UserDTO userDTOtemp : userService.findAll()) {
-            if (userDTOtemp.getEmail().equals(userDTO.getEmail())) {
+            if (userDTOtemp.getEmail().equals(userDTO.getEmail().toLowerCase())) {
                 counter++;
             }
         }
@@ -67,13 +67,13 @@ public class UserController {
         if (userDTOtemp.isPresent()) {
             if (!userDTO.getEmail().toLowerCase().equals(userDTOtemp.get().getEmail()) && counter >= 1) {
                 model.addAttribute("emailFound", userDTO.getEmail());
+                return "profile";
             }
         }
-        if (result.hasErrors()) {
-            return "profile";
+        if (!result.hasErrors()) {
+            model.addAttribute("success", "Successfully updated you profile");
+            userService.update(userDTO,principal);
         }
-        model.addAttribute("success", "Successfully updated you profile");
-        userService.update(userDTO,principal);
         return "profile";
     }
 
