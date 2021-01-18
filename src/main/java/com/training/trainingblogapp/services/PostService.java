@@ -121,11 +121,6 @@ public class PostService {
             exception.printStackTrace();
         }
         post.setUser(user);
-        System.out.println(post.getId());
-        System.out.println(post.getHeading());
-        System.out.println(post.getText());
-        System.out.println(post.getDate().toString());
-        System.out.println(post.getTags().toString());
         postRepository.save(post);
     }
 }
