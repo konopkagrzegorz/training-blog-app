@@ -10,7 +10,7 @@ import java.util.List;
 public interface PostRepository extends PagingAndSortingRepository<Post,Long> {
 
     List<Post> findAll();
-    @Query(value = "SELECT DISTINCT * FROM posts p WHERE LOWER(p.heading) OR LOWER(p.text) LIKE LOWER(concat('%', :keyword,'%'))",
+    @Query(value = "SELECT DISTINCT * FROM posts p WHERE LOWER(p.heading) LIKE LOWER(concat('%', :keyword,'%')) OR LOWER(p.text) LIKE LOWER(concat('%', :keyword,'%'))",
             nativeQuery = true)
     List<Post> findAllPostContainsPhase(@Param("keyword") String keyword);
     List<Post> findByTags_Id(Long id);

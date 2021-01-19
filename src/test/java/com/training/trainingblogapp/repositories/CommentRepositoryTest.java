@@ -45,7 +45,7 @@ class CommentRepositoryTest {
     }
 
     @Test
-    public void shouldntDeleteCommentByUser() {
+    public void shouldNotDeleteCommentByUser() {
         Optional<User> user = userRepository.findById(0L);
         assertThrows(NoSuchElementException.class, () -> commentRepository.deleteByUser(user.get()));
     }
