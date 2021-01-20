@@ -92,15 +92,13 @@
 		</dependency>
     </dependencies>
 
-<!--	<distributionManagement>-->
-<!--		<repository>-->
-<!--			<uniqueVersion>false</uniqueVersion>-->
-<!--			<id>corp1</id>-->
-<!--			<name>Corporate Repository</name>-->
-<!--			<url>file:///home/myfolder/.m2</url>-->
-<!--			<layout>default</layout>-->
-<!--		</repository>-->
-<!--	</distributionManagement>-->
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Internal repo</name>
+			<url>file:E:/mvnrepos</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
