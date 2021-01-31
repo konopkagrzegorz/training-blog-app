@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "posts")
-@Table(name = "tags")
+@Table(name = "tags", schema = "public")
 public class Tag {
 
     @Id

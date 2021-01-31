@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "posts")
+@Table(name = "posts", schema = "public")
 @EqualsAndHashCode(exclude = {"comments", "user"})
 public class Post {
 

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public")
 @EqualsAndHashCode(exclude = {"posts", "comments"})
 public class User {
 
