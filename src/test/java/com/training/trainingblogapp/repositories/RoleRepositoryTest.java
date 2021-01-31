@@ -14,24 +14,24 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class RoleRepositoryTest {
 
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Test
-    void shouldFind3Authorites() {
-        List<Role> roleList = roleRepository.findAll();
-        assertEquals(3,roleList.size());
-    }
-
-    @Test
-    void shouldFindAdminAuthority() {
-        Optional<Role> role = roleRepository.findByName("ROLE_ADMIN");
-        assertEquals("ROLE_ADMIN", role.get().getName());
-    }
-
-    @Test
-    void shouldReturnEmptyAuthority() {
-        Optional<Role> role = roleRepository.findByName("NOT_FOUND");
-        assertEquals(Optional.empty(), role);
-    }
+//    @Autowired
+//    RoleRepository roleRepository;
+//
+//    @Test
+//    void shouldFind3Authorites() {
+//        List<Role> roleList = roleRepository.findAll();
+//        assertEquals(3,roleList.size());
+//    }
+//
+//    @Test
+//    void shouldFindAdminAuthority() {
+//        Optional<Role> role = roleRepository.findByName("ROLE_ADMIN");
+//        assertEquals("ROLE_ADMIN", role.get().getName());
+//    }
+//
+//    @Test
+//    void shouldReturnEmptyAuthority() {
+//        Optional<Role> role = roleRepository.findByName("NOT_FOUND");
+//        assertEquals(Optional.empty(), role);
+//    }
 }
