@@ -21,6 +21,7 @@ public class Post {
     private String heading;
 
     @Lob
+    @Column(columnDefinition = "text")
     private String text;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
