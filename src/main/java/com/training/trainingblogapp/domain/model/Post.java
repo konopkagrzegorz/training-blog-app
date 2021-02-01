@@ -39,7 +39,7 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @Lob
-    //@Column(columnDefinition = "MEDIUMBLOB")
+    @Column(columnDefinition = "bytea")
     private byte[] image;
 
     @ManyToOne
