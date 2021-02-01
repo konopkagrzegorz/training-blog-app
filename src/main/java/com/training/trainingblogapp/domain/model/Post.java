@@ -21,7 +21,6 @@ public class Post {
     private String heading;
 
     @Lob
-    @Column(columnDefinition = "text")
     private String text;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -39,7 +38,6 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @Lob
-    @Column(columnDefinition = "bytea")
     private byte[] image;
 
     @ManyToOne
