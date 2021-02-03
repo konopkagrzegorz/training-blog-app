@@ -16,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "TEXT")
     private String username;
 
     @Column(name = "first_name")
@@ -23,6 +24,8 @@ public class User {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(columnDefinition = "TEXT")
     private String password;
     private String email;
 
@@ -35,8 +38,4 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
-
-    public void addPost(Post post) {
-        posts.add(post);
-    }
 }

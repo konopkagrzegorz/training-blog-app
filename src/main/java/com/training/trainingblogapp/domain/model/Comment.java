@@ -14,7 +14,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

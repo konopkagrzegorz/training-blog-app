@@ -114,12 +114,16 @@ public class MappingService {
         post.setText(postDTO.getText());
         post.setDate(postDTO.getDate());
         Set<Tag> tags = new HashSet<>();
-        for (TagDTO tagDTO : postDTO.getTags()) {
-            Tag tag;
-            tag = tagDtoToTag(tagDTO);
-            tags.add(tag);
+        Optional<Set<TagDTO>> tagDTOOptional = Optional.ofNullable(postDTO.getTags());
+
+        if (tagDTOOptional.isPresent()) {
+            for (TagDTO tagDTO : postDTO.getTags()) {
+                Tag tag;
+                tag = tagDtoToTag(tagDTO);
+                tags.add(tag);
+            }
+            post.setTags(tags);
         }
-        post.setTags(tags);
         if (postDTO.getImage().getSize() >= 1048576) {
             throw new MaxUploadSizeExceededException(1048576);
         } else {

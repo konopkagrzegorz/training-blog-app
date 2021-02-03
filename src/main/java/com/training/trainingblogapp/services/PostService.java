@@ -49,6 +49,7 @@ public class PostService {
         return dtoPage;
     }
 
+    @Transactional
     public List<PostDTO> findAllPostContainsPhase(String phase) {
         List<Post> posts = postRepository.findAllPostContainsPhase(phase);
         return posts.stream().map(post -> {
@@ -57,6 +58,7 @@ public class PostService {
         }).collect(Collectors.toList());
     }
 
+    @Transactional
     public List<PostDTO> findByTags_Id(Long id) {
         List<Post> posts = postRepository.findByTags_Id(id);
         return posts.stream().map(post -> {
@@ -75,6 +77,7 @@ public class PostService {
         }
     }
 
+    @Transactional
     public Optional<PostDTO> findById(Long id) {
         Optional<Post> post = Optional.ofNullable(postRepository.findById(id)).get();
         Optional<PostDTO> postDTO = Optional.empty();
@@ -90,6 +93,7 @@ public class PostService {
         postRepository.deleteByUser(user.get());
     }
 
+    @Transactional
     public PostDTO findPostById(long id) {
         PostDTO postDTO = mappingService.postToPostDto(postRepository.findById(id).get());
         return postDTO;

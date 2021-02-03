@@ -18,6 +18,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "TEXT")
     private String heading;
 
     @Column(columnDefinition = "TEXT")
@@ -38,6 +39,7 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @Lob
+    @Column(columnDefinition = "TEXT", length = 1048576)
     private byte[] image;
 
     @ManyToOne
