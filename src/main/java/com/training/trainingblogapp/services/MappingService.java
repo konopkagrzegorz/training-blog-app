@@ -115,7 +115,6 @@ public class MappingService {
         post.setDate(postDTO.getDate());
         Set<Tag> tags = new HashSet<>();
         Optional<Set<TagDTO>> tagDTOOptional = Optional.ofNullable(postDTO.getTags());
-
         if (tagDTOOptional.isPresent()) {
             for (TagDTO tagDTO : postDTO.getTags()) {
                 Tag tag;
@@ -141,13 +140,6 @@ public class MappingService {
         post.setId(postDTO.getId());
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
-        Set<Tag> tags = new HashSet<>();
-        for (TagDTO tagDTO : postDTO.getTags()) {
-            Tag tag;
-            tag = tagDtoToTag(tagDTO);
-            tags.add(tag);
-        }
-        post.setTags(tags);
         if (postDTO.getImage().getSize() >= 1048576) {
             throw new MaxUploadSizeExceededException(1048576);
         } else {
@@ -179,18 +171,10 @@ public class MappingService {
         return comment;
     }
 
-    @SneakyThrows
     public Tag tagDtoToTag(TagDTO tagDTO) {
         Tag tag = new Tag();
         tag.setId(tagDTO.getId());
         tag.setName(tagDTO.getName());
-//        Set<Post> posts = new HashSet<>();
-//        for (PostDTO postDTO : tagDTO.getPostsDTO()) {
-//            Post post;
-//            post = newPostDtoToPost(postDTO);
-//            posts.add(post);
-//        }
-//        tag.setPosts(posts);
         return tag;
     }
 
@@ -198,13 +182,6 @@ public class MappingService {
         TagDTO tagDTO = new TagDTO();
         tagDTO.setId(tag.getId());
         tagDTO.setName(tag.getName());
-//        Set<PostDTO> postsDTO = new HashSet<>();
-//        for (Post post : tag.getPosts()) {
-//            PostDTO postDTO;
-//            postDTO = postToPostDto(post);
-//            postsDTO.add(postDTO);
-//        }
-//        tagDTO.setPostsDTO(postsDTO);
         return tagDTO;
     }
 }
