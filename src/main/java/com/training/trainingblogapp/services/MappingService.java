@@ -140,6 +140,12 @@ public class MappingService {
         post.setId(postDTO.getId());
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
+        Set<Tag> tags = new HashSet<>();
+        for (TagDTO tagDTO : postDTO.getTags()) {
+            Tag tag = tagDtoToTag(tagDTO);
+            tags.add(tag);
+        }
+        post.setTags(tags);
         if (postDTO.getImage().getSize() >= 1048576) {
             throw new MaxUploadSizeExceededException(1048576);
         } else {
@@ -171,7 +177,6 @@ public class MappingService {
         return comment;
     }
 
-    @SneakyThrows
     public Tag tagDtoToTag(TagDTO tagDTO) {
         Tag tag = new Tag();
         tag.setId(tagDTO.getId());
