@@ -38,6 +38,7 @@ public class Post {
     private Set<Tag> tags = new HashSet<>();
 
     @Lob
+    @Column(columnDefinition = "BYTEA")
     private byte[] image;
 
     @ManyToOne
