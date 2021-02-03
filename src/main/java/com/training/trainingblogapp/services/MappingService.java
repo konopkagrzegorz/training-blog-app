@@ -171,6 +171,7 @@ public class MappingService {
         return comment;
     }
 
+    @SneakyThrows
     public Tag tagDtoToTag(TagDTO tagDTO) {
         Tag tag = new Tag();
         tag.setId(tagDTO.getId());
