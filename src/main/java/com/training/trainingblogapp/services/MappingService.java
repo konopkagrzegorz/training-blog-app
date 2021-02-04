@@ -2,7 +2,6 @@ package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.*;
 import com.training.trainingblogapp.domain.model.*;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import java.io.IOException;
@@ -140,12 +139,6 @@ public class MappingService {
         post.setId(postDTO.getId());
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
-        Set<Tag> tags = new HashSet<>();
-        for (TagDTO tagDTO : postDTO.getTags()) {
-            Tag tag = tagDtoToTag(tagDTO);
-            tags.add(tag);
-        }
-        post.setTags(tags);
         if (postDTO.getImage().getSize() >= 1048576) {
             throw new MaxUploadSizeExceededException(1048576);
         } else {
