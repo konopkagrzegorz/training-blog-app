@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
     public User save(UserRegistrationDTO userRegistrationDTO) {
         User temp = mappingService.userRegistrationDtoToUser(userRegistrationDTO);
         temp.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        Role role = roleRepository.findByName("ROLE_USER").get();
+        Role role = roleRepository.findById(3L).get();
         temp.setRole(role);
         return userRepository.save(temp);
     }

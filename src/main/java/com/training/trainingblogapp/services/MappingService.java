@@ -36,6 +36,7 @@ public class MappingService {
 
     public User userRegistrationDtoToUser(UserRegistrationDTO userRegistrationDTO) {
         User user = new User();
+        user.setId(0L);
         user.setUsername(userRegistrationDTO.getUsername().toLowerCase());
         user.setPassword("");
         user.setEmail(userRegistrationDTO.getEmail().toLowerCase());
