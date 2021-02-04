@@ -36,7 +36,7 @@ public class MappingService {
 
     public User userRegistrationDtoToUser(UserRegistrationDTO userRegistrationDTO) {
         User user = new User();
-        user.setId(0L);
+        user.setId(0);
         user.setUsername(userRegistrationDTO.getUsername().toLowerCase());
         user.setPassword("");
         user.setEmail(userRegistrationDTO.getEmail().toLowerCase());
@@ -44,17 +44,6 @@ public class MappingService {
         user.setLastName(userRegistrationDTO.getLastName());
 
         return user;
-    }
-
-    public UserDTO userRegistrationDtoToUserDto(UserRegistrationDTO userRegistrationDTO) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(0);
-        userDTO.setUsername(userRegistrationDTO.getUsername());
-        userDTO.setFirstName(userRegistrationDTO.getFirstName());
-        userDTO.setLastName(userRegistrationDTO.getLastName());
-        userDTO.setEmail(userRegistrationDTO.getLastName());
-
-        return userDTO;
     }
 
     public UserPasswordDTO userToUserPasswordDto(User user) {
