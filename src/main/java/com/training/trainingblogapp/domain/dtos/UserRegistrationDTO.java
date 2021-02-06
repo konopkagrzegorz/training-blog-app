@@ -1,7 +1,10 @@
 package com.training.trainingblogapp.domain.dtos;
 
 import com.training.trainingblogapp.validation.FieldsValueMatch;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -9,7 +12,8 @@ import javax.validation.constraints.Size;
 
 @Data
 @FieldsValueMatch(field = "password", fieldMatch = "confirmPassword")
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRegistrationDTO {
 
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Special characters are not allowed")

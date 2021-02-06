@@ -1,6 +1,8 @@
 package com.training.trainingblogapp.domain.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostDTO {
 
     private long id;

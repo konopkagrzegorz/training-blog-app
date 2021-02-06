@@ -1,10 +1,15 @@
 package com.training.trainingblogapp.domain.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentDTO {
     private long id;
 

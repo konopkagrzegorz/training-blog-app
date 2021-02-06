@@ -1,12 +1,17 @@
 package com.training.trainingblogapp.domain.dtos;
 
 import com.training.trainingblogapp.domain.model.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
     private long id;

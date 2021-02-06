@@ -1,7 +1,10 @@
 package com.training.trainingblogapp.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +13,8 @@ import java.util.Set;
 @Entity
 @Table(name = "users", schema = "public")
 @EqualsAndHashCode(exclude = {"posts", "comments"})
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id

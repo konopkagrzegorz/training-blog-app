@@ -10,12 +10,10 @@ import java.util.List;
 public class RoleService {
 
     private RoleRepository roleRepository;
-    private UserService userService;
 
     @Autowired
-    public RoleService(RoleRepository roleRepository, UserService userService) {
+    public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.userService = userService;
     }
 
     public List<Role> findAll() {

@@ -1,7 +1,9 @@
 package com.training.trainingblogapp.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name = "posts", schema = "public")
 @EqualsAndHashCode(exclude = {"comments", "user"})
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id
