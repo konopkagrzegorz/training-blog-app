@@ -1,8 +1,6 @@
 package com.training.trainingblogapp.services;
 
-import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
-import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
@@ -10,8 +8,6 @@ import com.training.trainingblogapp.repositories.TagRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;

@@ -29,7 +29,7 @@ public class MappingService {
         messageDTO.setSubject(message.getSubject());
         messageDTO.setContactEmail(message.getContactEmail());
         messageDTO.setText(message.getText());
-        messageDTO.setStatus(message.getStatus());
+        messageDTO.setStatus(message.isStatus());
 
         return messageDTO;
     }

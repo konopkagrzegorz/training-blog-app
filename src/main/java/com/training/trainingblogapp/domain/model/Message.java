@@ -1,8 +1,7 @@
 package com.training.trainingblogapp.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 
 @Data
@@ -17,17 +16,9 @@ public class Message {
     private long id;
 
     private String name;
-
     private String subject;
-
     @Column(name = "contact_email")
     private String contactEmail;
-
     private String text;
-
     private boolean status;
-
-    public boolean getStatus() {
-        return this.status;
-    }
 }

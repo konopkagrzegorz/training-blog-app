@@ -1,9 +1,12 @@
 package com.training.trainingblogapp.domain.dtos;
 
-import lombok.Data;
+import lombok.*;
+
 import javax.validation.constraints.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MessageDTO {
 
     private long id;
