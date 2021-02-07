@@ -40,9 +40,8 @@ public class TagController {
     public String addTag(@Valid @ModelAttribute("tagDTO") TagDTO tagDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "showTags";
-        } else if (tagService.findByName(tagDTO.getName()).isPresent()) {
-            throw new NotUniqueException("Tag with that name already exists");
         }
+        tagService.findByName(tagDTO.getName());
         tagService.add(tagDTO);
         return "redirect:/tags/showAll";
     }
