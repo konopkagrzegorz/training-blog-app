@@ -82,12 +82,19 @@ public class CommentService {
     }
 
     public void deleteById(long id) {
+        Optional<Comment> commentDTO = commentRepository.findById(id);
+        if (!commentDTO.isPresent()) {
+            throw new InvalidInputException("Comment with that id does not exist. Nothing to delete!");
+        }
         commentRepository.deleteById(id);
     }
 
     @Transactional
     public void deleteByUser(String username) {
         Optional<User> temp = userRepository.findByUsername(username);
+        if (!temp.isPresent()) {
+            throw new InvalidInputException("That username does not exist!. No comments to delete");
+        }
         commentRepository.deleteByUser(temp.get());
     }
 }

@@ -1,7 +1,6 @@
 package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.CommentDTO;
-import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.services.CommentService;
 import com.training.trainingblogapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +42,7 @@ public class CommentController {
 
     @GetMapping("/admin/post/{postId}/comment/delete/{id}")
     public String deleteComment(@PathVariable("postId") long postId, @PathVariable("id") long id) {
-        if (commentService.findById(id).isPresent()) {
-            commentService.deleteById(id);
-            return "redirect:/post/{postId}";
-        }
-        else {
-            throw new InvalidInputException("Comment with that id does not exist");
-        }
+        commentService.deleteById(id);
+        return "redirect:/post/{postId}";
     }
 }
