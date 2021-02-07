@@ -5,19 +5,18 @@ import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.repositories.CommentRepository;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.assertj.core.util.Lists;
-import org.checkerframework.checker.nullness.Opt;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -136,7 +135,6 @@ class CommentServiceTest {
     }
 
     @Test
-    @Disabled
     void saveComment() {
         //given
         Comment actual = new Comment();
@@ -160,6 +158,52 @@ class CommentServiceTest {
         Mockito.when(commentRepository.findById(actual.getId())).thenReturn(Optional.of(actual));
         Optional<CommentDTO> temp = commentService.findById(actual.getId());
         assertThat(temp.get()).isEqualTo(actualDTO);
+    }
+
+    @Test
+    void shouldThrowInvalidInputExceptionByPost_saveComment() {
+        //given
+        Comment actual = new Comment();
+        CommentDTO actualDTO = new CommentDTO();
+        actual.setId(1);
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user.getUsername();
+            }
+        };
+        //when
+        Mockito.when(mappingService.commentToCommentDto(actual)).thenReturn(actualDTO);
+        Mockito.when(mappingService.commentDtoToComment(actualDTO)).thenReturn(actual);
+        Mockito.when(postRepository.findById(post1.getId())).thenReturn(Optional.empty());
+        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        given(commentRepository.save(actual)).willAnswer(invocation -> invocation.getArgument(0));
+        //then
+        Assertions.assertThrows(InvalidInputException.class, () -> commentService.saveComment(actualDTO,principal,post1.getId()));
+    }
+
+    @Test
+    void shouldThrowInvalidInputExceptionByUser_saveComment() {
+        //given
+        Comment actual = new Comment();
+        CommentDTO actualDTO = new CommentDTO();
+        actual.setId(1);
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user.getUsername();
+            }
+        };
+        //when
+        Mockito.when(mappingService.commentToCommentDto(actual)).thenReturn(actualDTO);
+        Mockito.when(mappingService.commentDtoToComment(actualDTO)).thenReturn(actual);
+        Mockito.when(postRepository.findById(post1.getId())).thenReturn(Optional.of(post1));
+        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.empty());
+        given(commentRepository.save(actual)).willAnswer(invocation -> invocation.getArgument(0));
+        //then
+        Assertions.assertThrows(InvalidInputException.class, () -> commentService.saveComment(actualDTO,principal,post1.getId()));
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.repositories.CommentRepository;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
@@ -63,16 +64,20 @@ public class CommentService {
 
     public void saveComment(CommentDTO commentDTO, Principal principal, Long id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        Post post = postRepository.findById(id).get();
-        User user = userRepository.findByUsername(principal.getName()).get();
+        Optional<Post> post = postRepository.findById(id);
+        Optional<User> user = userRepository.findByUsername(principal.getName());
+        if (!post.isPresent()) {
+            throw new InvalidInputException("You can not add a comment to post which does not exist");
+        } else if (!user.isPresent()) {
+            throw new InvalidInputException("User with that username does not exist, cannot add a comment");
+        }
         Comment comment = mappingService.commentDtoToComment(commentDTO);
-
-        comment.setPost(post);
-        comment.setUser(user);
+        comment.setPost(post.get());
+        comment.setUser(user.get());
 
         comment.setDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
-        postRepository.save(post);
+        postRepository.save(post.get());
         commentRepository.save(comment);
     }
 
