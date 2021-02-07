@@ -6,8 +6,10 @@ import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.repositories.CommentRepository;
+import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.assertj.core.util.Lists;
+import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -15,12 +17,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -35,6 +40,9 @@ class CommentServiceTest {
     private CommentDTO commentDTO1 = new CommentDTO(comment1.getId(),null,comment1.getDate(),null, postDTO);
     private CommentDTO commentDTO2 = new CommentDTO(comment2.getId(),null,comment2.getDate(),null, postDTO);
     private User user = new User(1,"null",null,null,null,null,null,null,new HashSet<>());
+
+    @Mock
+    private PostRepository postRepository;
 
     @Mock
     private UserRepository userRepository;
@@ -99,7 +107,6 @@ class CommentServiceTest {
         Mockito.when(mappingService.commentToCommentDto(comment1)).thenReturn(commentDTO1);
         Mockito.when(mappingService.commentToCommentDto(comment2)).thenReturn(commentDTO2);
         Mockito.when(commentRepository.findCommentByPost_IdOrderByDateDesc(post1.getId())).thenReturn(Lists.list(comment2,comment1));
-
         //then
         List<CommentDTO> actual = commentService.findAllByPostId(post1.getId());
         assertThat(actual).containsExactly(commentDTO2,commentDTO1);
@@ -132,6 +139,27 @@ class CommentServiceTest {
     @Disabled
     void saveComment() {
         //given
+        Comment actual = new Comment();
+        CommentDTO actualDTO = new CommentDTO();
+        actual.setId(1);
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user.getUsername();
+            }
+        };
+        //when
+        Mockito.when(mappingService.commentToCommentDto(actual)).thenReturn(actualDTO);
+        Mockito.when(mappingService.commentDtoToComment(actualDTO)).thenReturn(actual);
+        Mockito.when(postRepository.findById(post1.getId())).thenReturn(Optional.of(post1));
+        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        given(commentRepository.save(actual)).willAnswer(invocation -> invocation.getArgument(0));
+        //then
+        commentService.saveComment(actualDTO,principal,post1.getId());
+        Mockito.when(commentRepository.findById(actual.getId())).thenReturn(Optional.of(actual));
+        Optional<CommentDTO> temp = commentService.findById(actual.getId());
+        assertThat(temp.get()).isEqualTo(actualDTO);
     }
 
     @Test
