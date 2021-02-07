@@ -4,7 +4,9 @@ import com.training.trainingblogapp.domain.dtos.CommentDTO;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.model.Comment;
 import com.training.trainingblogapp.domain.model.Post;
+import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.repositories.CommentRepository;
+import com.training.trainingblogapp.repositories.UserRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -14,10 +16,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 class CommentServiceTest {
@@ -29,6 +34,10 @@ class CommentServiceTest {
     private Comment comment2 = new Comment(2,null,LocalDateTime.of(1993,5,20,19,30),null,post1);
     private CommentDTO commentDTO1 = new CommentDTO(comment1.getId(),null,comment1.getDate(),null, postDTO);
     private CommentDTO commentDTO2 = new CommentDTO(comment2.getId(),null,comment2.getDate(),null, postDTO);
+    private User user = new User(1,"null",null,null,null,null,null,null,new HashSet<>());
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private MappingService mappingService;
@@ -122,15 +131,25 @@ class CommentServiceTest {
     @Test
     @Disabled
     void saveComment() {
+        //given
     }
 
     @Test
-    @Disabled
     void deleteById() {
+        long id = 1L;
+        commentService.deleteById(id);
+        verify(commentRepository, times(1)).deleteById(id);
     }
 
     @Test
-    @Disabled
     void deleteByUser() {
+        //given
+        comment1.setUser(user);
+        comment2.setUser(user);
+        //when
+        Mockito.when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        //then
+        commentService.deleteByUser(user.getUsername());
+        verify(commentRepository,times(1)).deleteByUser(user);
     }
 }
