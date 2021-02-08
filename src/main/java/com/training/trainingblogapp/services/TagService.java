@@ -3,6 +3,7 @@ package com.training.trainingblogapp.services;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.NotUniqueException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.TagRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
@@ -37,6 +38,9 @@ public class TagService {
 
     public void add(TagDTO tagDTO) {
         Tag tag = mappingService.tagDtoToTag(tagDTO);
+        if (tagRepository.findByNameIgnoreCase(tagDTO.getName()).isPresent()) {
+            throw new NotUniqueException("Tag with that name exists");
+        }
         tagRepository.save(tag);
     }
 

@@ -3,7 +3,6 @@ package com.training.trainingblogapp.controllers;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.exceptions.InvalidInputException;
-import com.training.trainingblogapp.exceptions.NotUniqueException;
 import com.training.trainingblogapp.services.PostService;
 import com.training.trainingblogapp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,6 @@ public class TagController {
         if (result.hasErrors()) {
             return "showTags";
         }
-        tagService.findByName(tagDTO.getName());
         tagService.add(tagDTO);
         return "redirect:/tags/showAll";
     }
