@@ -1,28 +1,30 @@
 package com.training.trainingblogapp.services;
 
 import com.training.trainingblogapp.domain.dtos.PostDTO;
+import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.domain.dtos.UserDTO;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.Role;
+import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.assertj.core.util.Lists;
-import org.hibernate.engine.spi.Mapping;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.map;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class PostServiceTest {
 
@@ -76,10 +78,10 @@ class PostServiceTest {
     @Disabled
     void findAll() {
         //when
-        Mockito.when(postRepository.findAll()).thenReturn(Lists.list(post1,post2,post3));
-        Mockito.when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
-        Mockito.when(mappingService.postToPostDto(post2)).thenReturn(postDTO2);
-        Mockito.when(mappingService.postToPostDto(post3)).thenReturn(postDTO3);
+        when(postRepository.findAll()).thenReturn(Lists.list(post1,post2,post3));
+        when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
+        when(mappingService.postToPostDto(post2)).thenReturn(postDTO2);
+        when(mappingService.postToPostDto(post3)).thenReturn(postDTO3);
 
         //them
         List<PostDTO> actual = postService.findAll();
@@ -92,18 +94,63 @@ class PostServiceTest {
     }
 
     @Test
-    @Disabled
     void findAllPostContainsPhase() {
+        //when
+        when(postRepository.findAllPostContainsPhase("te")).
+                thenReturn(Lists.list(post1,post2,post3));
+        when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
+        when(mappingService.postToPostDto(post2)).thenReturn(postDTO2);
+        when(mappingService.postToPostDto(post3)).thenReturn(postDTO3);
+
+        //then
+        List<PostDTO> actual = postService.findAllPostContainsPhase("te");
+        assertThat(actual).containsExactlyInAnyOrder(postDTO1,postDTO2,postDTO3);
+
     }
 
     @Test
-    @Disabled
     void findByTags_Id() {
+        //given
+        Tag tag = new Tag(1, "", new HashSet<>());
+        TagDTO tagDTO = new TagDTO(tag.getId(), tag.getName(), new HashSet<>());
+
+        post1.getTags().add(tag);
+        post2.getTags().add(tag);
+        postDTO1.getTags().add(tagDTO);
+        postDTO2.getTags().add(tagDTO);
+
+        //when
+        when(postRepository.findByTags_Id(tag.getId())).thenReturn(Lists.list(post1,post2));
+        when(mappingService.tagToTagDto(tag)).thenReturn(tagDTO);
+        when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
+        when(mappingService.postToPostDto(post2)).thenReturn(postDTO2);
+
+        //then
+        List<PostDTO> actual = postService.findByTags_Id(tag.getId());
+        assertThat(actual).containsExactlyInAnyOrder(postDTO1,postDTO2);
     }
 
     @Test
-    @Disabled
     void deleteById() {
+        //given
+        Long id=1L;
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user1.getUsername();
+            }
+        };
+        //when
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user1));
+        ArgumentCaptor<Long> idCapture = ArgumentCaptor.forClass(Long.class);
+
+        doNothing().when(postRepository).deleteById(idCapture.capture());
+        postService.deleteById(id,principal);
+
+        assertEquals(1L, idCapture.getValue());
+        verify(postRepository, times(1)).deleteById(id);
+
+
     }
 
     @Test
