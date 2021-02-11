@@ -30,7 +30,7 @@ public class CommentController {
                              Model model, Principal principal) {
         Long tempId = id;
         if (result.hasErrors()) {
-            model.addAttribute("postDTO", postService.findPostById(tempId));
+            model.addAttribute("postDTO", postService.findById(tempId));
             return "showPost";
         } else {
             commentDTO.setId(0);

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 @ControllerAdvice
@@ -29,6 +30,15 @@ public class ExceptionController {
     @ExceptionHandler(InvalidInputException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleInalidInputException(Exception exception, Model model) {
+        String exceptionMessage = exception.getMessage();
+        model.addAttribute("exception", exceptionMessage);
+        model.addAttribute("request", "404 Page Not Found");
+        return "error";
+    }
+
+    @ExceptionHandler(MessagingException.class)
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    public String handleMessagingException(Exception exception, Model model) {
         String exceptionMessage = exception.getMessage();
         model.addAttribute("exception", exceptionMessage);
         model.addAttribute("request", "404 Page Not Found");

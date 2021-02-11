@@ -129,13 +129,15 @@ public class MappingService {
         post.setId(postDTO.getId());
         post.setHeading(postDTO.getHeading());
         post.setText(postDTO.getText());
-        if (postDTO.getImage().getSize() >= 1048576) {
-            throw new MaxUploadSizeExceededException(1048576);
-        } else {
-            if(postDTO.getImage().getSize() > 0) {
-                post.setImage(postDTO.getImage().getBytes());
+        if (postDTO.getImage() != null) {
+            if (postDTO.getImage().getSize() >= 1048576) {
+                throw new MaxUploadSizeExceededException(1048576);
             } else {
-                post.setImage(null);
+                if (postDTO.getImage().getSize() > 0) {
+                    post.setImage(postDTO.getImage().getBytes());
+                } else {
+                    post.setImage(null);
+                }
             }
         }
         return post;

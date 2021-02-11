@@ -82,9 +82,10 @@ public class PostController {
 
     @GetMapping("/post/{id}")
     public String showPost(@PathVariable ("id") long postId,@ModelAttribute ("commentDTO") CommentDTO commentDTO, Model model) {
-        PostDTO postDTO = postService.findPostById(postId);
+        Optional<PostDTO> postDTOs = postService.findById(postId);
         List<CommentDTO> commentsDTO = commentService.findAllByPostId(postId);
         List<TagDTO> tagsDTO = tagService.findAllByPostId(postId);
+        PostDTO postDTO = postService.findPostById(postId);
         model.addAttribute("postDTO", postDTO);
         model.addAttribute("commentsDTO", commentsDTO);
         model.addAttribute("tagsDTO", tagsDTO);
@@ -94,9 +95,9 @@ public class PostController {
 
     @GetMapping("/post/edit/{id}")
     public String editPost(@PathVariable("id") long postId, Model model, Principal principal) {
-        PostDTO postDTO = postService.findPostById(postId);
+        Optional<PostDTO> postDTO = postService.findById(postId);
         Optional<UserDTO> user = userService.findByUsername(principal.getName());
-        boolean val = user.get().getUsername().equals(postDTO.getUserDTO().getUsername());
+        boolean val = user.get().getUsername().equals(postDTO.get().getUserDTO().getUsername());
         model.addAttribute("postDTO", postDTO);
         model.addAttribute("tagsDTO", tagService.findAll());
         if (!val) {
@@ -118,13 +119,9 @@ public class PostController {
 
     @GetMapping("/admin/post/delete/{id}")
     public String deletePost(@PathVariable ("id") long id, Principal principal) {
-        if (postService.findById(id).isPresent()) {
-            postService.deleteById(id,principal);
-            return "redirect:/";
-        }
-        else {
-            throw new InvalidInputException("Post with that id does not exist");
-        }
+        postService.findById(id);
+        postService.deleteById(id,principal);
+        return "redirect:/";
     }
 
     @GetMapping("/post/add-new")

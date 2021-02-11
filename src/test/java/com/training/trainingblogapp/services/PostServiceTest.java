@@ -7,10 +7,12 @@ import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.assertj.core.util.Lists;
+import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -169,10 +170,20 @@ class PostServiceTest {
     }
 
     @Test
-    @Disabled
     void ShouldReturn1Post_findById() {
         //when
+        when(postRepository.findById(post1.getId())).thenReturn(Optional.of(post1));
+        when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
+        Optional<PostDTO> actual = postService.findById(post1.getId());
+        assertThat(actual).isEqualTo(postDTO1);
+    }
 
+    @Test
+    void ShouldThrowInvalidInputException_findById() {
+        //when
+        when(postRepository.findById(post1.getId())).thenReturn(Optional.empty());
+        //then
+        assertThrows(InvalidInputException.class, () -> postService.findById(post1.getId()));
     }
 
     @Test

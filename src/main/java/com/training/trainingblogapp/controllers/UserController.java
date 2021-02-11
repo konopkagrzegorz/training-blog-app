@@ -154,9 +154,9 @@ public class UserController {
     }
 
     @GetMapping("/admin/users/{id}/delete")
-    public String deleteUser(@PathVariable ("id") Long id) {
+    public String deleteUser(@PathVariable ("id") Long id, Principal principal) {
         String username  = userService.findById(id).getUsername();
-        postService.deleteByUser(username);
+        postService.deleteByUser(username,principal);
         commentService.deleteByUser(username);
         userService.deleteById(id);
         return "redirect:/admin/users/list";

@@ -3,6 +3,7 @@ package com.training.trainingblogapp.services;
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
@@ -78,19 +79,25 @@ public class PostService {
     }
 
     @Transactional
-    public Optional<PostDTO> findById(Long id) {
-        Optional<Post> post = Optional.ofNullable(postRepository.findById(id)).get();
-        Optional<PostDTO> postDTO = Optional.empty();
+    public Optional<PostDTO> findById(long id) {
+        Optional<Post> post = postRepository.findById(id);
         if (post.isPresent()) {
-            postDTO = Optional.ofNullable(mappingService.postToPostDto(post.get()));
+            Optional<PostDTO> postDTO = Optional.ofNullable(mappingService.postToPostDto(post.get()));
+            return postDTO;
+        } else {
+            throw new InvalidInputException("Post with that ID does not exist");
         }
-        return postDTO;
     }
 
     @Transactional
-    public void deleteByUser(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        postRepository.deleteByUser(user.get());
+    public void deleteByUser(String username, Principal principal) {
+        Optional<User> principalUser = userRepository.findByUsername(principal.getName());
+        if(principalUser.isPresent() && principalUser.get().getRole().getName().equals("ROLE_ADMIN")) {
+            Optional<User> user = userRepository.findByUsername(username);
+            postRepository.deleteByUser(user.get());
+        } else {
+            throw new UserNotAuthorizedException("You are not logged in or You are not an admin!");
+        }
     }
 
     @Transactional

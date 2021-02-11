@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: meta-head">
+</head>
+<body>
+<nav th:replace="layout :: site-navbar">
+</nav>
+<div th:replace="layout :: banner-fragment">
+
+</div>
+<div class="container my-container">
+    <div class="row">
+        <div class="col-md-8 mx-auto div-distancer">
+            <div class="row list-group">
+                <div class="col-10 mx-auto div-distancer">
+                    <div th:each="post : ${posts}" class="list-group-item" style="margin-top:25px">
+                        <h1 th:text="${post.getHeading()}">First paragraph</h1>
+                        <p class="text-justify" th:text="${#strings.abbreviate(post.getText(),400)}">
+                        </p>
+                        <a th:href="@{/post/{id} (id=${post.getId()})}">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mx-auto div-distancer">
+            <div class="row">
+                <div class="col-10 mx-auto div-distancer">
+                    <h1>Categories</h1>
+                    <span th:each="tag : ${tags}">
+                <a th:href="@{/posts/search-by-tag/{id} (id=${tag.getId()})}" class="btn btn-outline-info" style="margin-bottom:10px" th:text="${tag.getName()}">
+                </a>
+              </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div th:if = "${totalPages > 1}">
+                <div class = "row col-sm-12">
+                    <div class = "col-sm-8">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+                    </div>
+                    <div class = "col-sm-2">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/page/'} + ${totalPages}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="layout :: footer-fragment">
+    </footer>
+</body>
+</html>
