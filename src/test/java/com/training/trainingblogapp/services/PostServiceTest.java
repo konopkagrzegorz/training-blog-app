@@ -7,6 +7,7 @@ import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
 import org.assertj.core.util.Lists;
@@ -76,7 +77,7 @@ class PostServiceTest {
 
     @Test
     @Disabled
-    void findAll() {
+    void shouldReturn3Posts_findAll() {
         //when
         when(postRepository.findAll()).thenReturn(Lists.list(post1,post2,post3));
         when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
@@ -94,7 +95,7 @@ class PostServiceTest {
     }
 
     @Test
-    void findAllPostContainsPhase() {
+    void shouldReturn3Posts_findAllPostContainsPhase() {
         //when
         when(postRepository.findAllPostContainsPhase("te")).
                 thenReturn(Lists.list(post1,post2,post3));
@@ -109,7 +110,7 @@ class PostServiceTest {
     }
 
     @Test
-    void findByTags_Id() {
+    void shouldReturn2Posts_findByTags_Id() {
         //given
         Tag tag = new Tag(1, "", new HashSet<>());
         TagDTO tagDTO = new TagDTO(tag.getId(), tag.getName(), new HashSet<>());
@@ -131,7 +132,7 @@ class PostServiceTest {
     }
 
     @Test
-    void deleteById() {
+    void shouldDeletePost_deleteById() {
         //given
         Long id=1L;
         Principal principal = new Principal() {
@@ -149,13 +150,29 @@ class PostServiceTest {
 
         assertEquals(1L, idCapture.getValue());
         verify(postRepository, times(1)).deleteById(id);
+    }
 
-
+    @Test
+    void shouldThrowUnauthorizedException_deleteById() {
+        //given
+        Long id=1L;
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user2.getUsername();
+            }
+        };
+        //when
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user2));
+        doNothing().when(postRepository).deleteById(id);
+        assertThrows(UserNotAuthorizedException.class, () -> postService.deleteById(id,principal));
     }
 
     @Test
     @Disabled
-    void findById() {
+    void ShouldReturn1Post_findById() {
+        //when
+
     }
 
     @Test

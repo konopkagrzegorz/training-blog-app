@@ -113,17 +113,17 @@ public class UserService implements UserDetailsService {
 
         @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User temp = userRepository.findByUsername(username).get();
+        Optional<User> temp = userRepository.findByUsername(username);
 
-        if (temp == null) {
+        if (!temp.isPresent()) {
             throw new UsernameNotFoundException("Invalid username and/or password");
         }
 
         Collection collection = new HashSet();
-        collection.add(temp.getRole());
+        collection.add(temp.get().getRole());
 
-        return new org.springframework.security.core.userdetails.User(temp.getUsername(),
-                temp.getPassword(), mapRolesToAuthorities(collection));
+        return new org.springframework.security.core.userdetails.User(temp.get().getUsername(),
+                temp.get().getPassword(), mapRolesToAuthorities(collection));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
