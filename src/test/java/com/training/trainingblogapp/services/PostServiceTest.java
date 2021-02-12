@@ -187,13 +187,34 @@ class PostServiceTest {
     }
 
     @Test
-    @Disabled
-    void deleteByUser() {
+    void shouldDeletePostsByUser_deleteByUser() {
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user1.getUsername();
+            }
+        };
+        //when
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user1));
+        when(userRepository.findById(user2.getId())).thenReturn(Optional.of(user2));
+        doNothing().when(postRepository).deleteByUser(user2);
+        postService.deleteByUser(user2.getUsername(), principal);
+        verify(postRepository, times(1)).deleteByUser(user2);
     }
 
     @Test
-    @Disabled
-    void findPostById() {
+    void shouldThrowUnauthorizedException_deleteByUser() {
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user2.getUsername();
+            }
+        };
+        //when
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user2));
+        when(userRepository.findById(user1.getId())).thenReturn(Optional.of(user1));
+        doNothing().when(postRepository).deleteByUser(user2);
+        assertThrows(UserNotAuthorizedException.class, () -> postService.deleteByUser(user1.getUsername(),principal));
     }
 
     @Test

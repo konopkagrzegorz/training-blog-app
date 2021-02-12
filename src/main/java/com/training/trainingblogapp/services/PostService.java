@@ -94,7 +94,7 @@ public class PostService {
         Optional<User> principalUser = userRepository.findByUsername(principal.getName());
         if(principalUser.isPresent() && principalUser.get().getRole().getName().equals("ROLE_ADMIN")) {
             Optional<User> user = userRepository.findByUsername(username);
-            postRepository.deleteByUser(user.get());
+            postRepository.deleteById(user.get().getId());
         } else {
             throw new UserNotAuthorizedException("You are not logged in or You are not an admin!");
         }
