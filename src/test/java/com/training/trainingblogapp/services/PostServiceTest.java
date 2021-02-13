@@ -11,13 +11,13 @@ import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.PostRepository;
 import com.training.trainingblogapp.repositories.UserRepository;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.assertj.core.util.Lists;
-import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,6 +26,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 class PostServiceTest {
@@ -218,12 +219,137 @@ class PostServiceTest {
     }
 
     @Test
-    @Disabled
-    void update() {
+    void shouldAllow_update() throws IOException {
+        //given
+        String heading = "Update heading";
+        String text = "Update text";
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user1.getUsername();
+            }
+        };
+
+        //when
+        given(postRepository.save(post3)).willReturn(post3);
+        when(userRepository.findByUsername(user2.getUsername())).thenReturn(Optional.of(user2));
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user1));
+        when(mappingService.postToPostDto(post3)).thenReturn(postDTO3);
+        when(mappingService.updatePostDtoToPost(postDTO3)).thenReturn(post3);
+        when(postRepository.findById(post3.getId())).thenReturn(Optional.of(post3));
+
+        //then
+        postDTO3.setHeading(heading);
+        postDTO3.setText(text);
+        postService.update(postDTO3,principal);
+        assertThat(postDTO3.getHeading()).isEqualTo(heading);
+        assertThat(postDTO3.getText()).isEqualTo(text);
+        verify(postRepository,times(1)).save(post3);
     }
 
     @Test
-    @Disabled
-    void addPost() {
+    void shouldThrowUserNotAuthorizedException_update() throws IOException {
+        //given
+        String heading = "Update heading";
+        String text = "Update text";
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user2.getUsername();
+            }
+        };
+        //when
+        given(postRepository.save(post1)).willReturn(post1);
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(Optional.of(user1));
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user2));
+        when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
+        when(mappingService.updatePostDtoToPost(postDTO1)).thenReturn(post1);
+        when(postRepository.findById(post1.getId())).thenReturn(Optional.of(post1));
+
+        //then
+        postDTO1.setHeading(heading);
+        postDTO1.setText(text);
+        assertThrows(UserNotAuthorizedException.class, () -> postService.update(postDTO1,principal));
+    }
+
+    @Test
+    void shouldThrowInvalidInputException_update() throws IOException {
+        //given
+        String heading = "Update heading";
+        String text = "Update text";
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user2.getUsername();
+            }
+        };
+        //when
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(Optional.of(user1));
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user1));
+        when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
+        when(mappingService.updatePostDtoToPost(postDTO1)).thenReturn(post1);
+        when(postRepository.findById(post1.getId())).thenReturn(Optional.empty());
+
+        //then
+        postDTO1.setHeading(heading);
+        postDTO1.setText(text);
+        assertThrows(InvalidInputException.class, () -> postService.update(postDTO1,principal));
+
+    }
+
+    @Test
+    void shouldAllow_addPost() throws IOException {
+        //given
+        Post post = new Post(10,"New heading", "New Text",LocalDateTime.now(), new HashSet<>(), new HashSet<>(),null, user1);
+        PostDTO postDTO = new PostDTO(post.getId(), post.getHeading(),post.getText(),new HashSet<>(), post.getDate(),null, "", userDTO1);
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user1.getUsername();
+            }
+        };
+        //when
+        when(postRepository.save(post)).thenReturn(post);
+        when(mappingService.postToPostDto(post)).thenReturn(postDTO);
+        when(mappingService.newPostDtoToPost(postDTO)).thenReturn(post);
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user1));
+        given(postRepository.save(post)).willAnswer(invocation -> invocation.getArgument(0));
+        //then
+        postService.addPost(postDTO,principal);
+        Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.of(post));
+        Optional<PostDTO> temp = postService.findById(postDTO.getId());
+        AssertionsForClassTypes.assertThat(temp.get()).isEqualTo(postDTO);
+    }
+
+    @Test
+    void shouldThrowUserNotAuthorizedException_addPost() throws IOException {
+        //given
+        User user3 = new User
+                (1, "User 3", "Firstname 3", "Last name 3",
+                        "pw3" ,"mail3@mail.com",
+                        new Role("ROLE_USER"), new HashSet<>(), new HashSet<>());
+        UserDTO userDTO1 = new UserDTO(user3.getId(), user3.getUsername(), user3.getFirstName(),
+                user3.getLastName(),user3.getEmail(),user3.getRole());
+        Post post = new Post(10,"New heading", "New Text",LocalDateTime.now(), new HashSet<>(), new HashSet<>(),null, user3);
+        PostDTO postDTO = new PostDTO(post.getId(), post.getHeading(),post.getText(),new HashSet<>(), post.getDate(),null, "", userDTO1);
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return user3.getUsername();
+            }
+        };
+        //when
+        when(postRepository.save(post)).thenReturn(post);
+        when(mappingService.postToPostDto(post)).thenReturn(postDTO);
+        when(mappingService.newPostDtoToPost(postDTO)).thenReturn(post);
+        when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user3));
+        given(postRepository.save(post)).willAnswer(invocation -> invocation.getArgument(0));
+        //then
+        assertThrows(UserNotAuthorizedException.class, () -> postService.addPost(postDTO,principal));
     }
 }

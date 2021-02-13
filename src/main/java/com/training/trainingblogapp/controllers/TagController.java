@@ -2,7 +2,6 @@ package com.training.trainingblogapp.controllers;
 
 import com.training.trainingblogapp.domain.dtos.PostDTO;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
-import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.services.PostService;
 import com.training.trainingblogapp.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TagController {
@@ -44,21 +44,18 @@ public class TagController {
         return "redirect:/tags/showAll";
     }
 
-    @GetMapping("/admin/tag/delete/{id}")
+    @GetMapping("/admin/tags/delete/{id}")
     public String deleteTag(@PathVariable("id") long id, Principal principal) {
-        if (tagService.findById(id).isPresent()) {
-            TagDTO tagDTO = tagService.findById(id).get();
+        Optional<TagDTO> tagDTO = tagService.findById(id);
+        if (tagDTO.isPresent()) {
             List<PostDTO> posts = postService.findByTags_Id(id);
 
             for (PostDTO postDTO : posts) {
-                postDTO.getTags().remove(tagDTO);
-                postService.update(postDTO,principal);
+                postDTO.getTags().remove(tagDTO.get());
+                postService.update(postDTO, principal);
             }
-            tagService.deleteById(id,principal);
-            return "redirect:/";
+            tagService.deleteById(id, principal);
         }
-        else {
-            throw new InvalidInputException("Tag with that id does not exist");
-        }
+        return "redirect:/";
     }
 }

@@ -102,7 +102,7 @@ public class PostController {
         model.addAttribute("tagsDTO", tagService.findAll());
         if (!val) {
             if (!user.get().getRole().getName().equals("ROLE_ADMIN")) {
-                throw new UserNotAuthorizedException("Oops... You are not admin or owner of this post - deleting aborted.");
+                throw new UserNotAuthorizedException("Oops... You are not admin or owner of this post - editing not allowed.");
             }
         }
         return "editPost";

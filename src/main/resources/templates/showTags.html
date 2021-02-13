@@ -44,7 +44,7 @@
               <tr th:each="tagDTO : ${tagsDTO}" class="text-center">
                 <td class="text-center" th:text="${tagDTO.getId()}"></td>
                 <td class="text-center" th:text="${tagDTO.getName()}"></td>
-                <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/tag/delete/{id} (id=${tagDTO.getId()})}" class="btn btn-danger text-center">Delete</a></td>
+                <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/tags/delete/{id} (id=${tagDTO.getId()})}" class="btn btn-danger text-center">Delete</a></td>
               </tr>
             </table>
           </div>

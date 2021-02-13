@@ -5,6 +5,7 @@ import com.training.trainingblogapp.domain.model.Post;
 import com.training.trainingblogapp.domain.model.Role;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.NotUniqueException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.TagRepository;
@@ -130,7 +131,7 @@ class TagServiceTest {
     }
 
     @Test
-    void findById() {
+    void shouldReturnTag_findById() {
         //when
         Mockito.when(tagRepository.findById(tag.getId())).thenReturn(Optional.of(tag));
         Mockito.when(mappingService.tagToTagDto(tag)).thenReturn(tagDTO);
@@ -138,6 +139,15 @@ class TagServiceTest {
         //then
         Optional<TagDTO> actual = tagService.findById(tag.getId());
         assertThat(actual.get()).isEqualTo(tagDTO);
+    }
+
+    @Test
+    void shouldThrowInvalidInputException_findById() {
+        //when
+        Mockito.when(tagRepository.findById(tag.getId())).thenReturn(Optional.empty());
+
+        //then
+        assertThrows(InvalidInputException.class, () -> tagService.findById(tag.getId()));
     }
 
     @Test
@@ -162,7 +172,7 @@ class TagServiceTest {
     }
 
     @Test
-    void shouldDeleteUser_deleteById() {
+    void shouldDeleteTag_deleteById() {
         long id = 1L;
         Principal principal = new Principal() {
             @Override

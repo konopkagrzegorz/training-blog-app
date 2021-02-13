@@ -3,6 +3,7 @@ package com.training.trainingblogapp.services;
 import com.training.trainingblogapp.domain.dtos.TagDTO;
 import com.training.trainingblogapp.domain.model.Tag;
 import com.training.trainingblogapp.domain.model.User;
+import com.training.trainingblogapp.exceptions.InvalidInputException;
 import com.training.trainingblogapp.exceptions.NotUniqueException;
 import com.training.trainingblogapp.exceptions.UserNotAuthorizedException;
 import com.training.trainingblogapp.repositories.TagRepository;
@@ -54,10 +55,12 @@ public class TagService {
     }
 
     public Optional<TagDTO> findById(long id) {
-        Optional<Tag> tag = Optional.ofNullable(tagRepository.findById(id)).get();
-        Optional<TagDTO> tagDTO = Optional.empty();
+        Optional<Tag> tag = tagRepository.findById(id);
+        Optional<TagDTO> tagDTO;
         if (tag.isPresent()) {
             tagDTO = Optional.ofNullable(mappingService.tagToTagDto(tag.get()));
+        } else {
+            throw new InvalidInputException("Tag with that ID does not exist");
         }
         return tagDTO;
     }

@@ -107,31 +107,47 @@ public class PostService {
     }
 
     public void update(PostDTO postDTO, Principal principal) {
-        Post temp = postRepository.findById(postDTO.getId()).get();
-        User user = userRepository.findByUsername(temp.getUser().getUsername()).get();
-        Post post = null;
-        try {
-            post = mappingService.updatePostDtoToPost(postDTO);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        Optional<Post> temp = postRepository.findById(postDTO.getId());
+        if (temp.isPresent()) {
+            Optional<User> user = userRepository.findByUsername(temp.get().getUser().getUsername());
+            Optional<User> principalUser = userRepository.findByUsername(principal.getName());
+            if (principalUser.isPresent()) {
+                if (user.get().getUsername().equals(principal.getName())
+                        || principalUser.get().getRole().getName().equals("ROLE_ADMIN")) {
+                    Post post = null;
+                    try {
+                        post = mappingService.updatePostDtoToPost(postDTO);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    post.setDate(temp.get().getDate());
+                    post.setUser(user.get());
+                    postRepository.save(post);
+                } else {
+                    throw new UserNotAuthorizedException("You are not logged in");
+                }
+            }
+        } else {
+            throw new InvalidInputException("Post with that ID does not exist");
         }
-        post.setDate(temp.getDate());
-        post.setUser(user);
-        postRepository.save(post);
     }
 
     @Transactional
     public void addPost(PostDTO postDTO, Principal principal) {
-
-        User user = userRepository.findByUsername(principal.getName()).get();
-        postDTO.setDate(LocalDateTime.now());
-        Post post = null;
-        try {
-            post = mappingService.newPostDtoToPost(postDTO);
-        } catch (IOException exception) {
-            exception.printStackTrace();
+        Optional<User> user = userRepository.findByUsername(principal.getName());
+        if (user.isPresent() && !user.get().getRole().getName().equals("ROLE_USER")) {
+            postDTO.setDate(LocalDateTime.now());
+            Post post = null;
+            try {
+                post = mappingService.newPostDtoToPost(postDTO);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            post.setUser(user.get());
+            postRepository.save(post);
+        } else {
+            throw new UserNotAuthorizedException("You are not allowed to create new post");
         }
-        post.setUser(user);
-        postRepository.save(post);
+
     }
 }
