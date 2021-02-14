@@ -25,8 +25,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 
 class CommentServiceTest {
@@ -208,7 +207,11 @@ class CommentServiceTest {
 
     @Test
     void deleteById() {
+        //given
         long id = 1L;
+        //when
+        when(commentRepository.findById(id)).thenReturn(Optional.of(comment1));
+        when(mappingService.commentToCommentDto(comment1)).thenReturn(commentDTO1);
         commentService.deleteById(id);
         verify(commentRepository, times(1)).deleteById(id);
     }

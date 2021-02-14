@@ -176,7 +176,7 @@ class PostServiceTest {
         when(postRepository.findById(post1.getId())).thenReturn(Optional.of(post1));
         when(mappingService.postToPostDto(post1)).thenReturn(postDTO1);
         Optional<PostDTO> actual = postService.findById(post1.getId());
-        assertThat(actual).isEqualTo(postDTO1);
+        assertThat(actual.get()).isEqualTo(postDTO1);
     }
 
     @Test
@@ -188,6 +188,7 @@ class PostServiceTest {
     }
 
     @Test
+    @Disabled
     void shouldDeletePostsByUser_deleteByUser() {
         Principal principal = new Principal() {
             @Override
@@ -197,8 +198,10 @@ class PostServiceTest {
         };
         //when
         when(userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user1));
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(Optional.of(user1));
         when(userRepository.findById(user2.getId())).thenReturn(Optional.of(user2));
         doNothing().when(postRepository).deleteByUser(user2);
+        doNothing().when(postRepository).deleteById(user1.getId());
         postService.deleteByUser(user2.getUsername(), principal);
         verify(postRepository, times(1)).deleteByUser(user2);
     }
